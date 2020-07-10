@@ -1,0 +1,56 @@
+@import '../config';
+
+.main-content{
+  background-color: #fff;
+  padding: 32px 64px;
+  flex: 0 1 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: black;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  &__logo{
+    font-size: 30px;
+    font-weight: bold;
+    color: $clr-main-accent;
+  }
+  &__location{
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    color: $clr-gray-dark;
+  }
+}
+
+.hero-block{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 308px;
+  &__title{
+    font-size: 70px;
+    font-weight: bold;
+    color: black;
+    line-height: 0;
+  }
+  p{
+    color: $clr-main-accent;
+  }
+  &__subtitle{
+    font-size: 26px;
+    color: $clr-gray-dark;
+  }
+  .button{
+    height: 48px;
+    width: 250px;
+    background-color: $clr-main-accent;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+  }
+}
