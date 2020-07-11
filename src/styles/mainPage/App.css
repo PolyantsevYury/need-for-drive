@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+}
+
+.app-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  color: #EEEEEE;
+}
+.app-wrapper h1 {
+  margin: 0;
+}
+
+/*# sourceMappingURL=App.css.map */

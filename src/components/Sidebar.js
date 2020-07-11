@@ -5,10 +5,10 @@ export const SideBar = () => {
   return (
       <nav className='side-bar'>
         <div className='burger'>
-          <div className='burger__vector'></div>
+          <div className='burger__vector'> </div>
         </div>
         <div className='language'>
-          eng
+          Eng
         </div>
       </nav>
   )

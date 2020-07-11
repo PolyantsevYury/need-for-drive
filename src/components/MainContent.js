@@ -14,7 +14,8 @@ export const MainContent = () => {
         </div>
         <div className='hero-block'>
           <h1 className='hero-block__title'>
-            Каршеринг <p>Need for drive</p>
+            Каршеринг <br/>
+            <span>Need for drive</span>
           </h1>
           <span className='hero-block__subtitle'>
             Поминутная аренда авто твоего города
@@ -23,7 +24,10 @@ export const MainContent = () => {
             Забронировать
           </button>
         </div>
-        <footer className='footer'>footer</footer>
+        <footer className='footer'>
+          <span className='footer__copyright'>© 2016-2019 «Need for drive»</span>
+          <a href='tel:84952342244' className='footer__number'>8 (495) 234-22-44</a>
+        </footer>
       </div>
   )
 };
