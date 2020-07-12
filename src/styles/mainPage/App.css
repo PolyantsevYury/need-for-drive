@@ -8,7 +8,7 @@
   width: 100%;
   color: #EEEEEE;
 }
-.app-wrapper h1 {
+.app-wrapper h1, .app-wrapper h2 {
   margin: 0;
 }
 

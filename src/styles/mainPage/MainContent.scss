@@ -63,5 +63,7 @@
     color: $clr-gray-dark;
   }
   &__number{
+    text-decoration: none;
+    color: $clr-main-black;
   }
 }

@@ -3,6 +3,47 @@
   background-size: cover;
   background-position: center;
   flex: 0 1 50%;
+  display: flex;
+}
+.slider__control {
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 64px;
+  min-width: 64px;
+}
+.slider__control:hover {
+  background-color: rgba(14, 194, 97, 0.2);
+}
+.slider__content {
+  align-self: flex-end;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 75vh;
+}
+.slider__item-title {
+  font-size: 40px;
+  font-weight: normal;
+}
+.slider__item-info {
+  margin-top: 8px;
+  margin-bottom: 32px;
+  font-size: 24px;
+  font-weight: lighter;
+  line-height: 24px;
+}
+.slider__item-button {
+  height: 48px;
+  width: 164px;
+  background-image: linear-gradient(to right, #13493F 0%, #0C7B1B 100%);
+  color: #fff;
+  font-size: 18px;
+  border: none;
+  border-radius: 4px;
 }
 
 /*# sourceMappingURL=Slider.css.map */
