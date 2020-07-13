@@ -19,9 +19,12 @@
     color: $clr-main-accent;
   }
   &__location{
-    font-size: 14px;
     display: flex;
     align-items: center;
+  }
+  &__location-city{
+    margin-left: 8px;
+    font-size: 14px;
     color: $clr-gray-dark;
   }
 }
@@ -33,13 +36,14 @@
     font-size: 70px;
     font-weight: bold;
     color: black;
-    line-height: 68px;
+    line-height: 70px;
     span{
       color: $clr-main-accent;
     }
   }
   &__subtitle{
     margin-top: 26px;
+    font-weight: 300;
     font-size: 26px;
     color: $clr-gray-dark;
   }
@@ -48,7 +52,9 @@
     width: 250px;
     background-image: linear-gradient(to right, $clr-main-accent 0%, #039F67 100%);
     color: #fff;
+    font-family: Roboto, sans-serif;
     font-size: 18px;
+    font-weight: 500;
     border: none;
     border-radius: 8px;
     margin: 60px 0;

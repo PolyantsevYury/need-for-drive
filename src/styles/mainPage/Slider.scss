@@ -1,7 +1,7 @@
 @import '../config';
 
 .slider{
-  background-image: url('../../img/slider_1.png');
+  background-image: url('../../assets/images/slide_1.png');
   background-size: cover;
   background-position: center;
   flex: 0 1 50%;
@@ -18,25 +18,25 @@
     }
   }
   &__content{
-    align-self: flex-end;
+    align-self: center;
     padding: 32px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 75vh;
+    margin-bottom: 150px;
   }
   &__item{
   }
   &__item-title{
     font-size: 40px;
-    font-weight: normal;
+    font-weight: 500;
   }
   &__item-info{
     margin-top: 8px;
     margin-bottom: 32px;
     font-size: 24px;
-    font-weight: lighter;
+    font-weight: 300;
     line-height: 24px;
   }
   &__item-button{
@@ -44,10 +44,26 @@
     width: 164px;
     background-image: linear-gradient(to right, #13493F 0%, #0C7B1B 100%);
     color: #fff;
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
     font-size: 18px;
     border: none;
     border-radius: 4px;
   }
-  &__nav{
+  &__dots{
+    position: absolute;
+    bottom: 32px;
+    display: flex;
+  }
+  &__dot{
+    width: 9px;
+    height: 9px;
+    margin-right: 9px;
+    border: none;
+    border-radius: 50%;
+    background-color: #fff;
+    &--active{
+      background-color: $clr-main-accent;
+    }
   }
 }

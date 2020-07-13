@@ -1,7 +1,9 @@
 @import '../config';
+@import '../fonts';
 
 * {
   box-sizing: border-box;
+  margin: 0;
 }
 
 .app-wrapper {
@@ -9,8 +11,5 @@
   min-height: 100vh;
   width: 100%;
   color: $clr-gray-light;
-
-  h1,h2{
-    margin: 0;
-  }
+  font-family: Roboto, sans-serif;
 }

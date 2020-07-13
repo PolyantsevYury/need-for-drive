@@ -1,5 +1,6 @@
 import React from "react";
 import '../styles/mainPage/MainContent.scss';
+import locationIcon from '../assets/images/icons/location_icon.svg'
 
 export const MainContent = () => {
   return (
@@ -9,7 +10,8 @@ export const MainContent = () => {
             Need for drive
           </div>
           <div className='header__location'>
-            Ульяновск
+            <img src={locationIcon} alt=""/>
+            <span className='header__location-city'>Ульяновск</span>
           </div>
         </div>
         <div className='hero-block'>
