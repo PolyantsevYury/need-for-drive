@@ -4,7 +4,7 @@ import locationIcon from '../assets/images/icons/location_icon.svg'
 
 export const MainContent = () => {
   return (
-      <div className='main-content'>
+      <section className='main-content'>
         <div className='header'>
           <div className='header__logo'>
             Need for drive
@@ -23,13 +23,15 @@ export const MainContent = () => {
             Поминутная аренда авто твоего города
           </span>
           <button className='button'>
-            Забронировать
+            <p className='button__text'>
+              Забронировать
+            </p>
           </button>
         </div>
         <footer className='footer'>
           <span className='footer__copyright'>© 2016-2019 «Need for drive»</span>
           <a href='tel:84952342244' className='footer__number'>8 (495) 234-22-44</a>
         </footer>
-      </div>
+      </section>
   )
 };

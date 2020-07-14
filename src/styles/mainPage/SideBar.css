@@ -5,10 +5,11 @@
   justify-content: space-between;
   min-width: 64px;
   background-color: #151B1F;
-  padding: 32px 0;
+  padding: 32px 0 15px 0;
 }
 
 .burger {
+  cursor: pointer;
   width: 32px;
   height: 32px;
   display: flex;
@@ -37,10 +38,19 @@
 }
 
 .language {
+  cursor: pointer;
   font-size: 13px;
   font-weight: bold;
   color: #0EC261;
   text-align: center;
+  width: 48px;
+  line-height: 46px;
+  border: 1px solid rgba(0, 0, 0, 0);
+}
+.language:hover {
+  border: 1px solid white;
+  border-radius: 50%;
+  color: white;
 }
 
 /*# sourceMappingURL=SideBar.css.map */

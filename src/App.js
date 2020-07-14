@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles/mainPage/App.scss';
+import './styles/App.scss';
 
 import {SideBar} from "./components/Sidebar";
 import {MainContent} from "./components/MainContent";

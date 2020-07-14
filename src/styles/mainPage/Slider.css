@@ -6,6 +6,7 @@
   display: flex;
 }
 .slider__control {
+  cursor: pointer;
   height: 100%;
   background-color: transparent;
   border: none;
@@ -46,6 +47,10 @@
   font-size: 18px;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
+}
+.slider__item-button:focus {
+  outline: none;
 }
 .slider__dots {
   position: absolute;
@@ -53,6 +58,7 @@
   display: flex;
 }
 .slider__dot {
+  cursor: pointer;
   width: 9px;
   height: 9px;
   margin-right: 9px;

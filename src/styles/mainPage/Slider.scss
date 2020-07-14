@@ -7,6 +7,7 @@
   flex: 0 1 50%;
   display: flex;
   &__control{
+    cursor: pointer;
     height: 100%;
     background-color: transparent;
     border: none;
@@ -49,6 +50,10 @@
     font-size: 18px;
     border: none;
     border-radius: 4px;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
   }
   &__dots{
     position: absolute;
@@ -56,6 +61,7 @@
     display: flex;
   }
   &__dot{
+    cursor: pointer;
     width: 9px;
     height: 9px;
     margin-right: 9px;

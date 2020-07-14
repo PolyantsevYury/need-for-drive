@@ -58,6 +58,10 @@
     border: none;
     border-radius: 8px;
     margin: 60px 0;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
   }
 }
 
@@ -71,5 +75,8 @@
   &__number{
     text-decoration: none;
     color: $clr-main-black;
+    &:hover{
+      color: $clr-main-accent;
+    }
   }
 }
