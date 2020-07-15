@@ -1,0 +1,49 @@
+@import "../../../../styles/variables";
+
+.side-drawer {
+  height: 100%;
+  width: calc(50% + 36px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #151B1F;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 15;
+  &__navigation{
+    margin-left: 110px;
+  }
+  &__navigation-items {
+    list-style: none;
+    padding: 0;
+  }
+  &__navigation-item {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 32px;
+    text-transform: uppercase;
+    line-height: 50px;
+    &:hover{
+      color: $clr-main-accent;
+    }
+  }
+  &__social-items{
+    margin-top: 30px;
+  }
+  &__social-item{
+    margin-right: 24px;
+    cursor: pointer;
+  }
+}
+
+.backdrop{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(21, 27, 31, 0.81);
+  z-index: 5;
+}

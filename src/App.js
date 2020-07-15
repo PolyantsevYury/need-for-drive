@@ -1,9 +1,9 @@
 import React from 'react';
-import './styles/App.scss';
+import './App.scss';
 
-import {SideBar} from "./components/Sidebar";
-import {MainContent} from "./components/MainContent";
-import {Slider} from "./components/Slider";
+import {SideBar} from "./components/mainPage/sidebar/Sidebar";
+import {MainContent} from "./components/mainPage/mainContent/MainContent";
+import {Slider} from "./components/mainPage/slider/Slider";
 
 const App = () => {
   return (

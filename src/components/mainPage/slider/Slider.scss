@@ -1,4 +1,4 @@
-@import '../config';
+@import '../../../styles/variables';
 
 .slider{
   background-size: cover;
@@ -24,9 +24,11 @@
     width: 100%;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 150px;
   }
   &__item{
+    width: 100%;
     button{
       border-radius: 4px;
       width: 164px;

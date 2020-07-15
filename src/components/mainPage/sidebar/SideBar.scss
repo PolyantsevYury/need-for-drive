@@ -1,0 +1,28 @@
+@import '../../../styles/variables';
+
+.side-bar{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 64px;
+  background-color: #151B1F;
+  padding: 36px 0 15px 0;
+}
+
+.language{
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  color: $clr-main-accent;
+  text-align: center;
+  width: 48px;
+  line-height: 46px;
+  border: 1px solid rgba(0,0,0,0);
+  z-index: 10;
+  &:hover{
+    border: 1px solid white;
+    border-radius: 50%;
+    color: white;
+  }
+}

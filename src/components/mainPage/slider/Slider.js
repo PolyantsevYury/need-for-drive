@@ -1,12 +1,12 @@
 import React from "react";
-import '../styles/mainPage/Slider.scss'
-import arrowLeft from '../assets/images/icons/arrow_left_icon.svg'
-import arrowRight from '../assets/images/icons/arrow_right_icon.svg'
-import {Button} from "./common/Button";
-import Image1 from '../assets/images/slide_1.png';
-import Image2 from '../assets/images/slide_2.png';
-import Image3 from '../assets/images/slide_3.png';
-import Image4 from '../assets/images/slide_4.png';
+import './Slider.scss'
+import arrowLeft from '../../../assets/images/icons/arrow_left_icon.svg'
+import arrowRight from '../../../assets/images/icons/arrow_right_icon.svg'
+import {Button} from "../../common/Button";
+import Image1 from '../../../assets/images/slide_1.png';
+import Image2 from '../../../assets/images/slide_2.png';
+import Image3 from '../../../assets/images/slide_3.png';
+import Image4 from '../../../assets/images/slide_4.png';
 
 export const Slider = () => {
   const slides = [

@@ -1,7 +1,7 @@
 import React from "react";
-import '../styles/mainPage/MainContent.scss';
-import locationIcon from '../assets/images/icons/location_icon.svg'
-import {Button} from "./common/Button";
+import './MainContent.scss';
+import locationIcon from '../../../assets/images/icons/location_icon.svg'
+import {Button} from "../../common/Button";
 
 export const MainContent = () => {
   return (

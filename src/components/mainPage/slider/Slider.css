@@ -23,7 +23,11 @@
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 150px;
+}
+.slider__item {
+  width: 100%;
 }
 .slider__item button {
   border-radius: 4px;
