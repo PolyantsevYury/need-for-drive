@@ -17,6 +17,10 @@
   @media (max-width: $max-laptop) {
     padding: 32px;
   }
+  @media (max-width: $max-mobile) {
+    padding: 0;
+    display: block;
+  }
 }
 
 .header{
@@ -30,22 +34,42 @@
   &__location{
     display: flex;
     align-items: center;
+    @media (max-width: $max-mobile) {
+      margin-top: 10px;
+    }
   }
   &__location-city{
     margin-left: 8px;
     font-size: 14px;
     color: $clr-gray-dark;
   }
+  @media (max-width: $max-mobile) {
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-end;
+  }
 }
 
 .hero-block{
   display: flex;
   flex-direction: column;
+  @media (max-width: $max-mobile) {
+    button{
+      width: 100%;
+      height: 54px;
+      border-radius: 0;
+    }
+  }
   &__title{
     font-size: 70px;
     font-weight: bold;
     color: black;
     line-height: 70px;
+    @media (max-width: $max-mobile) {
+      font-size: 38px;
+      line-height: 44px;
+      margin: 16px;
+    }
     span{
       color: $clr-main-accent;
     }
@@ -56,6 +80,10 @@
     font-weight: 300;
     font-size: 26px;
     color: $clr-gray-dark;
+    @media (max-width: $max-mobile) {
+      font-size: 18px;
+      margin: 0 16px 32px 16px;
+    }
   }
 }
 
@@ -71,6 +99,22 @@
     color: $clr-main-black;
     &:hover{
       color: $clr-main-accent;
+    }
+  }
+  @media (max-width: $max-mobile) {
+    position: absolute;
+    bottom: 0;
+    height: 72px;
+    background-color: #151B1F;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    padding: 16px;
+    width: 100%;
+    &__number{
+      color: $clr-main-accent;
+    }
+    &__copyright{
+       color: #EEEEEE;
     }
   }
 }

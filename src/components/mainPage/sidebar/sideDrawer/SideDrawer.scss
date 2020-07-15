@@ -11,8 +11,15 @@
   flex-direction: column;
   justify-content: center;
   z-index: 15;
+  @media (max-width: $max-tablet) {
+    width: 100%;
+    display: block;
+  }
   &__navigation{
     margin-left: 110px;
+    @media (max-width: $max-tablet) {
+      margin: 64px 28px;
+    }
   }
   &__navigation-items {
     list-style: none;
@@ -27,6 +34,9 @@
     line-height: 50px;
     &:hover{
       color: $clr-main-accent;
+    }
+    @media (max-width: $max-mobile) {
+      font-size: 22px;
     }
   }
   &__social-items{
