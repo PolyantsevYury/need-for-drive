@@ -1,6 +1,7 @@
 import React from "react";
 import '../styles/mainPage/MainContent.scss';
 import locationIcon from '../assets/images/icons/location_icon.svg'
+import {Button} from "./common/Button";
 
 export const MainContent = () => {
   return (
@@ -14,7 +15,7 @@ export const MainContent = () => {
             <span className='header__location-city'>Ульяновск</span>
           </div>
         </div>
-        <div className='hero-block'>
+        <div className='hero-block main-content__hero-block'>
           <h1 className='hero-block__title'>
             Каршеринг <br/>
             <span>Need for drive</span>
@@ -22,11 +23,9 @@ export const MainContent = () => {
           <span className='hero-block__subtitle'>
             Поминутная аренда авто твоего города
           </span>
-          <button className='button'>
-            <p className='button__text'>
-              Забронировать
-            </p>
-          </button>
+          <Button>
+            Забронировать
+          </Button>
         </div>
         <footer className='footer'>
           <span className='footer__copyright'>© 2016-2019 «Need for drive»</span>

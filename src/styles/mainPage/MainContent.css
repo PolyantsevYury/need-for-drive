@@ -7,6 +7,9 @@
   justify-content: space-between;
   color: black;
 }
+.main-content__hero-block {
+  margin-bottom: 60px;
+}
 
 .header {
   display: flex;
@@ -42,25 +45,10 @@
 }
 .hero-block__subtitle {
   margin-top: 26px;
+  margin-bottom: 60px;
   font-weight: 300;
   font-size: 26px;
   color: #999999;
-}
-.hero-block .button {
-  height: 48px;
-  width: 250px;
-  background-image: linear-gradient(to right, #0EC261 0%, #039F67 100%);
-  color: #fff;
-  font-family: Roboto, sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  border: none;
-  border-radius: 8px;
-  margin: 60px 0;
-  cursor: pointer;
-}
-.hero-block .button:focus {
-  outline: none;
 }
 
 .footer {

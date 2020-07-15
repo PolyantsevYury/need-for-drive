@@ -16,13 +16,13 @@
   align-items: center;
   justify-content: center;
 }
-.burger__vector {
+.burger__lines {
   width: 26px;
   height: 3px;
   background: #fff;
   border-radius: 6px;
 }
-.burger__vector:before, .burger__vector:after {
+.burger__lines:before, .burger__lines:after {
   content: "";
   position: absolute;
   width: 26px;
@@ -30,10 +30,10 @@
   background: #fff;
   border-radius: 6px;
 }
-.burger__vector:before {
+.burger__lines:before {
   transform: translateY(-9px);
 }
-.burger__vector:after {
+.burger__lines:after {
   transform: translateY(9px);
 }
 

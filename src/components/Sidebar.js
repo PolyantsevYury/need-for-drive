@@ -5,7 +5,7 @@ export const SideBar = () => {
   return (
       <nav className='side-bar'>
         <div className='burger'>
-          <div className='burger__vector'> </div>
+          <div className='burger__lines'> </div>
         </div>
         <div className='language'>
           Eng
