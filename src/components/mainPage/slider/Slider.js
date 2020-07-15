@@ -7,41 +7,50 @@ import Image1 from '../../../assets/images/slide_1.png';
 import Image2 from '../../../assets/images/slide_2.png';
 import Image3 from '../../../assets/images/slide_3.png';
 import Image4 from '../../../assets/images/slide_4.png';
+import useSlider from "../../../assets/hooks/useSlider";
+
+const slides = [
+  {
+    image: Image1,
+    title: 'Бесплатная парковка',
+    info: 'Оставляйте машину на платных городских' +
+        ' парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.',
+    buttonStyle: 'button__slide-1',
+  },
+  {
+    image: Image2,
+    title: 'Страховка',
+    info: 'Полная страховка страховка автомобиля',
+    buttonStyle: 'button__slide-2',
+  },
+  {
+    image: Image3,
+    title: 'Бензин',
+    info: 'Полный бак на любой заправке города за наш счёт',
+    buttonStyle: 'button__slide-3',
+  },
+  {
+    image: Image4,
+    title: 'Обслуживание',
+    info: 'Автомобиль проходит еженедельное ТО',
+    buttonStyle: 'button__slide-4',
+  },
+]
 
 export const Slider = () => {
-  const slides = [
-    {
-      image: Image1,
-      title: 'Бесплатная парковка',
-      info: 'Оставляйте машину на платных городских' +
-          ' парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.',
-      buttonStyle: 'button__slide-1',
-    },
-    {
-      image: Image2,
-      title: 'Страховка',
-      info: 'Полная страховка страховка автомобиля',
-      buttonStyle: 'button__slide-2',
-    },
-    {
-      image: Image3,
-      title: 'Бензин',
-      info: 'Полный бак на любой заправке города за наш счёт',
-      buttonStyle: 'button__slide-3',
-    },
-    {
-      image: Image4,
-      title: 'Обслуживание',
-      info: 'Автомобиль проходит еженедельное ТО',
-      buttonStyle: 'button__slide-4',
-    },
-  ]
-
-  const {image, title, info, buttonStyle} = slides[0];
+  const {slide, setSlide} = useSlider({
+    total: slides.length,
+    enabled: true,
+    speed: 4000,
+  });
+  const {image, title, info, buttonStyle} = slides[slide];
+  // const dotClass = classNames('slider__dot', { 'slider__dot--active' });
 
   return (
       <section className='slider' style={{backgroundImage: `url(${image})`}}>
-        <button className='slider__control slider__control-prev'>
+        <button className='slider__control slider__control-prev'
+                onClick={() => (slide === 0) ? setSlide(slides.length - 1)
+                                                             : setSlide(slide - 1)}>
           <img src={arrowLeft} alt=""/>
         </button>
         <div className='slider__content'>
@@ -51,13 +60,16 @@ export const Slider = () => {
             <Button additionalStyles={buttonStyle}>Подробнее</Button>
           </div>
           <div className='slider__dots'>
-            <span className='slider__dot' key="dot-1"/>
-            <span className='slider__dot slider__dot--active' key="dot-2"/>
-            <span className='slider__dot' key="dot-3"/>
-            <span className='slider__dot' key="dot-4"/>
+            {slides.map((slideNumber, index) => (
+              <span className={'slider__dot' + (slide === index ? ' slider__dot--active' : '')}
+              key={index}
+              onClick={() => setSlide(index)}/>
+            ))}
           </div>
         </div>
-        <button className='slider__control slider__control-next'>
+        <button className='slider__control slider__control-next'
+                onClick={() => (slide === slides.length - 1) ? setSlide(0)
+                                                             : setSlide(slide + 1)}>
           <img src={arrowRight} alt=""/>
         </button>
       </section>
