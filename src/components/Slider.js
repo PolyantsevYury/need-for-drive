@@ -37,7 +37,7 @@ export const Slider = () => {
     },
   ]
 
-  const {image, title, info, buttonStyle} = slides[1];
+  const {image, title, info, buttonStyle} = slides[0];
 
   return (
       <section className='slider' style={{backgroundImage: `url(${image})`}}>
