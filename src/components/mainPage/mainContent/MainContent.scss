@@ -1,4 +1,4 @@
-@import '../../../styles/variables';
+@import '../../../assets/variables';
 
 .main-content{
   background-color: #fff;
@@ -10,6 +10,12 @@
   color: black;
   &__hero-block{
     margin-bottom: 60px;
+  }
+  @media (max-width: $max-tablet) {
+    flex: 0 1 100%;
+  }
+  @media (max-width: $max-laptop) {
+    padding: 32px;
   }
 }
 

@@ -10,6 +10,16 @@
 .main-content__hero-block {
   margin-bottom: 60px;
 }
+@media (max-width: 1023px) {
+  .main-content {
+    flex: 0 1 100%;
+  }
+}
+@media (max-width: 1439px) {
+  .main-content {
+    padding: 32px;
+  }
+}
 
 .header {
   display: flex;

@@ -16,6 +16,12 @@
 .slider__control:hover {
   background-color: rgba(14, 194, 97, 0.2);
 }
+@media (max-width: 1439px) {
+  .slider__control {
+    width: 32px;
+    min-width: 32px;
+  }
+}
 .slider__content {
   align-self: center;
   padding: 32px;
