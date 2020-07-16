@@ -7,69 +7,71 @@ import Image1 from '../../../assets/images/slide_1.png';
 import Image2 from '../../../assets/images/slide_2.png';
 import Image3 from '../../../assets/images/slide_3.png';
 import Image4 from '../../../assets/images/slide_4.png';
-import useSlider from "../../../assets/hooks/useSlider";
-
-const slides = [
-  {
-    image: Image1,
-    title: 'Бесплатная парковка',
-    info: 'Оставляйте машину на платных городских' +
-        ' парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.',
-    buttonStyle: 'button__slide-1',
-  },
-  {
-    image: Image2,
-    title: 'Страховка',
-    info: 'Полная страховка страховка автомобиля',
-    buttonStyle: 'button__slide-2',
-  },
-  {
-    image: Image3,
-    title: 'Бензин',
-    info: 'Полный бак на любой заправке города за наш счёт',
-    buttonStyle: 'button__slide-3',
-  },
-  {
-    image: Image4,
-    title: 'Обслуживание',
-    info: 'Автомобиль проходит еженедельное ТО',
-    buttonStyle: 'button__slide-4',
-  },
-]
+import useSlider from "../../common/hooks/useSlider";
 
 export const Slider = () => {
-  const {slide, setSlide} = useSlider({
+  const slides = [
+    {
+      image: Image1,
+      title: 'Бесплатная парковка',
+      info: 'Оставляйте машину на платных городских' +
+          ' парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.',
+      buttonStyle: 'button__slide-1',
+    },
+    {
+      image: Image2,
+      title: 'Страховка',
+      info: 'Полная страховка страховка автомобиля',
+      buttonStyle: 'button__slide-2',
+    },
+    {
+      image: Image3,
+      title: 'Бензин',
+      info: 'Полный бак на любой заправке города за наш счёт',
+      buttonStyle: 'button__slide-3',
+    },
+    {
+      image: Image4,
+      title: 'Обслуживание',
+      info: 'Автомобиль проходит еженедельное ТО',
+      buttonStyle: 'button__slide-4',
+    },
+  ]
+
+  const {currentSlide, setCurrentSlide} = useSlider({
     total: slides.length,
     enabled: true,
     speed: 4000,
   });
-  const {image, title, info, buttonStyle} = slides[slide];
-  // const dotClass = classNames('slider__dot', { 'slider__dot--active' });
 
   return (
-      <section className='slider' style={{backgroundImage: `url(${image})`}}>
+      <section className='slider'>
         <button className='slider__control slider__control-prev'
-                onClick={() => (slide === 0) ? setSlide(slides.length - 1)
-                                                             : setSlide(slide - 1)}>
+                onClick={() => (currentSlide === 0) ? setCurrentSlide(slides.length - 1)
+                                             : setCurrentSlide(currentSlide - 1)}>
           <img src={arrowLeft} alt=""/>
         </button>
-        <div className='slider__content'>
-          <div className='slider__item'>
-            <h2 className='slider__item-title'>{title}</h2>
-            <p className='slider__item-info'>{info}</p>
-            <Button additionalStyles={buttonStyle}>Подробнее</Button>
-          </div>
-          <div className='slider__dots'>
-            {slides.map((slideNumber, index) => (
-              <span className={'slider__dot' + (slide === index ? ' slider__dot--active' : '')}
-              key={index}
-              onClick={() => setSlide(index)}/>
-            ))}
-          </div>
+        <div className='slider__content-wrapper'>
+          {slides.map((slideContent, index) => (
+              <div className={'slider__content' + (currentSlide === index ? ' slider__content--active' : '')}>
+                <img className='slider__background-preload' src={slideContent.image}/>
+                <div className='slider__background' style={{backgroundImage: `url(${slideContent.image})`}}/>
+                <h2 className='slider__content-title'>{slideContent.title}</h2>
+                <p className='slider__content-info'>{slideContent.info}</p>
+                <Button additionalStyles={slideContent.buttonStyle}>Подробнее</Button>
+              </div>
+          ))}
+        </div>
+        <div className='slider__dots'>
+          {slides.map((slideInfo, index) => (
+              <span className={'slider__dot' + (currentSlide === index ? ' slider__dot--active' : '')}
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}/>
+          ))}
         </div>
         <button className='slider__control slider__control-next'
-                onClick={() => (slide === slides.length - 1) ? setSlide(0)
-                                                             : setSlide(slide + 1)}>
+                onClick={() => (currentSlide === slides.length - 1) ? setCurrentSlide(0)
+                                                             : setCurrentSlide(currentSlide + 1)}>
           <img src={arrowRight} alt=""/>
         </button>
       </section>
