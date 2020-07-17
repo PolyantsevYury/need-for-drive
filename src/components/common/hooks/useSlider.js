@@ -6,17 +6,16 @@ function useSlider({
                      enabled = false,
                      speed = 5000,
                    }) {
-
   const [currentSlide, setCurrentSlide] = React.useState(0);
 
-  function incrementSlide() {
+  function nextSlide() {
     (currentSlide === total - 1) ? setCurrentSlide(0)
                                  : setCurrentSlide(currentSlide + 1);
   }
 
   useInterval(() => {
     if (enabled && currentSlide < total) {
-      incrementSlide();
+      nextSlide();
     }
   }, speed);
 
