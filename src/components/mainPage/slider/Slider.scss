@@ -1,10 +1,11 @@
 @import '../../../assets/variables';
 
 .slider{
-  background-size: cover;
-  background-position: center;
   flex: 0 1 50%;
   display: flex;
+  position: relative;
+  overflow: hidden;
+  background-color: #151B1F;
   &__control{
     cursor: pointer;
     height: 100%;
@@ -13,6 +14,7 @@
     outline: none;
     width: 64px;
     min-width: 64px;
+    z-index: 6;
     &:hover{
       background-color: rgba(14, 194, 97, 0.2);
     }
@@ -21,38 +23,16 @@
       min-width: 32px;
     }
   }
-  &__content{
-    align-self: center;
-    padding: 32px;
-    display: flex;
+  &__content-wrapper{
+    padding: 0 32px;
     width: 100%;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 150px;
-  }
-  &__item{
-    width: 100%;
-    button{
-      border-radius: 4px;
-      width: 164px;
-    }
-  }
-  &__item-title{
-    font-size: 40px;
-    font-weight: 500;
-  }
-  &__item-info{
-    margin-top: 8px;
-    margin-bottom: 32px;
-    font-size: 24px;
-    font-weight: 300;
-    line-height: 24px;
   }
   &__dots{
     position: absolute;
     bottom: 32px;
+    width: 100%;
     display: flex;
+    justify-content: center;
   }
   &__dot{
     cursor: pointer;
@@ -62,8 +42,12 @@
     border: none;
     border-radius: 50%;
     background-color: #fff;
+    transition: background-color 250ms;
     &--active{
       background-color: $clr-main-accent;
     }
+  }
+  .img-preload{
+    display: none;
   }
 }
