@@ -12,7 +12,7 @@
   outline: none;
   width: 64px;
   min-width: 64px;
-  z-index: 1;
+  z-index: 6;
 }
 .slider__control:hover {
   background-color: rgba(14, 194, 97, 0.2);
@@ -24,14 +24,8 @@
   }
 }
 .slider__content-wrapper {
-  align-self: center;
-  padding: 32px;
-  display: flex;
+  padding: 0 32px;
   width: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 150px;
 }
 .slider__dots {
   position: absolute;

@@ -1,9 +1,5 @@
 .slide{
-  display: none;
   width: 100%;
-  &--active{
-    display: block;
-  }
   &__background{
     position: absolute;
     top: 0;
@@ -12,19 +8,26 @@
     height: calc(100% + 80px);
     background-size: cover;
     background-position: center top;
+    animation-name: shiftBackgroundLeft;
+    transform: translateX(0);
+    animation-duration: 4500ms;
+    animation-timing-function: ease-out;
+    animation-fill-mode: backwards;
+    &--is-prev{
+      right: 80px;
+      animation-name: shiftBackgroundRight;
+    }
     &--is-next{
-      animation-name: shiftBackgroundLeft;
-      transform: translateX(0);
-      animation-duration: 5500ms;
-      animation-timing-function: ease-out;
-      animation-fill-mode: backwards;
     }
   }
   &__background-preload{
     display: none;
   }
   &__content{
-    animation-name: fadeInContent;
+    position: absolute;
+    top: 30%;
+    width: 80%;
+    animation-name: shiftContentLeft;
     animation-duration: 500ms;
     transform: translateX(0);
     animation-timing-function: ease-out;
@@ -43,7 +46,7 @@
     line-height: 24px;
   }
   &__button{
-    animation-name: fadeInContent;
+    animation-name: shiftContentLeft;
     animation-duration: 500ms;
     transform: translateX(0);
     animation-timing-function: ease-out;
@@ -71,7 +74,22 @@
   }
 }
 
-@keyframes fadeInContent {
+@keyframes shiftBackgroundRight {
+  0% {
+    transform: translateX(0px) rotate(0.01deg);
+    opacity: 0.7;
+  }
+  9.0909% {
+    transform: translateX(60px) rotate(0.01deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(80px) rotate(0.01deg);
+    opacity: 1;
+  }
+}
+
+@keyframes shiftContentLeft {
   0% {
     transform: translateX(20px) rotate(0.01deg);
     opacity: 0;
@@ -84,9 +102,18 @@
 
 @keyframes fadeOut {
   0% {
-    opacity:1
+    opacity: 1
   }
   100% {
-    opacity:0
+    opacity: 0
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0.9
+  }
+  100% {
+    opacity: 1
   }
 }
