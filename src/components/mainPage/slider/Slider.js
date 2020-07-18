@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React from "react";
 import './Slider.scss'
 import arrowLeft from '../../../assets/images/icons/arrow_left_icon.svg'
 import arrowRight from '../../../assets/images/icons/arrow_right_icon.svg'
@@ -8,6 +8,7 @@ import Image3 from '../../../assets/images/slide_3.png';
 import Image4 from '../../../assets/images/slide_4.png';
 import useSlider from "../../common/hooks/useSlider";
 import {Slide} from "./Slide";
+import usePrevious from "../../common/hooks/usePrevious";
 
 const slides = [
   {
@@ -44,13 +45,6 @@ export const Slider = () => {
     speed: 4500,
   });
 
-  function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-  }
   const previousSlide = usePrevious(currentSlide);
 
   const showPrevSlide = () => {
@@ -70,15 +64,18 @@ export const Slider = () => {
         </button>
         <div className='slider__content-wrapper'>
           {slides.map((slide, index) => (
-              <Slide key={index} slide={slide} currentSlide={currentSlide}
-                     previousSlide={previousSlide} index={index}/>
+              <Slide key={index}
+                     totalSlides={slides.length - 1}
+                     slide={slide}
+                     currentSlide={currentSlide}
+                     previousSlide={previousSlide}
+                     index={index}/>
           ))}
         </div>
         <div className='slider__dots'>
           {slides.map((slideInfo, index) => (
               <span className={'slider__dot' + (currentSlide === index ? ' slider__dot--active' : '')}
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}/>
+                    key={index} onClick={() => setCurrentSlide(index)}/>
           ))}
         </div>
         <button className='slider__control slider__control-next'

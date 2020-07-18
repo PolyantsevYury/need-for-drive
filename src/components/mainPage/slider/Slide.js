@@ -3,7 +3,7 @@ import {Button} from "../../common/Button";
 import './Slide.scss';
 import classNames from 'classnames';
 
-export const Slide = ({slide, currentSlide, previousSlide, index}) => {
+export const Slide = ({totalSlides, slide, currentSlide, previousSlide, index}) => {
   const isCurrent = (currentSlide === index);
   const [render, setRender] = useState(isCurrent);
 
@@ -16,21 +16,21 @@ export const Slide = ({slide, currentSlide, previousSlide, index}) => {
       setRender(false)
     }
   };
-  const backgroundStyles = classNames('slide__background',
-      {'slide__background--is-prev': previousSlide > currentSlide},
-      {'slide__background--is-next': previousSlide < currentSlide});
+
+  const previousClass = classNames({'is-prev': (previousSlide === 0 && currentSlide === totalSlides) ||
+            (previousSlide > currentSlide &&! (previousSlide === totalSlides && currentSlide === 0))});
 
   return (
       render && (
           <div className={'slide'} style={{animation: `${isCurrent ? "fadeIn" : "fadeOut"} 0.5s`}}
                onAnimationEnd={onAnimationEnd}>
             <img className='slide__background-preload' src={slide.image} alt=''/>
-            <div className={backgroundStyles}
+            <div className={`slide__background ${previousClass}`}
                  style={{backgroundImage: `url(${slide.image})`}}/>
-            <div className='slide__content'>
+            <div className={`slide__content ${previousClass}`}>
               <h2 className='slide__content-title'>{slide.title}</h2>
               <p className='slide__content-info'>{slide.info}</p>
-              <div className='slide__button'>
+              <div className={`slide__button ${previousClass}`}>
                 <Button additionalStyles={slide.buttonStyle}>Подробнее</Button>
               </div>
             </div>
