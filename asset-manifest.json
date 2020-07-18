@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/need-for-drive/static/css/main.3205a3b9.chunk.css",
+    "main.css": "/need-for-drive/static/css/main.b02348c1.chunk.css",
     "main.js": "/need-for-drive/static/js/main.2831b44d.chunk.js",
     "main.js.map": "/need-for-drive/static/js/main.2831b44d.chunk.js.map",
     "runtime-main.js": "/need-for-drive/static/js/runtime-main.c0011e84.js",
@@ -8,9 +8,9 @@
     "static/js/2.b8218516.chunk.js": "/need-for-drive/static/js/2.b8218516.chunk.js",
     "static/js/2.b8218516.chunk.js.map": "/need-for-drive/static/js/2.b8218516.chunk.js.map",
     "index.html": "/need-for-drive/index.html",
-    "precache-manifest.1c0ae3268b92ed9ff7e63744762ae7a2.js": "/need-for-drive/precache-manifest.1c0ae3268b92ed9ff7e63744762ae7a2.js",
+    "precache-manifest.6cd762dc67dbf827b8f506dc39bb96fe.js": "/need-for-drive/precache-manifest.6cd762dc67dbf827b8f506dc39bb96fe.js",
     "service-worker.js": "/need-for-drive/service-worker.js",
-    "static/css/main.3205a3b9.chunk.css.map": "/need-for-drive/static/css/main.3205a3b9.chunk.css.map",
+    "static/css/main.b02348c1.chunk.css.map": "/need-for-drive/static/css/main.b02348c1.chunk.css.map",
     "static/js/2.b8218516.chunk.js.LICENSE.txt": "/need-for-drive/static/js/2.b8218516.chunk.js.LICENSE.txt",
     "static/media/App.scss": "/need-for-drive/static/media/Roboto-Regular.11eabca2.ttf",
     "static/media/arrow_left_icon.svg": "/need-for-drive/static/media/arrow_left_icon.1267430e.svg",
@@ -24,7 +24,7 @@
   "entrypoints": [
     "static/js/runtime-main.c0011e84.js",
     "static/js/2.b8218516.chunk.js",
-    "static/css/main.3205a3b9.chunk.css",
+    "static/css/main.b02348c1.chunk.css",
     "static/js/main.2831b44d.chunk.js"
   ]
 }
