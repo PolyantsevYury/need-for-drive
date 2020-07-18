@@ -24,7 +24,6 @@ export const Slide = ({totalSlides, slide, currentSlide, previousSlide, index}) 
       render && (
           <div className={'slide'} style={{animation: `${isCurrent ? "fadeIn" : "fadeOut"} 0.5s`}}
                onAnimationEnd={onAnimationEnd}>
-            <img className='slide__background-preload' src={slide.image} alt=''/>
             <div className={`slide__background ${previousClass}`}
                  style={{backgroundImage: `url(${slide.image})`}}/>
             <div className={`slide__content ${previousClass}`}>

@@ -19,9 +19,6 @@
   right: 100px;
   animation-name: shiftBackgroundRight;
 }
-.slide__background-preload {
-  display: none;
-}
 .slide__content {
   position: absolute;
   top: 30%;

@@ -47,5 +47,8 @@
 .slider__dot--active {
   background-color: #0EC261;
 }
+.slider .img-preload {
+  display: none;
+}
 
 /*# sourceMappingURL=Slider.css.map */

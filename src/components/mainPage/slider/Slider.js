@@ -44,9 +44,7 @@ export const Slider = () => {
     enabled: true,
     speed: 4500,
   });
-
   const previousSlide = usePrevious(currentSlide);
-
   const showPrevSlide = () => {
     (currentSlide === 0) ? setCurrentSlide(slides.length - 1)
                          : setCurrentSlide(currentSlide - 1)
@@ -58,6 +56,12 @@ export const Slider = () => {
 
   return (
       <section className='slider'>
+        <div className='img-preload'>
+          {slides.forEach(slide => {
+            const img = new Image();
+            img.src = slide.image;
+          })}
+        </div>
         <button className='slider__control slider__control-prev'
                 onClick={() => showPrevSlide()}>
           <img src={arrowLeft} alt=""/>
