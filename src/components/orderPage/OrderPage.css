@@ -1,0 +1,22 @@
+.order-page {
+  background-color: #fff;
+  padding: 32px 64px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: black;
+}
+@media (max-width: 1439px) {
+  .order-page {
+    padding: 32px;
+  }
+}
+@media (max-width: 767px) {
+  .order-page {
+    padding: 0;
+    display: block;
+  }
+}
+
+/*# sourceMappingURL=OrderPage.css.map */

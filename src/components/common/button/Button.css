@@ -4,12 +4,16 @@
   font-weight: 500;
   height: 48px;
   width: 250px;
-  background-image: linear-gradient(90deg, #0EC261 2.61%, #02935F 112.6%);
   color: #fff;
+  background-image: linear-gradient(90deg, #0EC261 2.61%, #02935F 112.6%);
   background-blend-mode: darken;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+}
+.button a {
+  color: #fff;
+  text-decoration: none;
 }
 .button:focus, .button:hover {
   outline: none;

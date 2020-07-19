@@ -1,20 +1,13 @@
 import React from "react";
 import './MainContent.scss';
-import locationIcon from '../../../assets/images/icons/location_icon.svg'
-import {Button} from "../../common/Button";
+import {Button} from "../../common/button/Button";
+import {Header} from "../../common/header/Header";
+import {NavLink} from "react-router-dom";
 
 export const MainContent = () => {
   return (
       <section className='main-content'>
-        <div className='header'>
-          <div className='header__logo'>
-            Need for drive
-          </div>
-          <div className='header__location'>
-            <img src={locationIcon} alt=""/>
-            <span className='header__location-city'>Ульяновск</span>
-          </div>
-        </div>
+        <Header/>
         <div className='hero-block main-content__hero-block'>
           <h1 className='hero-block__title'>
             Каршеринг <br/>
@@ -24,7 +17,9 @@ export const MainContent = () => {
             Поминутная аренда авто твоего города
           </span>
           <Button>
-            Забронировать
+            <NavLink to="/order">
+              Забронировать
+            </NavLink>
           </Button>
         </div>
         <footer className='footer'>

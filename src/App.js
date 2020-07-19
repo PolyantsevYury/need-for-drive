@@ -1,18 +1,22 @@
 import React from 'react';
 import './App.scss';
-import { useMediaQuery } from 'react-responsive'
-
+import {Route, Switch} from "react-router-dom";
 import {SideBar} from "./components/mainPage/sidebar/Sidebar";
-import {MainContent} from "./components/mainPage/mainContent/MainContent";
-import {Slider} from "./components/mainPage/slider/Slider";
+import {MainPage} from "./components/mainPage/MainPage";
+import {OrderPage} from "./components/orderPage/OrderPage";
 
 const App = () => {
-  const isLaptopOrDesktop = useMediaQuery({ minWidth: 1024 })
   return (
       <div className='app-wrapper'>
-          <SideBar/>
-          <MainContent/>
-        {isLaptopOrDesktop && <Slider/>}
+        <SideBar/>
+        <Switch>
+          <Route exact path='/'
+                 render={() => <MainPage/>}/>
+          <Route path='/order'
+                 render={() => <OrderPage/>}/>
+          <Route path='*'
+                 render={() => <div>404 NOT FOUND</div>}/>
+        </Switch>
       </div>
   )
 };
