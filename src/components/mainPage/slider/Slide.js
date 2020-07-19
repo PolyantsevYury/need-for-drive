@@ -1,0 +1,39 @@
+import React, {useEffect, useState} from "react";
+import {Button} from "../../common/Button";
+import './Slide.scss';
+import classNames from 'classnames';
+
+export const Slide = ({totalSlides, slide, currentSlide, previousSlide, index}) => {
+  const isCurrent = (currentSlide === index);
+  const [render, setRender] = useState(isCurrent);
+
+  useEffect(() => {
+    if (isCurrent) setRender(true);
+  }, [isCurrent]);
+
+  const onAnimationEnd = () => {
+    if (!isCurrent) {
+      setRender(false)
+    }
+  };
+
+  const previousClass = classNames({'is-prev': (previousSlide === 0 && currentSlide === totalSlides) ||
+            (previousSlide > currentSlide &&! (previousSlide === totalSlides && currentSlide === 0))});
+
+  return (
+      render && (
+          <div className={'slide'} style={{animation: `${isCurrent ? "fadeIn" : "fadeOut"} 0.5s`}}
+               onAnimationEnd={onAnimationEnd}>
+            <div className={`slide__background ${previousClass}`}
+                 style={{backgroundImage: `url(${slide.image})`}}/>
+            <div className={`slide__content ${previousClass}`}>
+              <h2 className='slide__content-title'>{slide.title}</h2>
+              <p className='slide__content-info'>{slide.info}</p>
+              <div className={`slide__button ${previousClass}`}>
+                <Button additionalStyles={slide.buttonStyle}>Подробнее</Button>
+              </div>
+            </div>
+          </div>
+      )
+  )
+}
