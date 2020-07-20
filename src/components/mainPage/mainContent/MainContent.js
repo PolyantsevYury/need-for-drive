@@ -1,8 +1,7 @@
 import React from "react";
 import './MainContent.scss';
-import {Button} from "../../common/button/Button";
+import {LinkButton} from "../../common/buttons/Buttons";
 import {Header} from "../../common/header/Header";
-import {NavLink} from "react-router-dom";
 
 export const MainContent = () => {
   return (
@@ -16,11 +15,9 @@ export const MainContent = () => {
           <span className='hero-block__subtitle'>
             Поминутная аренда авто твоего города
           </span>
-          <Button>
-            <NavLink to="/order">
-              Забронировать
-            </NavLink>
-          </Button>
+          <LinkButton to='/order'>
+            Забронировать
+          </LinkButton>
         </div>
         <footer className='footer'>
           <span className='footer__copyright'>© 2016-2019 «Need for drive»</span>

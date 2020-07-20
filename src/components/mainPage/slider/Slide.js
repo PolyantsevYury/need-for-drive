@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button} from "../../common/button/Button";
+import {Button} from "../../common/buttons/Buttons";
 import './Slide.scss';
 import classNames from 'classnames';
 

@@ -3,6 +3,10 @@
   justify-content: space-between;
   width: 100%;
 }
+.header a {
+  text-decoration: none;
+  color: #0EC261;
+}
 .header__logo {
   font-size: 30px;
   font-weight: bold;
