@@ -1,21 +1,30 @@
 .order-page {
   background-color: #fff;
-  padding: 32px 64px;
+  padding: 32px 0;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   color: black;
-}
-@media (max-width: 1439px) {
-  .order-page {
-    padding: 32px;
-  }
 }
 @media (max-width: 767px) {
   .order-page {
     padding: 0;
     display: block;
+  }
+}
+.order-page__header {
+  margin-bottom: 32px;
+  padding: 0 64px;
+}
+@media (max-width: 1439px) {
+  .order-page__header {
+    padding: 0 32px;
+  }
+}
+@media (max-width: 767px) {
+  .order-page__header {
+    padding: 0;
+    margin-bottom: 0;
   }
 }
 

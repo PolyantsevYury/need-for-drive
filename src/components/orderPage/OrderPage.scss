@@ -2,17 +2,24 @@
 
 .order-page {
   background-color: #fff;
-  padding: 32px 64px;
+  padding: 32px 0;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   color: black;
-  @media (max-width: $max-laptop) {
-    padding: 32px;
-  }
   @media (max-width: $max-mobile) {
     padding: 0;
     display: block;
+  }
+  &__header {
+    margin-bottom: 32px;
+    padding: 0 64px;
+    @media (max-width: $max-laptop) {
+      padding: 0 32px;
+    }
+    @media (max-width: $max-mobile) {
+      padding: 0;
+      margin-bottom: 0;
+    }
   }
 }

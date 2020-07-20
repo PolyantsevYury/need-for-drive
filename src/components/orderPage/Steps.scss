@@ -1,0 +1,37 @@
+@import '../../assets/variables';
+
+.steps {
+  height: 32px;
+  border-top: 1px solid $clr-gray-light;
+  border-bottom: 1px solid $clr-gray-light;
+  display: flex;
+  align-items: center;
+  &__items {
+    display: flex;
+    padding: 0 64px;
+    @media (max-width: $max-laptop) {
+      padding: 0 32px;
+    }
+    @media (max-width: $max-mobile) {
+      padding: 0 16px;
+    }
+  }
+  &__item {
+    display: flex;
+    font-size: 14px;
+    font-weight: bold;
+    color: $clr-gray-dark;
+    &--active {
+      color: $clr-main-accent;
+  }
+    @media (max-width: 380px) {
+      font-size: 11px;
+    }
+  }
+  &__item-icon {
+    margin: 0 16px;
+    @media (max-width: $max-mobile) {
+      margin: 0 4px;
+    }
+  }
+}
