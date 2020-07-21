@@ -1,6 +1,6 @@
 .side-drawer {
   height: 100%;
-  width: calc(50% + 36px);
+  width: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -10,16 +10,23 @@
   justify-content: center;
   z-index: 15;
 }
-@media (max-width: 1023px) {
+@media (max-width: 767px) {
   .side-drawer {
-    width: 100%;
     display: block;
+  }
+}
+.side-drawer--show-slider {
+  width: calc(50% + 36px);
+}
+@media (max-width: 1023px) {
+  .side-drawer--show-slider {
+    width: 100%;
   }
 }
 .side-drawer__navigation {
   margin-left: 110px;
 }
-@media (max-width: 1023px) {
+@media (max-width: 767px) {
   .side-drawer__navigation {
     margin: 64px 28px;
   }

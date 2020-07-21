@@ -1,13 +1,18 @@
 import React from 'react';
 import './SideDrawer.scss';
-import Telegram from '../../../../assets/images/socialLinks/Telegram.png';
-import Facebook from '../../../../assets/images/socialLinks/Facebook.png';
-import Instagram from '../../../../assets/images/socialLinks/Instagram.png';
+import Telegram from '../../../assets/images/socialLinks/Telegram.png';
+import Facebook from '../../../assets/images/socialLinks/Facebook.png';
+import Instagram from '../../../assets/images/socialLinks/Instagram.png';
+import {withRouter} from "react-router-dom";
+import classNames from "classnames";
 
-export const SideDrawer = () => {
+const RoutedSideDrawer = ({location}) => {
+  const sideDrawerClass = classNames('side-drawer', {'side-drawer--show-slider': location.pathname === "/"});
+
   return (
       <>
-        <section className='side-drawer'>
+        {console.log(location.pathname)}
+        <section className={sideDrawerClass}>
           <nav className='side-drawer__navigation'>
             <ul className='side-drawer__navigation-items'>
               <li><a className='side-drawer__navigation-item' href="/">Парковка</a></li>
@@ -27,3 +32,5 @@ export const SideDrawer = () => {
       </>
   )
 }
+
+export const SideDrawer = withRouter(RoutedSideDrawer)

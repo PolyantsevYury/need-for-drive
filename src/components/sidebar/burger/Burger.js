@@ -3,7 +3,6 @@ import './Burger.scss';
 import classNames from 'classnames';
 
 export const Burger = ({setIsMenuOpen, isMenuOpen}) => {
-
   const burgerClass = classNames('burger', { 'burger--active': isMenuOpen });
 
   return(
