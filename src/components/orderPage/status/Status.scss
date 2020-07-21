@@ -1,0 +1,47 @@
+@import '../../../assets/variables';
+
+.status {
+  display: flex;
+  flex-direction: column;
+  &__title {
+    align-self: flex-end;
+    font-weight: 500;
+    font-size: 18px;
+  }
+  &__info-items {
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+  }
+  &__info-item {
+    display: flex;
+    align-items: flex-end;
+  }
+  &__info-name {
+
+  }
+  &__info-filler {
+    margin: 0 10px;
+    flex-grow: 1;
+    border-bottom: 1px $clr-gray-dark dotted;
+  }
+  &__info-value {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    color: $clr-gray-dark;
+  }
+  &__price {
+    margin-top: 32px;
+    font-size: 16px;
+    display: flex;
+  }
+  &__price-title {
+    font-weight: 500;
+    margin-right: 4px;
+  }
+  button {
+    margin-top: 32px;
+    width: 100%;
+  }
+}

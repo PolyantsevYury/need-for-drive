@@ -1,0 +1,44 @@
+.status {
+  display: flex;
+  flex-direction: column;
+}
+.status__title {
+  align-self: flex-end;
+  font-weight: 500;
+  font-size: 18px;
+}
+.status__info-items {
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+}
+.status__info-item {
+  display: flex;
+  align-items: flex-end;
+}
+.status__info-filler {
+  margin: 0 10px;
+  flex-grow: 1;
+  border-bottom: 1px #999999 dotted;
+}
+.status__info-value {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: #999999;
+}
+.status__price {
+  margin-top: 32px;
+  font-size: 16px;
+  display: flex;
+}
+.status__price-title {
+  font-weight: 500;
+  margin-right: 4px;
+}
+.status button {
+  margin-top: 32px;
+  width: 100%;
+}
+
+/*# sourceMappingURL=Status.css.map */

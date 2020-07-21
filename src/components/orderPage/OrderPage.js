@@ -4,6 +4,7 @@ import {Location} from "./location/Location";
 import {Model} from "./model/Model";
 import {Addition} from "./addition/Addition";
 import {Final} from "./final/Final";
+import {Status} from "./status/Status";
 import NextStep from "../../assets/images/icons/next_step_icon.svg";
 import './OrderPage.scss';
 
@@ -27,7 +28,7 @@ export const OrderPage = () => {
           </div>
           <div className='order__status-container'>
             <div className='order__status'>
-              Status
+              <Status/>
             </div>
           </div>
         </div>
