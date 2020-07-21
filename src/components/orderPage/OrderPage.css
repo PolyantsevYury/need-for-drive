@@ -1,6 +1,5 @@
 .order-page {
   background-color: #fff;
-  padding-top: 32px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -13,19 +12,28 @@
   }
 }
 .order-page__header {
-  margin-bottom: 32px;
-  padding: 0 64px;
-}
-@media (max-width: 1439px) {
-  .order-page__header {
-    padding: 0 32px;
-  }
+  max-width: 1250px;
+  width: 100%;
+  margin: 32px auto;
+  padding: 0 32px;
 }
 @media (max-width: 767px) {
   .order-page__header {
     padding: 0;
     margin-bottom: 0;
   }
+}
+.order-page__steps-border {
+  border-top: 1px solid #EEEEEE;
+  border-bottom: 1px solid #EEEEEE;
+}
+.order-page__steps {
+  height: 32px;
+  max-width: 1250px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
 }
 
 .order {
@@ -34,36 +42,27 @@
   font-size: 14px;
   color: #121212;
   font-weight: 300;
+  max-width: 1250px;
+  width: 100%;
+  margin: 0 auto;
 }
 .order__content-container {
   flex: 0 1 70%;
-}
-.order__content {
-  margin: 32px;
 }
 .order__status-container {
   flex: 0 1 30%;
   border-left: 1px solid #EEEEEE;
 }
+.order__content {
+  margin: 32px;
+}
 .order__status {
   margin: 32px;
 }
 
-.steps {
-  height: 32px;
-  border-top: 1px solid #EEEEEE;
-  border-bottom: 1px solid #EEEEEE;
-  display: flex;
-  align-items: center;
-}
 .steps__items {
   display: flex;
-  padding: 0 64px;
-}
-@media (max-width: 1439px) {
-  .steps__items {
-    padding: 0 32px;
-  }
+  padding: 0 32px;
 }
 @media (max-width: 767px) {
   .steps__items {

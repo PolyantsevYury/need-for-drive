@@ -13,7 +13,7 @@ export const Location = () => {
           <input placeholder='Начните вводить пункт' name='address' type="text"/>
           </label>
         </div>
-        Выбрать на карте:
+        <p>Выбрать на карте:</p>
         <img className='location__map' src={Map} alt=""/>
       </section>
   )

@@ -14,7 +14,11 @@ export const OrderPage = () => {
         <div className='order-page__header'>
           <Header/>
         </div>
-        <Steps/>
+        <div className='order-page__steps-border'>
+          <div className='order-page__steps'>
+            <Steps/>
+          </div>
+        </div>
         <div className='order'>
           <div className='order__content-container'>
             <div className='order__content'>
