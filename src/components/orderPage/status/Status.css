@@ -32,6 +32,7 @@
 .status__info-item {
   display: flex;
   align-items: flex-end;
+  margin-bottom: 16px;
 }
 .status__info-filler {
   margin: 0 10px;
