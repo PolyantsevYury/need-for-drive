@@ -3,19 +3,24 @@
   flex-direction: column;
 }
 .location__input-items {
-  width: 300px;
+  width: 290px;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
+@media (max-width: 767px) {
+  .location__input-items {
+    margin-bottom: 8px;
+  }
+}
 .location__input-item {
   margin-bottom: 12px;
 }
 .location__input-item input {
-  width: 200px;
+  width: 180px;
   color: #121212;
-  font-weight: lighter;
+  font-weight: 300;
   margin-left: 8px;
   border: none;
   border-bottom: 1px solid #999999;
@@ -26,10 +31,21 @@
 }
 .location__input-item input::placeholder {
   color: #999999;
+  font-weight: 300;
+}
+.location__input-item img {
+  position: relative;
+  left: -14px;
 }
 .location__map {
   margin-top: 16px;
   max-width: 730px;
+  width: 100%;
+}
+@media (max-width: 767px) {
+  .location__map {
+    margin-top: 8px;
+  }
 }
 
 /*# sourceMappingURL=Location.css.map */

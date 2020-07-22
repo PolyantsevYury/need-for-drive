@@ -20,7 +20,7 @@
 @media (max-width: 767px) {
   .order-page__header {
     padding: 0;
-    margin-bottom: 0;
+    margin: 0;
   }
 }
 .order-page__steps-border {
@@ -46,6 +46,12 @@
   width: 100%;
   margin: 0 auto;
 }
+@media (max-width: 1023px) {
+  .order {
+    flex-direction: column;
+    height: auto;
+  }
+}
 .order__content-container {
   flex: 0 1 70%;
 }
@@ -53,11 +59,27 @@
   flex: 0 1 30%;
   border-left: 1px solid #EEEEEE;
 }
+@media (max-width: 1023px) {
+  .order__status-container {
+    border-left: none;
+    border-top: 1px solid #EEEEEE;
+  }
+}
 .order__content {
   margin: 32px;
 }
+@media (max-width: 767px) {
+  .order__content {
+    margin: 16px;
+  }
+}
 .order__status {
   margin: 32px;
+}
+@media (max-width: 767px) {
+  .order__status {
+    margin: 16px;
+  }
 }
 
 .steps__items {
