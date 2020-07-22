@@ -22,10 +22,10 @@ export const OrderPage = () => {
         <div className='order'>
           <div className='order__content-container'>
             <div className='order__content'>
-              <Model/>
+              <Addition/>
               <div style={{display: 'none'}}>
                 <Location/>
-                <Addition/>
+                <Model/>
                 <Final/>
               </div>
             </div>
@@ -48,11 +48,11 @@ const Steps = () => {
             <span>Местоположение</span>
             <img className='steps__item-icon' src={NextStep} alt=""/>
           </div>
-          <div className='steps__item steps__item--active'>
+          <div className='steps__item'>
             <span>Модель</span>
             <img className='steps__item-icon' src={NextStep} alt=""/>
           </div>
-          <div className='steps__item'>
+          <div className='steps__item steps__item--active'>
             <span>Дополнительно</span>
             <img className='steps__item-icon' src={NextStep} alt=""/>
           </div>

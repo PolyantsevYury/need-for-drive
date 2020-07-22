@@ -67,9 +67,6 @@ export const Model = () => {
                 <img className='catalog__car-img' src={car.img} alt=""/>
               </div>
           ))}
-          <div>
-
-          </div>
         </div>
       </section>
   )
