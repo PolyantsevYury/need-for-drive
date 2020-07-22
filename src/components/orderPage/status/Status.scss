@@ -1,0 +1,65 @@
+@import '../../../assets/variables';
+
+.status {
+  display: flex;
+  flex-direction: column;
+  min-width: 280px;
+  @media (max-width: $max-tablet) {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  &__title {
+    align-self: flex-end;
+    font-weight: 500;
+    font-size: 18px;
+    @media (max-width: $max-tablet) {
+      display: none;
+    }
+  }
+  &__info-items {
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+    @media (max-width: $max-tablet) {
+      margin-top: 0;
+    }
+  }
+  &__info-item {
+    display: flex;
+    align-items: flex-end;
+  }
+  &__info-name {
+
+  }
+  &__info-filler {
+    margin: 0 10px;
+    flex-grow: 1;
+    border-bottom: 1px $clr-gray-dark dotted;
+  }
+  &__info-value {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    color: $clr-gray-dark;
+  }
+  &__price {
+    margin-top: 32px;
+    font-size: 16px;
+    display: flex;
+    @media (max-width: $max-tablet) {
+      margin-top: 16px;
+      font-size: 14px;
+    }
+  }
+  &__price-title {
+    font-weight: 500;
+    margin-right: 4px;
+  }
+  button {
+    margin-top: 32px;
+    width: 100%;
+    @media (max-width: $max-tablet) {
+      margin-top: 16px;
+    }
+  }
+}

@@ -27,37 +27,6 @@
   }
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-.header__logo {
-  font-size: 30px;
-  font-weight: bold;
-  color: #0EC261;
-}
-.header__location {
-  display: flex;
-  align-items: center;
-}
-@media (max-width: 767px) {
-  .header__location {
-    margin-top: 10px;
-  }
-}
-.header__location-city {
-  margin-left: 8px;
-  font-size: 14px;
-  color: #999999;
-}
-@media (max-width: 767px) {
-  .header {
-    padding: 16px;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-}
-
 .hero-block {
   display: flex;
   flex-direction: column;

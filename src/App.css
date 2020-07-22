@@ -32,6 +32,7 @@
 }
 
 .app-wrapper {
+  overflow: auto;
   display: flex;
   min-height: 100vh;
   width: 100%;

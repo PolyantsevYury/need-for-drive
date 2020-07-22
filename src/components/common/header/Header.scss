@@ -1,0 +1,33 @@
+@import '../../../assets/variables';
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  a {
+    text-decoration: none;
+    color: $clr-main-accent;
+  }
+  &__logo{
+    font-size: 30px;
+    font-weight: bold;
+    color: $clr-main-accent;
+  }
+  &__location{
+    display: flex;
+    align-items: center;
+    @media (max-width: $max-mobile) {
+      margin-top: 10px;
+    }
+  }
+  &__location-city{
+    margin-left: 8px;
+    font-size: 14px;
+    color: $clr-gray-dark;
+  }
+  @media (max-width: $max-mobile) {
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}

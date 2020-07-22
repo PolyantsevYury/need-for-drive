@@ -1,0 +1,40 @@
+@import '../../assets/variables';
+
+.side-bar{
+  min-width: 64px;
+  background-color: #151B1F;
+  padding: 36px 0 15px 0;
+  @media (max-width: $max-tablet) {
+    min-width: 80px;
+  }
+  @media (max-width: $max-mobile) {
+    display: none;
+  }
+}
+
+.language{
+  position: fixed;
+  bottom: 18px;
+  left: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  color: $clr-main-accent;
+  text-align: center;
+  width: 48px;
+  line-height: 46px;
+  border: 1px solid rgba(0,0,0,0);
+  &:hover{
+    border: 1px solid white;
+    border-radius: 50%;
+    color: white;
+  }
+  @media (max-width: $max-tablet) {
+    left: 16px;
+  }
+  @media (max-width: $max-mobile) {
+    z-index: 20;
+    bottom: 16px;
+    left: 16px;
+  }
+}
