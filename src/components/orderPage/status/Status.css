@@ -70,4 +70,47 @@
   }
 }
 
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.modal__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  opacity: 0.9;
+  z-index: 99;
+}
+.modal__container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 400px;
+  width: 100%;
+  z-index: 100;
+  padding: 0 16px;
+}
+.modal__title {
+  text-align: center;
+  color: #121212;
+  font-size: 24px;
+  font-weight: normal;
+}
+.modal__buttons {
+  display: flex;
+}
+.modal__buttons button {
+  border-radius: 4px;
+}
+.modal__buttons-space {
+  width: 40px;
+}
+
 /*# sourceMappingURL=Status.css.map */

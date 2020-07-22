@@ -22,11 +22,11 @@ export const OrderPage = () => {
         <div className='order'>
           <div className='order__content-container'>
             <div className='order__content'>
-              <Model/>
+              <Final/>
               <div style={{display: 'none'}}>
                 <Location/>
+                <Model/>
                 <Addition/>
-                <Final/>
               </div>
             </div>
           </div>
