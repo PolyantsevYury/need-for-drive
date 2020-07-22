@@ -82,6 +82,11 @@
   }
 }
 
+.steps__finished {
+  color: #121212;
+  font-size: 14px;
+  font-weight: bold;
+}
 .steps__items {
   display: flex;
   padding: 0 32px;

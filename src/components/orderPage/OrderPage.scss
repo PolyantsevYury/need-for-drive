@@ -73,6 +73,11 @@
 }
 
 .steps {
+  &__finished {
+    color: $clr-main-black;
+    font-size: 14px;
+    font-weight: bold;
+  }
   &__items {
     display: flex;
     padding: 0 32px;

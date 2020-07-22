@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import './Status.scss'
 import {Button} from "../../common/buttons/Buttons";
 
-export const Status = () => {
+export const Status = ({isFinished}) => {
   const [isModal, setIsModal] = useState(false)
 
   return (
@@ -17,7 +17,7 @@ export const Status = () => {
                   Подтвердить
                 </Button>
                 <div className='modal__buttons-space'> </div>
-                <Button additionalStyles='button__modal-cancel' onClick={() => setIsModal(false)}>
+                <Button additionalStyles='button__cancel' onClick={() => setIsModal(false)}>
                   Вернуться
                 </Button>
               </div>
@@ -41,8 +41,9 @@ export const Status = () => {
           <h4 className='status__price-title'>Цена: </h4>
           <span>от 8 000 до  12 000 ₽</span>
         </div>
-        <Button onClick={() => setIsModal(!isModal)}>
-          Заказать
+        <Button additionalStyles={isFinished ? 'button__cancel' : ''}
+                onClick={() => isFinished ? '' : setIsModal(!isModal)}>
+          {isFinished ? 'Отменить' : 'Заказать'}
         </Button>
       </section>
   )

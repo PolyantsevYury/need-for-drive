@@ -3,7 +3,7 @@ import './App.scss';
 import {Route, Switch} from "react-router-dom";
 import {SideBar} from "./components/sidebar/Sidebar";
 import {MainPage} from "./components/mainPage/MainPage";
-import {OrderPage} from "./components/orderPage/OrderPage";
+import {OrderPageContainer} from "./components/orderPage/OrderPage";
 
 const App = () => {
   return (
@@ -13,7 +13,7 @@ const App = () => {
           <Route exact path='/'
                  render={() => <MainPage/>}/>
           <Route path='/order'
-                 render={() => <OrderPage/>}/>
+                 render={() => <OrderPageContainer/>}/>
           <Route path='*'
                  render={() => <div>404 NOT FOUND</div>}/>
         </Switch>
