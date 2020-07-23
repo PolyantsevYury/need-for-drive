@@ -1,0 +1,37 @@
+@import '../../../assets/variables';
+
+.final {
+  display: flex;
+  justify-content: space-between;
+  font-weight: normal;
+  flex-wrap: wrap;
+  max-width: 736px;
+  &__model {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  &__number {
+    padding: 4px 6px;
+    width: fit-content;
+    border: 1px solid $clr-main-black;
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }
+  &__fuel {
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  &__access {
+    font-weight: bold;
+  }
+  span {
+    font-weight: 300;
+  }
+  &__car-img {
+    max-width: 256px;
+    @media (max-width: $max-mobile) {
+      height: 100px;
+      align-self: flex-end;
+    }
+  }
+}

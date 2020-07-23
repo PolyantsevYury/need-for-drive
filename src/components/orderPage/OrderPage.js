@@ -7,8 +7,10 @@ import {Final} from "./final/Final";
 import {Status} from "./status/Status";
 import NextStep from "../../assets/images/icons/next_step_icon.svg";
 import './OrderPage.scss';
+import {Finished} from "./finished/Finished";
 
-export const OrderPage = () => {
+export const OrderPage = ({isFinished}) => {
+
   return (
       <section className='order-page'>
         <div className='order-page__header'>
@@ -16,23 +18,27 @@ export const OrderPage = () => {
         </div>
         <div className='order-page__steps-border'>
           <div className='order-page__steps'>
-            <Steps/>
+            <Steps isFinished={isFinished}/>
           </div>
         </div>
         <div className='order'>
           <div className='order__content-container'>
             <div className='order__content'>
-              <Model/>
-              <div style={{display: 'none'}}>
-                <Location/>
-                <Addition/>
-                <Final/>
-              </div>
+              {isFinished ? <Finished/> :
+                  <>
+                    <Final/>
+                    <div style={{display: 'none'}}>
+                      <Location/>
+                      <Model/>
+                      <Addition/>
+                    </div>
+                  </>
+              }
             </div>
           </div>
           <div className='order__status-container'>
             <div className='order__status'>
-              <Status/>
+              <Status isFinished={isFinished}/>
             </div>
           </div>
         </div>
@@ -40,25 +46,29 @@ export const OrderPage = () => {
   )
 };
 
-const Steps = () => {
+const Steps = ({isFinished}) => {
   return (
       <section className='steps'>
         <div className='steps__items'>
-          <div className='steps__item'>
-            <span>Местоположение</span>
-            <img className='steps__item-icon' src={NextStep} alt=""/>
-          </div>
-          <div className='steps__item steps__item--active'>
-            <span>Модель</span>
-            <img className='steps__item-icon' src={NextStep} alt=""/>
-          </div>
-          <div className='steps__item'>
-            <span>Дополнительно</span>
-            <img className='steps__item-icon' src={NextStep} alt=""/>
-          </div>
-          <div className='steps__item'>
-            <span>Итого</span>
-          </div>
+          {isFinished ? <span className="steps__finished">Заказ номер RU58491823</span> :
+              <>
+                <div className='steps__item'>
+                  <span>Местоположение</span>
+                  <img className='steps__item-icon' src={NextStep} alt=""/>
+                </div>
+                <div className='steps__item steps__item--active'>
+                  <span>Модель</span>
+                  <img className='steps__item-icon' src={NextStep} alt=""/>
+                </div>
+                <div className='steps__item'>
+                  <span>Дополнительно</span>
+                  <img className='steps__item-icon' src={NextStep} alt=""/>
+                </div>
+                <div className='steps__item'>
+                  <span>Итого</span>
+                </div>
+              </>
+          }
         </div>
       </section>
   )
