@@ -1,0 +1,13 @@
+@import '../../../assets/variables';
+
+.addition {
+  &__option {
+    margin-bottom: 32px;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+}

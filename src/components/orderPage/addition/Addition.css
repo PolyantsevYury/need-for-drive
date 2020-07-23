@@ -1,3 +1,10 @@
-
+.addition__option {
+  margin-bottom: 32px;
+}
+.addition__title {
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 16px;
+}
 
 /*# sourceMappingURL=Addition.css.map */

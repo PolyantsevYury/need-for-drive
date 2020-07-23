@@ -36,6 +36,26 @@ export const Status = ({isFinished}) => {
             <div className='status__info-filler'> </div>
             <div className='status__info-value'>Hyndai, i30 N</div>
           </div>
+          <div className='status__info-item'>
+            <div className='status__info-name'>Цвет</div>
+            <div className='status__info-filler'> </div>
+            <div className='status__info-value'>Голубой</div>
+          </div>
+          <div className='status__info-item'>
+            <div className='status__info-name'>Длительност аренды</div>
+            <div className='status__info-filler'> </div>
+            <div className='status__info-value'>1д 2ч</div>
+          </div>
+          <div className='status__info-item'>
+            <div className='status__info-name'>Тариф</div>
+            <div className='status__info-filler'> </div>
+            <div className='status__info-value'>На сутки</div>
+          </div>
+          <div className='status__info-item'>
+            <div className='status__info-name'>Полный бак</div>
+            <div className='status__info-filler'> </div>
+            <div className='status__info-value'>Да</div>
+          </div>
         </div>
         <div className='status__price'>
           <h4 className='status__price-title'>Цена: </h4>
