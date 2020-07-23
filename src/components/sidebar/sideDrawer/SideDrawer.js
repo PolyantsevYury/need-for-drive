@@ -15,10 +15,10 @@ const RoutedSideDrawer = ({location}) => {
         <section className={sideDrawerClass}>
           <nav className='side-drawer__navigation'>
             <ul className='side-drawer__navigation-items'>
-              <li><a className='side-drawer__navigation-item' href="/">Парковка</a></li>
-              <li><a className='side-drawer__navigation-item' href="/">Страховка</a></li>
-              <li><a className='side-drawer__navigation-item' href="/">Бензин</a></li>
-              <li><a className='side-drawer__navigation-item' href="/">Обслуживание</a></li>
+              <li><a className='side-drawer__navigation-item' href="/need-for-drive">Парковка</a></li>
+              <li><a className='side-drawer__navigation-item' href="/need-for-drive">Страховка</a></li>
+              <li><a className='side-drawer__navigation-item' href="/need-for-drive">Бензин</a></li>
+              <li><a className='side-drawer__navigation-item' href="/need-for-drive">Обслуживание</a></li>
             </ul>
             <div className='side-drawer__social-items'>
               <img className='side-drawer__social-item' src={Telegram} alt=" "/>
