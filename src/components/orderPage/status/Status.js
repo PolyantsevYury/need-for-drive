@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import './Status.scss'
-import {Button} from "../../common/buttons/Buttons";
+import {Button, LinkButton} from "../../common/buttons/Buttons";
 
 export const Status = ({isFinished}) => {
   const [isModal, setIsModal] = useState(false)
@@ -13,10 +13,10 @@ export const Status = ({isFinished}) => {
             <div className='modal__container'>
               <div className='modal__title'>Подтвердить заказ</div>
               <div className='modal__buttons'>
-                <Button onClick={() => setIsModal(false)}>
+                <LinkButton to='/order/finished' onClick={() => setIsModal(false)}>
                   Подтвердить
-                </Button>
-                <div className='modal__buttons-space'> </div>
+                </LinkButton>
+                <div className='modal__buttons-space'/>
                 <Button additionalStyles='button__cancel' onClick={() => setIsModal(false)}>
                   Вернуться
                 </Button>

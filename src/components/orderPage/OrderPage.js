@@ -8,10 +8,8 @@ import {Status} from "./status/Status";
 import NextStep from "../../assets/images/icons/next_step_icon.svg";
 import './OrderPage.scss';
 import {Finished} from "./finished/Finished";
-import {withRouter} from "react-router-dom";
 
-export const OrderPage = ({location}) => {
-  const isFinished = (location.pathname === "/order/finished");
+export const OrderPage = ({isFinished}) => {
 
   return (
       <section className='order-page'>
@@ -75,5 +73,3 @@ const Steps = ({isFinished}) => {
       </section>
   )
 };
-
-export const OrderPageContainer = withRouter(OrderPage);
