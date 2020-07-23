@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "46bb1649d942c196d0e6d3c2ee9c0698",
+    "revision": "ca3b8fb3e31686c23c9036615d5c42b8",
     "url": "/need-for-drive/index.html"
   },
   {
-    "revision": "1a3ff3b30147fc6ad73b",
-    "url": "/need-for-drive/static/css/main.131c21e3.chunk.css"
+    "revision": "f93048e9311b37fc8182",
+    "url": "/need-for-drive/static/css/main.cfd0243d.chunk.css"
   },
   {
-    "revision": "587b14f31a654d718e3f",
-    "url": "/need-for-drive/static/js/2.7a3e4ab9.chunk.js"
+    "revision": "ed29cfe80b5774821d5d",
+    "url": "/need-for-drive/static/js/2.67ac528f.chunk.js"
   },
   {
-    "revision": "ac708def751a8292e55daf5717e57737",
-    "url": "/need-for-drive/static/js/2.7a3e4ab9.chunk.js.LICENSE.txt"
+    "revision": "5ab1baa52e351a54fb487f180027ee45",
+    "url": "/need-for-drive/static/js/2.67ac528f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "1a3ff3b30147fc6ad73b",
-    "url": "/need-for-drive/static/js/main.bc8c034c.chunk.js"
+    "revision": "f93048e9311b37fc8182",
+    "url": "/need-for-drive/static/js/main.37561b13.chunk.js"
   },
   {
     "revision": "d626b68bd1aca0cbff82",
@@ -48,8 +48,44 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/need-for-drive/static/media/arrow_right_icon.f9a6dc71.svg"
   },
   {
+    "revision": "9c23a58302e982ac52c55141a95ac697",
+    "url": "/need-for-drive/static/media/car1.9c23a583.png"
+  },
+  {
+    "revision": "4125631c0a07a378e591ae276a618867",
+    "url": "/need-for-drive/static/media/car2.4125631c.png"
+  },
+  {
+    "revision": "d2b9c74d10337537a5053dc49afbf2d7",
+    "url": "/need-for-drive/static/media/car3.d2b9c74d.png"
+  },
+  {
+    "revision": "492b5a6ca78e060e28ee67d2ee388ca2",
+    "url": "/need-for-drive/static/media/car4.492b5a6c.png"
+  },
+  {
+    "revision": "9c23a58302e982ac52c55141a95ac697",
+    "url": "/need-for-drive/static/media/car5.9c23a583.png"
+  },
+  {
+    "revision": "4125631c0a07a378e591ae276a618867",
+    "url": "/need-for-drive/static/media/car6.4125631c.png"
+  },
+  {
+    "revision": "9f1b3b91cf6744470015a09e2dbea7e4",
+    "url": "/need-for-drive/static/media/clean_icon.9f1b3b91.svg"
+  },
+  {
     "revision": "b7637e298c7836256a5fdc7f3a13eb4d",
     "url": "/need-for-drive/static/media/location_icon.b7637e29.svg"
+  },
+  {
+    "revision": "65b12582a9af555be8a237b2e9bf627d",
+    "url": "/need-for-drive/static/media/map.65b12582.jpg"
+  },
+  {
+    "revision": "7f93b98434ed894eaaa7c49e72da4d31",
+    "url": "/need-for-drive/static/media/next_step_icon.7f93b984.svg"
   },
   {
     "revision": "f4bd976a53a45f81132656308c21907f",
