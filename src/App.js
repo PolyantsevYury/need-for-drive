@@ -12,8 +12,10 @@ const App = () => {
         <Switch>
           <Route exact path='/'
                  render={() => <MainPage/>}/>
-          <Route path='/order'
+          <Route exact path='/order'
                  render={() => <OrderPage/>}/>
+          <Route path='/order/finished'
+                 render={() => <OrderPage isFinished={true}/>}/>
           <Route path='*'
                  render={() => <div>404 NOT FOUND</div>}/>
         </Switch>

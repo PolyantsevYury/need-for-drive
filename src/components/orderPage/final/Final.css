@@ -1,3 +1,39 @@
-
+.final {
+  display: flex;
+  justify-content: space-between;
+  font-weight: normal;
+  flex-wrap: wrap;
+  max-width: 736px;
+}
+.final__model {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.final__number {
+  padding: 4px 6px;
+  width: fit-content;
+  border: 1px solid #121212;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+.final__fuel {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+.final__access {
+  font-weight: bold;
+}
+.final span {
+  font-weight: 300;
+}
+.final__car-img {
+  max-width: 256px;
+}
+@media (max-width: 767px) {
+  .final__car-img {
+    height: 100px;
+    align-self: flex-end;
+  }
+}
 
 /*# sourceMappingURL=Final.css.map */
