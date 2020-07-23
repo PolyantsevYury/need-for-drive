@@ -1,55 +1,10 @@
 @import '../../../assets/variables';
 
 .model {
-  &__filter {
-    display: flex;
-    color: $clr-gray-dark;
+  &__option {
     margin-bottom: 32px;
   }
-
-  &__filter-item {
-    display: flex;
-    align-items: center;
-    &:not(:last-child) {
-      margin-right: 16px;
-    }
-
-    input {
-      margin-right: 6px;
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-
-      & + label {
-        display: flex;
-        align-items: center;
-
-        &::before {
-          content: '';
-          display: inline-block;
-          width: 12px;
-          height: 12px;
-          border: 1px solid $clr-gray-dark;
-          border-radius: 100%;
-          margin-right: 6px;
-        }
-      }
-
-      &:checked + label {
-        color: $clr-main-black;
-
-        &::before {
-          width: 8px;
-          height: 8px;
-          border: 3px solid $clr-main-accent;
-          border-radius: 100%;
-        }
-      }
-    }
-  }
 }
-
 .catalog {
   display: flex;
   flex-wrap: wrap;

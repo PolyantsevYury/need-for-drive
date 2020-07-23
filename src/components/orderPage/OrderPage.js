@@ -26,11 +26,11 @@ export const OrderPage = ({isFinished}) => {
             <div className='order__content'>
               {isFinished ? <Finished/> :
                   <>
-                    <Final/>
+                    <Model/>
                     <div style={{display: 'none'}}>
                       <Location/>
-                      <Model/>
                       <Addition/>
+                      <Final/>
                     </div>
                   </>
               }

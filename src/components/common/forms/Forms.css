@@ -108,6 +108,9 @@
   align-items: flex-end;
   flex-direction: column;
 }
+.input-text__title {
+  width: max-content;
+}
 .input-text__item {
   margin-bottom: 12px;
   display: flex;

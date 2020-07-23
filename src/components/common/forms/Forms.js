@@ -39,7 +39,8 @@ export const InputText = ({items}) => {
   return (
       <div className='input-text'>
         {items.map((item, index) => (
-            <label className='input-text__item' key={index}>{item.label}
+            <label className='input-text__item' key={index}>
+              <div className='input-text__title'>{item.label}</div>
               <input type="text" name={item.label} placeholder={item.placeholder}/>
               <img src={Clean} alt=""/>
             </label>

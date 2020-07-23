@@ -130,6 +130,10 @@
   align-items: flex-end;
   flex-direction: column;
 
+    &__title {
+      width: max-content;
+    }
+
     &__item {
     margin-bottom: 12px;
     display: flex;

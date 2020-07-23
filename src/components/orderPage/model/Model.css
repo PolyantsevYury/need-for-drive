@@ -1,43 +1,5 @@
-.model__filter {
-  display: flex;
-  color: #999999;
+.model__option {
   margin-bottom: 32px;
-}
-.model__filter-item {
-  display: flex;
-  align-items: center;
-}
-.model__filter-item:not(:last-child) {
-  margin-right: 16px;
-}
-.model__filter-item input {
-  margin-right: 6px;
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-.model__filter-item input + label {
-  display: flex;
-  align-items: center;
-}
-.model__filter-item input + label::before {
-  content: "";
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border: 1px solid #999999;
-  border-radius: 100%;
-  margin-right: 6px;
-}
-.model__filter-item input:checked + label {
-  color: #121212;
-}
-.model__filter-item input:checked + label::before {
-  width: 8px;
-  height: 8px;
-  border: 3px solid #0EC261;
-  border-radius: 100%;
 }
 
 .catalog {
