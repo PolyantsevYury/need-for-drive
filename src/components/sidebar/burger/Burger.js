@@ -1,13 +1,26 @@
 import React from "react";
-import './Burger.scss';
-import classNames from 'classnames';
+import "./Burger.scss";
+import classNames from "classnames";
+import PropTypes from "prop-types";
 
-export const Burger = ({setIsMenuOpen, isMenuOpen}) => {
-  const burgerClass = classNames('burger', { 'burger--active': isMenuOpen });
+const Burger = ({ setIsMenuOpen, isMenuOpen }) => {
+  const burgerClass = classNames("burger", { "burger--active": isMenuOpen });
 
-  return(
-    <div className={burgerClass} onClick={() => setIsMenuOpen(!isMenuOpen)}>
-      <span className='burger__line'> </span>
+  return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus
+    <div
+      role="button"
+      className={burgerClass}
+      onClick={() => setIsMenuOpen(!isMenuOpen)}
+    >
+      <span className="burger__line"> </span>
     </div>
-  )
-}
+  );
+};
+
+Burger.propTypes = {
+  setIsMenuOpen: PropTypes.func.isRequired,
+  isMenuOpen: PropTypes.bool.isRequired,
+};
+
+export default Burger;

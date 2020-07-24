@@ -1,4 +1,4 @@
-@import '../../../assets/variables';
+@import "../../../assets/variables";
 
 .model {
   &__option {
@@ -39,6 +39,7 @@
       font-weight: normal;
       margin-bottom: 4px;
     }
+
     p {
       font-size: 14px;
       color: $clr-gray-dark;

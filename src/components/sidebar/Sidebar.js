@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./SideBar.scss";
 import { useMediaQuery } from "react-responsive";
-import { Burger } from "./burger/Burger";
-import { SideDrawer } from "./sideDrawer/SideDrawer";
+import Burger from "./burger/Burger";
+import SideDrawer from "./sideDrawer/SideDrawer";
 
 const SideBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

@@ -6,17 +6,19 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #151B1F;
+  background-color: #151b1f;
   display: flex;
   flex-direction: column;
   justify-content: center;
   z-index: 15;
+
   @media (max-width: $max-mobile) {
     display: block;
   }
 
   &--show-slider {
     width: calc(50% + 36px);
+
     @media (max-width: $max-tablet) {
       width: 100%;
     }
@@ -24,6 +26,7 @@
 
   &__navigation {
     margin-left: 110px;
+
     @media (max-width: $max-mobile) {
       margin: 64px 28px;
     }

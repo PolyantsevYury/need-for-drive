@@ -1,4 +1,4 @@
-@import '../../../assets/variables';
+@import "../../../assets/variables";
 
 .location {
   display: flex;
@@ -12,6 +12,7 @@
     margin-top: 16px;
     max-width: 730px;
     width: 100%;
+
     @media (max-width: $max-mobile) {
       margin-top: 8px;
     }
