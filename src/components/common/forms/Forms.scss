@@ -1,4 +1,4 @@
-@import '../../../assets/variables';
+@import "../../../assets/variables";
 
 .input {
   display: flex;
@@ -39,7 +39,7 @@
         cursor: pointer;
 
         &::before {
-          content: '';
+          content: "";
           display: inline-block;
           width: 12px;
           height: 12px;
@@ -84,7 +84,7 @@
         cursor: pointer;
 
         &::before {
-          content: '';
+          content: "";
           display: inline-block;
           width: 12px;
           height: 12px;
@@ -93,7 +93,7 @@
         }
 
         &::after {
-          content: '';
+          content: "";
           position: absolute;
           width: 0;
           left: 8px;
@@ -123,18 +123,17 @@
   }
 }
 
-
 .input-text {
   width: min-content;
   display: flex;
   align-items: flex-end;
   flex-direction: column;
 
-    &__title {
-      width: max-content;
-    }
+  &__title {
+    width: max-content;
+  }
 
-    &__item {
+  &__item {
     margin-bottom: 12px;
     display: flex;
 

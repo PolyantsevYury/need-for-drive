@@ -1,41 +1,54 @@
-@import '../../../assets/variables';
+@import "../../../assets/variables";
 
-.button{
+.button {
   font-family: Roboto, sans-serif;
   font-size: 18px;
   font-weight: 500;
   height: 48px;
   width: 250px;
   color: #fff;
-  background-image: linear-gradient(90deg, $clr-main-accent 2.61%, #02935F 112.6%);
+  background-image: linear-gradient(
+    90deg,
+    $clr-main-accent 2.61%,
+    #02935f 112.6%
+  );
   background-blend-mode: darken;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+
   a {
     color: #fff;
     text-decoration: none;
   }
-  &:focus, &:hover{
+
+  &:focus,
+  &:hover {
     outline: none;
     box-shadow: inset 0 0 100px 100px rgba(0, 0, 0, 0.1);
   }
-  &:active{
+
+  &:active {
     box-shadow: inset 0 0 100px 100px rgba(0, 0, 0, 0.2);
   }
-  &__slide-1{
-    background-image: linear-gradient(90deg, #13493F 0%, #0C7B1B 100%);
+
+  &__slide-1 {
+    background-image: linear-gradient(90deg, #13493f 0%, #0c7b1b 100%);
   }
-  &__slide-2{
-    background-image: linear-gradient(90deg, #132949 0%, #0C7B67 100%);
+
+  &__slide-2 {
+    background-image: linear-gradient(90deg, #132949 0%, #0c7b67 100%);
   }
-  &__slide-3{
-    background-image: linear-gradient(90deg, #493013 0%, #7B0C3B 100%);
+
+  &__slide-3 {
+    background-image: linear-gradient(90deg, #493013 0%, #7b0c3b 100%);
   }
-  &__slide-4{
-    background-image: linear-gradient(90deg, #281349 0%, #720C7B 100%);
+
+  &__slide-4 {
+    background-image: linear-gradient(90deg, #281349 0%, #720c7b 100%);
   }
+
   &__cancel {
-    background-image: linear-gradient(90deg, #493013 0%, #7B0C3B 100%);
+    background-image: linear-gradient(90deg, #493013 0%, #7b0c3b 100%);
   }
 }

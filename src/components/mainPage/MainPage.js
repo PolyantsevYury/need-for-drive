@@ -1,14 +1,16 @@
 import React from "react";
-import {MainContent} from "./mainContent/MainContent";
-import {Slider} from "./slider/Slider";
-import {useMediaQuery} from "react-responsive";
+import { useMediaQuery } from "react-responsive";
+import MainContent from "./mainContent/MainContent";
+import Slider from "./slider/Slider";
 
-export const MainPage = () => {
-  const isLaptopOrDesktop = useMediaQuery({minWidth: 1024})
+const MainPage = () => {
+  const isLaptopOrDesktop = useMediaQuery({ minWidth: 1024 });
   return (
-      <>
-        <MainContent/>
-        {isLaptopOrDesktop && <Slider/>}
-      </>
-  )
+    <>
+      <MainContent />
+      {isLaptopOrDesktop && <Slider />}
+    </>
+  );
 };
+
+export default MainPage;

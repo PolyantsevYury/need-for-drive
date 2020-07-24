@@ -1,6 +1,6 @@
 @import '../../assets/variables';
 
-.side-bar{
+.side-bar {
   min-width: 64px;
   background-color: #151B1F;
   padding: 36px 0 15px 0;
@@ -12,7 +12,7 @@
   }
 }
 
-.language{
+.language {
   position: fixed;
   bottom: 18px;
   left: 8px;
@@ -23,12 +23,14 @@
   text-align: center;
   width: 48px;
   line-height: 46px;
-  border: 1px solid rgba(0,0,0,0);
-  &:hover{
+  border: 1px solid rgba(0, 0, 0, 0);
+
+  &:hover {
     border: 1px solid white;
     border-radius: 50%;
     color: white;
   }
+
   @media (max-width: $max-tablet) {
     left: 16px;
   }

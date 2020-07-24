@@ -1,12 +1,13 @@
-@import '../../../assets/variables';
+@import "../../../assets/variables";
 
-.slider{
+.slider {
   flex: 0 1 50%;
   display: flex;
   position: relative;
   overflow: hidden;
-  background-color: #151B1F;
-  &__control{
+  background-color: #151b1f;
+
+  &__control {
     cursor: pointer;
     height: 100%;
     background-color: transparent;
@@ -15,26 +16,31 @@
     width: 64px;
     min-width: 64px;
     z-index: 6;
-    &:hover{
+
+    &:hover {
       background-color: rgba(14, 194, 97, 0.2);
     }
+
     @media (max-width: $max-laptop) {
       width: 32px;
       min-width: 32px;
     }
   }
-  &__content-wrapper{
+
+  &__content-wrapper {
     padding: 0 32px;
     width: 100%;
   }
-  &__dots{
+
+  &__dots {
     position: absolute;
     bottom: 32px;
     width: 100%;
     display: flex;
     justify-content: center;
   }
-  &__dot{
+
+  &__dot {
     cursor: pointer;
     width: 9px;
     height: 9px;
@@ -43,11 +49,13 @@
     border-radius: 50%;
     background-color: #fff;
     transition: background-color 250ms;
-    &--active{
+
+    &--active {
       background-color: $clr-main-accent;
     }
   }
-  .img-preload{
+
+  .img-preload {
     display: none;
   }
 }
