@@ -12,7 +12,7 @@ const SideBar = () => {
     <>
       <div className="side-bar" />
       <Burger setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} />
-      {isMenuOpen && <SideDrawer />}
+      {isMenuOpen && <SideDrawer setIsMenuOpen={setIsMenuOpen} />}
       {(!isMobile || (isMobile && isMenuOpen)) && (
         <div className="language">Eng</div>
       )}
