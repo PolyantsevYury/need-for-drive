@@ -72,21 +72,21 @@
       }
     }
   }
+}
 
-  .backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100vh;
-    background: rgb(21, 27, 31);
-    opacity: 0;
-    z-index: 7;
-    transition: opacity 0.5s ease 0s;
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100vh;
+  background: rgb(21, 27, 31);
+  opacity: 0;
+  z-index: 7;
+  transition: opacity 0.5s ease 0s;
 
-    &--active {
-      width: 100vw;
-      opacity: 0.81;
-    }
+  &--active {
+    width: 100vw;
+    opacity: 0.81;
   }
 }
