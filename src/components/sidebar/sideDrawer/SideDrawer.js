@@ -1,15 +1,21 @@
 import React from "react";
 import "./SideDrawer.scss";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import classNames from "classnames";
-import Telegram from "../../../assets/images/socialLinks/Telegram.png";
-import Facebook from "../../../assets/images/socialLinks/Facebook.png";
-import Instagram from "../../../assets/images/socialLinks/Instagram.png";
+import Instagram from "../../common/icons/Instagram";
+import Facebook from "../../common/icons/Facebook";
+import Telegram from "../../common/icons/Telegram";
 
-const RoutedSideDrawer = ({ location }) => {
-  const sideDrawerClass = classNames("side-drawer", {
-    "side-drawer--show-slider": location.pathname === "/",
+const RoutedSideDrawer = ({ location, isMenuOpen, setIsMenuOpen }) => {
+  const sideDrawerClass = classNames(
+    "side-drawer",
+    { "side-drawer--show-slider": location.pathname === "/need-for-drive" },
+    { "side-drawer--open": isMenuOpen }
+  );
+
+  const backDropClass = classNames("backdrop", {
+    "backdrop--active": isMenuOpen && location.pathname === "/need-for-drive",
   });
 
   return (
@@ -18,46 +24,50 @@ const RoutedSideDrawer = ({ location }) => {
         <nav className="side-drawer__navigation">
           <ul className="side-drawer__navigation-items">
             <li>
-              <a
+              <Link
+                to="/need-for-drive"
                 className="side-drawer__navigation-item"
-                href="/need-for-drive"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Парковка
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
+                to="/need-for-drive"
                 className="side-drawer__navigation-item"
-                href="/need-for-drive"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Страховка
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
+                to="/need-for-drive"
                 className="side-drawer__navigation-item"
-                href="/need-for-drive"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Бензин
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
+                to="/need-for-drive"
                 className="side-drawer__navigation-item"
-                href="/need-for-drive"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Обслуживание
-              </a>
+              </Link>
             </li>
           </ul>
           <div className="side-drawer__social-items">
-            <img className="side-drawer__social-item" src={Telegram} alt=" " />
-            <img className="side-drawer__social-item" src={Facebook} alt=" " />
-            <img className="side-drawer__social-item" src={Instagram} alt=" " />
+            <Telegram />
+            <Facebook />
+            <Instagram />
           </div>
         </nav>
       </section>
-      <div className="backdrop" />
+      <div className={backDropClass} />
     </>
   );
 };
@@ -66,6 +76,8 @@ RoutedSideDrawer.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
+  isMenuOpen: PropTypes.bool.isRequired,
+  setIsMenuOpen: PropTypes.func.isRequired,
 };
 
 const SideDrawer = withRouter(RoutedSideDrawer);

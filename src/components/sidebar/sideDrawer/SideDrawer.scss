@@ -5,15 +5,20 @@
   width: 100%;
   position: absolute;
   top: 0;
-  left: 0;
+  left: -100%;
   background-color: #151b1f;
   display: flex;
   flex-direction: column;
   justify-content: center;
   z-index: 15;
+  transition: all 0.5s ease 0s;
 
   @media (max-width: $max-mobile) {
     display: block;
+  }
+
+  &--open {
+    left: 0;
   }
 
   &--show-slider {
@@ -56,20 +61,32 @@
 
   &__social-items {
     margin-top: 30px;
+
+    svg {
+      margin-right: 24px;
+      cursor: pointer;
+      fill: white;
+
+      &:hover {
+        fill: $clr-main-accent;
+      }
+    }
   }
 
-  &__social-item {
-    margin-right: 24px;
-    cursor: pointer;
-  }
-}
+  .backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100vh;
+    background: rgb(21, 27, 31);
+    opacity: 0;
+    z-index: 7;
+    transition: opacity 0.5s ease 0s;
 
-.backdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(21, 27, 31, 0.81);
-  z-index: 7;
+    &--active {
+      width: 100vw;
+      opacity: 0.81;
+    }
+  }
 }
