@@ -5,15 +5,20 @@
   width: 100%;
   position: absolute;
   top: 0;
-  left: 0;
+  left: -100%;
   background-color: #151b1f;
   display: flex;
   flex-direction: column;
   justify-content: center;
   z-index: 15;
+  transition: all 0.5s ease 0s;
 
   @media (max-width: $max-mobile) {
     display: block;
+  }
+
+  &--open {
+    left: 0;
   }
 
   &--show-slider {
@@ -70,6 +75,12 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(21, 27, 31, 0.81);
+  background: rgb(21, 27, 31);
+  opacity: 0;
   z-index: 7;
+  transition: all 0.5s ease 0s;
+
+  &--active {
+    opacity: 0.81;
+  }
 }

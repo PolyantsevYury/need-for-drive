@@ -7,9 +7,15 @@ import Telegram from "../../../assets/images/socialLinks/Telegram.png";
 import Facebook from "../../../assets/images/socialLinks/Facebook.png";
 import Instagram from "../../../assets/images/socialLinks/Instagram.png";
 
-const RoutedSideDrawer = ({ location, setIsMenuOpen }) => {
-  const sideDrawerClass = classNames("side-drawer", {
-    "side-drawer--show-slider": location.pathname === "/need-for-drive",
+const RoutedSideDrawer = ({ location, isMenuOpen, setIsMenuOpen }) => {
+  const sideDrawerClass = classNames(
+    "side-drawer",
+    { "side-drawer--show-slider": location.pathname === "/need-for-drive" },
+    { "side-drawer--open": isMenuOpen }
+  );
+
+  const backDropClass = classNames("backdrop", {
+    "backdrop--active": isMenuOpen && location.pathname === "/need-for-drive",
   });
 
   return (
@@ -61,7 +67,7 @@ const RoutedSideDrawer = ({ location, setIsMenuOpen }) => {
           </div>
         </nav>
       </section>
-      <div className="backdrop" />
+      <div className={backDropClass} />
     </>
   );
 };
@@ -70,6 +76,7 @@ RoutedSideDrawer.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
+  isMenuOpen: PropTypes.bool.isRequired,
   setIsMenuOpen: PropTypes.func.isRequired,
 };
 
