@@ -26,6 +26,7 @@
   width: 48px;
   line-height: 46px;
   border: 1px solid rgba(0, 0, 0, 0);
+  animation: fadeIn 0.5s;
 }
 .language:hover {
   border: 1px solid white;
@@ -42,6 +43,15 @@
     z-index: 20;
     bottom: 16px;
     left: 16px;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 

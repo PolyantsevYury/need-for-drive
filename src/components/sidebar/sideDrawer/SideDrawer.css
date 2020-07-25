@@ -58,23 +58,27 @@
 .side-drawer__social-items {
   margin-top: 30px;
 }
-.side-drawer__social-item {
+.side-drawer__social-items svg {
   margin-right: 24px;
   cursor: pointer;
+  fill: white;
 }
-
-.backdrop {
+.side-drawer__social-items svg:hover {
+  fill: #0EC261;
+}
+.side-drawer .backdrop {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 0;
   height: 100vh;
   background: #151b1f;
   opacity: 0;
   z-index: 7;
-  transition: all 0.5s ease 0s;
+  transition: opacity 0.5s ease 0s;
 }
-.backdrop--active {
+.side-drawer .backdrop--active {
+  width: 100vw;
   opacity: 0.81;
 }
 

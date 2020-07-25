@@ -3,9 +3,9 @@ import "./SideDrawer.scss";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import classNames from "classnames";
-import Telegram from "../../../assets/images/socialLinks/Telegram.png";
-import Facebook from "../../../assets/images/socialLinks/Facebook.png";
-import Instagram from "../../../assets/images/socialLinks/Instagram.png";
+import Instagram from "../../common/icons/Instagram";
+import Facebook from "../../common/icons/Facebook";
+import Telegram from "../../common/icons/Telegram";
 
 const RoutedSideDrawer = ({ location, isMenuOpen, setIsMenuOpen }) => {
   const sideDrawerClass = classNames(
@@ -61,9 +61,9 @@ const RoutedSideDrawer = ({ location, isMenuOpen, setIsMenuOpen }) => {
             </li>
           </ul>
           <div className="side-drawer__social-items">
-            <img className="side-drawer__social-item" src={Telegram} alt=" " />
-            <img className="side-drawer__social-item" src={Facebook} alt=" " />
-            <img className="side-drawer__social-item" src={Instagram} alt=" " />
+            <Telegram />
+            <Facebook />
+            <Instagram />
           </div>
         </nav>
       </section>

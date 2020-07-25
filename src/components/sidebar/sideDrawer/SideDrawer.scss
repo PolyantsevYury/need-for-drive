@@ -61,26 +61,32 @@
 
   &__social-items {
     margin-top: 30px;
+
+    svg {
+      margin-right: 24px;
+      cursor: pointer;
+      fill: white;
+
+      &:hover {
+        fill: $clr-main-accent;
+      }
+    }
   }
 
-  &__social-item {
-    margin-right: 24px;
-    cursor: pointer;
-  }
-}
+  .backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100vh;
+    background: rgb(21, 27, 31);
+    opacity: 0;
+    z-index: 7;
+    transition: opacity 0.5s ease 0s;
 
-.backdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgb(21, 27, 31);
-  opacity: 0;
-  z-index: 7;
-  transition: all 0.5s ease 0s;
-
-  &--active {
-    opacity: 0.81;
+    &--active {
+      width: 100vw;
+      opacity: 0.81;
+    }
   }
 }
