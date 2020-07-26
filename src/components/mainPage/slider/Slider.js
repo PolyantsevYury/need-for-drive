@@ -40,9 +40,10 @@ const slides = [
 ];
 
 const Slider = () => {
+  const [isSliderEnabled, setSliderEnabled] = React.useState(true);
   const { currentSlide, setCurrentSlide } = useSlider({
     total: slides.length,
-    enabled: true,
+    enabled: isSliderEnabled,
     speed: 4500,
   });
   const previousSlide = usePrevious(currentSlide);
@@ -52,6 +53,7 @@ const Slider = () => {
     } else {
       setCurrentSlide(currentSlide - 1);
     }
+    setSliderEnabled(false);
   };
   const showNextSlide = () => {
     if (currentSlide === slides.length - 1) {
@@ -59,6 +61,7 @@ const Slider = () => {
     } else {
       setCurrentSlide(currentSlide + 1);
     }
+    setSliderEnabled(false);
   };
 
   return (
@@ -93,7 +96,10 @@ const Slider = () => {
           <span
             role="button"
             tabIndex={index}
-            onKeyPress={() => setCurrentSlide(index)}
+            onKeyPress={() => {
+              setCurrentSlide(index);
+              setSliderEnabled(false);
+            }}
             className={`slider__dot${
               currentSlide === index ? " slider__dot--active" : ""
             }`}
