@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/need-for-drive/static/css/main.8adbfbd0.chunk.css",
-    "main.js": "/need-for-drive/static/js/main.e9150ea8.chunk.js",
-    "main.js.map": "/need-for-drive/static/js/main.e9150ea8.chunk.js.map",
+    "main.css": "/need-for-drive/static/css/main.8e591b46.chunk.css",
+    "main.js": "/need-for-drive/static/js/main.360e871e.chunk.js",
+    "main.js.map": "/need-for-drive/static/js/main.360e871e.chunk.js.map",
     "runtime-main.js": "/need-for-drive/static/js/runtime-main.7c67051a.js",
     "runtime-main.js.map": "/need-for-drive/static/js/runtime-main.7c67051a.js.map",
-    "static/js/2.5cb68113.chunk.js": "/need-for-drive/static/js/2.5cb68113.chunk.js",
-    "static/js/2.5cb68113.chunk.js.map": "/need-for-drive/static/js/2.5cb68113.chunk.js.map",
+    "static/js/2.51dd4575.chunk.js": "/need-for-drive/static/js/2.51dd4575.chunk.js",
+    "static/js/2.51dd4575.chunk.js.map": "/need-for-drive/static/js/2.51dd4575.chunk.js.map",
     "index.html": "/need-for-drive/index.html",
-    "precache-manifest.77aa0b55029caa052dbc7bfd933d1f51.js": "/need-for-drive/precache-manifest.77aa0b55029caa052dbc7bfd933d1f51.js",
+    "precache-manifest.80fe296b7777acde4be88a5de64a516d.js": "/need-for-drive/precache-manifest.80fe296b7777acde4be88a5de64a516d.js",
     "service-worker.js": "/need-for-drive/service-worker.js",
-    "static/css/main.8adbfbd0.chunk.css.map": "/need-for-drive/static/css/main.8adbfbd0.chunk.css.map",
-    "static/js/2.5cb68113.chunk.js.LICENSE.txt": "/need-for-drive/static/js/2.5cb68113.chunk.js.LICENSE.txt",
+    "static/css/main.8e591b46.chunk.css.map": "/need-for-drive/static/css/main.8e591b46.chunk.css.map",
+    "static/js/2.51dd4575.chunk.js.LICENSE.txt": "/need-for-drive/static/js/2.51dd4575.chunk.js.LICENSE.txt",
     "static/media/App.scss": "/need-for-drive/static/media/Roboto-Regular.11eabca2.ttf",
     "static/media/arrow_left_icon.svg": "/need-for-drive/static/media/arrow_left_icon.1267430e.svg",
     "static/media/arrow_right_icon.svg": "/need-for-drive/static/media/arrow_right_icon.f9a6dc71.svg",
@@ -32,8 +32,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.7c67051a.js",
-    "static/js/2.5cb68113.chunk.js",
-    "static/css/main.8adbfbd0.chunk.css",
-    "static/js/main.e9150ea8.chunk.js"
+    "static/js/2.51dd4575.chunk.js",
+    "static/css/main.8e591b46.chunk.css",
+    "static/js/main.360e871e.chunk.js"
   ]
 }
