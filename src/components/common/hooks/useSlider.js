@@ -13,7 +13,7 @@ function useSlider({ total = 0, enabled = false, speed = 5000 }) {
   }
 
   useInterval(() => {
-    if (enabled && currentSlide < total) {
+    if (enabled) {
       nextSlide();
     }
   }, speed);
