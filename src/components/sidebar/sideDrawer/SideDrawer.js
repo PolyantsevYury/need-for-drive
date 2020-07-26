@@ -10,12 +10,15 @@ import Telegram from "../../common/icons/Telegram";
 const RoutedSideDrawer = ({ location, isMenuOpen, setIsMenuOpen }) => {
   const sideDrawerClass = classNames(
     "side-drawer",
-    { "side-drawer--show-slider": location.pathname === "/need-for-drive" },
+    {
+      "side-drawer--show-slider": location.pathname.includes("/need-for-drive"),
+    },
     { "side-drawer--open": isMenuOpen }
   );
 
   const backDropClass = classNames("backdrop", {
-    "backdrop--active": isMenuOpen && location.pathname === "/need-for-drive",
+    "backdrop--active":
+      isMenuOpen && location.pathname.includes("/need-for-drive"),
   });
 
   return (
