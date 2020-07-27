@@ -4,8 +4,7 @@ import classNames from "classnames";
 import PropTypes from "prop-types";
 import Clean from "../../../assets/images/icons/clean_icon.svg";
 
-export const InputRadio = (props) => {
-  const { name, items, direction } = props;
+export const InputRadio = ({ name, items, onChange, direction }) => {
   const inputClass = classNames("input", {
     input__column: direction === "column",
   });
@@ -18,7 +17,8 @@ export const InputRadio = (props) => {
             name={name}
             value={item.value}
             id={item.value}
-            defaultChecked={!!item.defaultChecked}
+            checked={item.checked}
+            onChange={onChange}
           />
           <label htmlFor={item.value}>{item.label}</label>
         </div>
@@ -37,8 +37,7 @@ InputRadio.defaultProps = {
   direction: "row",
 };
 
-export const InputCheckbox = (props) => {
-  const { name, items, direction } = props;
+export const InputCheckbox = ({ items, direction, onChange }) => {
   const inputClass = classNames("input", {
     input__column: direction === "column",
   });
@@ -48,10 +47,11 @@ export const InputCheckbox = (props) => {
         <div className="input__checkbox-item" key={item.value}>
           <input
             type="checkbox"
-            name={name}
+            name={item.value}
             value={item.value}
             id={item.value}
-            defaultChecked={!!item.defaultChecked}
+            checked={item.checked}
+            onChange={onChange}
           />
           <label htmlFor={item.value}>{item.label}</label>
         </div>
@@ -61,7 +61,6 @@ export const InputCheckbox = (props) => {
 };
 
 InputCheckbox.propTypes = {
-  name: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   direction: PropTypes.string,
 };
@@ -70,13 +69,20 @@ InputCheckbox.defaultProps = {
   direction: "row",
 };
 
-export const InputText = ({ items }) => {
+export const InputText = ({ items, onChange }) => {
   return (
     <div className="input-text">
       {items.map((item) => (
         <div className="input-text__item" key={item.label}>
           <div className="input-text__title">{item.label}</div>
-          <input type="text" name={item.label} placeholder={item.placeholder} />
+          <input
+            type="text"
+            id={item.name}
+            name={item.name}
+            placeholder={item.placeholder}
+            onChange={onChange}
+            value={item.value}
+          />
           <img src={Clean} alt="" />
         </div>
       ))}

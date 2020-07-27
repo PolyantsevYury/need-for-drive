@@ -11,6 +11,23 @@ const Status = ({ isFinished, setStep, step }) => {
     }
     setIsModal(false);
   };
+  const buttonText = () => {
+    if (isFinished) {
+      return "Отменить";
+    }
+    switch (step) {
+      case 1:
+        return "Выбрать модель";
+      case 2:
+        return "Дополнительно";
+      case 3:
+        return "Итого";
+      case 4:
+        return "Заказать";
+      default:
+        return "Выбрать модель";
+    }
+  };
 
   return (
     <section className="status">
@@ -80,13 +97,11 @@ const Status = ({ isFinished, setStep, step }) => {
       </div>
       <Button
         additionalStyles={isFinished ? "button__cancel" : ""}
-        onClick={() => (step === 4 ? setIsModal(!isModal) : setStep(step + 1))}
+        onClick={() =>
+          step === 4 || isFinished ? setIsModal(!isModal) : setStep(step + 1)
+        }
       >
-        {step === 1 && "Выбрать модель"}
-        {step === 2 && "Дополнительно"}
-        {step === 3 && "Итого"}
-        {step === 4 && !isFinished && "Заказать"}
-        {step === 4 && isFinished && "Отменить"}
+        {buttonText()}
       </Button>
     </section>
   );
