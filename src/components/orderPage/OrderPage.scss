@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   color: black;
+
   @media (max-width: $max-mobile) {
     padding: 0;
     display: block;
@@ -90,6 +91,7 @@
     font-size: 14px;
     font-weight: bold;
   }
+
   &__items {
     display: flex;
     padding: 0 32px;
@@ -98,11 +100,19 @@
       padding: 0 16px;
     }
   }
+
   &__item {
     display: flex;
+  }
+
+  &__item-title {
     font-size: 14px;
     font-weight: bold;
     color: $clr-gray-dark;
+
+    &:hover {
+      cursor: pointer;
+    }
 
     &--active {
       color: $clr-main-accent;

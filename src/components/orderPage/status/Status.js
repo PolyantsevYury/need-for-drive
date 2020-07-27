@@ -3,8 +3,14 @@ import "./Status.scss";
 import PropTypes from "prop-types";
 import { Button, LinkButton } from "../../common/buttons/Buttons";
 
-const Status = ({ isFinished }) => {
+const Status = ({ isFinished, setStep, step }) => {
   const [isModal, setIsModal] = useState(false);
+  const onModalConfirm = () => {
+    if (isFinished) {
+      setStep(1);
+    }
+    setIsModal(false);
+  };
 
   return (
     <section className="status">
@@ -12,11 +18,13 @@ const Status = ({ isFinished }) => {
         <div className="modal">
           <div className="modal__overlay" />
           <div className="modal__container">
-            <div className="modal__title">Подтвердить заказ</div>
+            <div className="modal__title">
+              {isFinished ? "Отменить заказ" : "Подтвердить заказ"}
+            </div>
             <div className="modal__buttons">
               <LinkButton
-                to="/order/finished"
-                onClick={() => setIsModal(false)}
+                to={isFinished ? "/order" : "/order/finished"}
+                onClick={() => onModalConfirm()}
               >
                 Подтвердить
               </LinkButton>
@@ -72,9 +80,13 @@ const Status = ({ isFinished }) => {
       </div>
       <Button
         additionalStyles={isFinished ? "button__cancel" : ""}
-        onClick={() => (isFinished ? "" : setIsModal(!isModal))}
+        onClick={() => (step === 4 ? setIsModal(!isModal) : setStep(step + 1))}
       >
-        {isFinished ? "Отменить" : "Заказать"}
+        {step === 1 && "Выбрать модель"}
+        {step === 2 && "Дополнительно"}
+        {step === 3 && "Итого"}
+        {step === 4 && !isFinished && "Заказать"}
+        {step === 4 && isFinished && "Отменить"}
       </Button>
     </section>
   );
@@ -82,6 +94,8 @@ const Status = ({ isFinished }) => {
 
 Status.propTypes = {
   isFinished: PropTypes.bool,
+  step: PropTypes.number.isRequired,
+  setStep: PropTypes.func.isRequired,
 };
 
 Status.defaultProps = {

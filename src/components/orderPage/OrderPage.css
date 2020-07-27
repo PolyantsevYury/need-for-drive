@@ -98,15 +98,20 @@
 }
 .steps__item {
   display: flex;
+}
+.steps__item-title {
   font-size: 14px;
   font-weight: bold;
   color: #999999;
 }
-.steps__item--active {
+.steps__item-title:hover {
+  cursor: pointer;
+}
+.steps__item-title--active {
   color: #0EC261;
 }
 @media (max-width: 380px) {
-  .steps__item {
+  .steps__item-title {
     font-size: 11px;
   }
 }
