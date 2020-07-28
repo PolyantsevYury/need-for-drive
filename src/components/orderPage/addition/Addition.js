@@ -12,18 +12,18 @@ const Addition = ({ formik }) => {
           items={[
             {
               label: "Любой",
-              value: "any",
-              checked: formik.values.color === "any",
+              value: "Любой",
+              checked: formik.values.color === "Любой",
             },
             {
               label: "Красный",
-              value: "red",
-              checked: formik.values.color === "red",
+              value: "Красный",
+              checked: formik.values.color === "Красный",
             },
             {
               label: "Голубой",
-              value: "blue",
-              checked: formik.values.color === "blue",
+              value: "Голубой",
+              checked: formik.values.color === "Голубой",
             },
           ]}
           onChange={formik.handleChange}
