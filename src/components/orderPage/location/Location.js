@@ -3,16 +3,26 @@ import "./Location.scss";
 import Map from "../../../assets/images/map.jpg";
 import { InputText } from "../../common/forms/Forms";
 
-const Location = () => {
+const Location = ({ formik }) => {
   return (
     <section className="location">
       <div className="location__form">
         <InputText
-          name="date"
           items={[
-            { label: "Город", placeholder: "Начните вводить город" },
-            { label: "Пункт выдачи", placeholder: "Начните вводить пункт" },
+            {
+              name: "locationCity",
+              label: "Город",
+              placeholder: "Начните вводить город",
+              value: formik.values.locationCity,
+            },
+            {
+              name: "locationPlace",
+              label: "Пункт выдачи",
+              placeholder: "Начните вводить пункт",
+              value: formik.values.locationPlace,
+            },
           ]}
+          onChange={formik.handleChange}
         />
       </div>
       <p>Выбрать на карте:</p>

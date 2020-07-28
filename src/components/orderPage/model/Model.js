@@ -41,17 +41,30 @@ const cars = [
   },
 ];
 
-const Model = () => {
+const Model = ({ formik }) => {
   return (
     <section className="model">
       <div className="model__option">
         <InputRadio
-          name="model"
+          name="modelFilter"
           items={[
-            { label: "Все модели", value: "all", defaultChecked: true },
-            { label: "Эконом", value: "economic" },
-            { label: "Премиум", value: "premium" },
+            {
+              label: "Все модели",
+              value: "all",
+              checked: formik.values.modelFilter === "all",
+            },
+            {
+              label: "Эконом",
+              value: "economic",
+              checked: formik.values.modelFilter === "economic",
+            },
+            {
+              label: "Премиум",
+              value: "premium",
+              checked: formik.values.modelFilter === "premium",
+            },
           ]}
+          onChange={formik.handleChange}
         />
       </div>
       <div className="catalog">
