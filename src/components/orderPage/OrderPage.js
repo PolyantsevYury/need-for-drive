@@ -13,12 +13,19 @@ import "./OrderPage.scss";
 import Finished from "./finished/Finished";
 
 const OrderPage = ({ isFinished }) => {
+  const [isStepsDisabled, setIsStepsDisabled] = useState({
+    1: false,
+    2: true,
+    3: true,
+    4: true,
+  });
   const [step, setStep] = useState(1);
   const formik = useFormik({
     initialValues: {
       locationCity: "",
       locationPlace: "",
       modelFilter: "all",
+      model: "",
       color: "any",
       dateFrom: "",
       dateTo: "",
@@ -28,7 +35,7 @@ const OrderPage = ({ isFinished }) => {
       rightHand: false,
     },
   });
-  console.log(formik.values);
+
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -51,7 +58,12 @@ const OrderPage = ({ isFinished }) => {
       </div>
       <div className="order-page__steps-border">
         <div className="order-page__steps">
-          <Steps isFinished={isFinished} step={step} setStep={setStep} />
+          <Steps
+            isStepsDisabled={isStepsDisabled}
+            isFinished={isFinished}
+            step={step}
+            setStep={setStep}
+          />
         </div>
       </div>
       <div className="order">
@@ -62,7 +74,13 @@ const OrderPage = ({ isFinished }) => {
         </div>
         <div className="order__status-container">
           <div className="order__status">
-            <Status isFinished={isFinished} step={step} setStep={setStep} />
+            <Status
+              isStepsDisabled={isStepsDisabled}
+              setIsStepsDisabled={setIsStepsDisabled}
+              isFinished={isFinished}
+              step={step}
+              setStep={setStep}
+            />
           </div>
         </div>
       </div>
@@ -78,7 +96,7 @@ OrderPage.defaultProps = {
   isFinished: false,
 };
 
-const Steps = ({ isFinished, step, setStep }) => {
+const Steps = ({ isFinished, step, setStep, isStepsDisabled }) => {
   const stepsTitles = ["Местоположение", "Модель", "Дополнительно", "Итого"];
   const stepTitleClass = (index) =>
     classNames("steps__item-title", {
@@ -93,15 +111,14 @@ const Steps = ({ isFinished, step, setStep }) => {
         ) : (
           stepsTitles.map((title, index) => (
             <div className="steps__item" key={title}>
-              <span
-                role="button"
-                tabIndex={index}
-                onKeyPress={() => setStep(index + 1)}
+              <button
                 className={stepTitleClass(index)}
+                disabled={isStepsDisabled[index + 1]}
+                type="button"
                 onClick={() => setStep(index + 1)}
               >
                 {title}
-              </span>
+              </button>
               {index !== stepsTitles.length - 1 && (
                 <img className="steps__item-icon" src={NextStep} alt="" />
               )}

@@ -100,12 +100,20 @@
   display: flex;
 }
 .steps__item-title {
+  border: none;
+  background-color: #ffffff;
   font-size: 14px;
   font-weight: bold;
-  color: #999999;
+  color: #121212;
+}
+.steps__item-title:focus {
+  outline: none;
 }
 .steps__item-title:hover {
   cursor: pointer;
+}
+.steps__item-title:disabled {
+  color: #999999;
 }
 .steps__item-title--active {
   color: #0EC261;

@@ -106,12 +106,22 @@
   }
 
   &__item-title {
+    border: none;
+    background-color: #ffffff;
     font-size: 14px;
     font-weight: bold;
-    color: $clr-gray-dark;
+    color: $clr-main-black;
+
+    &:focus {
+      outline: none;
+    }
 
     &:hover {
       cursor: pointer;
+    }
+
+    &:disabled {
+      color: $clr-gray-dark;
     }
 
     &--active {

@@ -3,7 +3,13 @@ import "./Status.scss";
 import PropTypes from "prop-types";
 import { Button, LinkButton } from "../../common/buttons/Buttons";
 
-const Status = ({ isFinished, setStep, step }) => {
+const Status = ({
+  isFinished,
+  setStep,
+  step,
+  isStepsDisabled,
+  setIsStepsDisabled,
+}) => {
   const [isModal, setIsModal] = useState(false);
   const onModalConfirm = () => {
     if (isFinished) {
@@ -26,6 +32,18 @@ const Status = ({ isFinished, setStep, step }) => {
         return "Заказать";
       default:
         return "Выбрать модель";
+    }
+  };
+  const onButtonClick = () => {
+    if (step === 4 || isFinished) {
+      setIsModal(!isModal);
+    } else {
+      const nexStep = step + 1;
+      setIsStepsDisabled({
+        ...isStepsDisabled,
+        [nexStep]: false,
+      });
+      setStep(nexStep);
     }
   };
 
@@ -97,9 +115,7 @@ const Status = ({ isFinished, setStep, step }) => {
       </div>
       <Button
         additionalStyles={isFinished ? "button__cancel" : ""}
-        onClick={() =>
-          step === 4 || isFinished ? setIsModal(!isModal) : setStep(step + 1)
-        }
+        onClick={() => onButtonClick()}
       >
         {buttonText()}
       </Button>
