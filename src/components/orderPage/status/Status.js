@@ -47,6 +47,15 @@ const Status = ({
       setStep(nexStep);
     }
   };
+  const isButtonDisabled = () => {
+    if (step === 1 && formData.locationPlace === "") {
+      return true;
+    }
+    if (step === 2 && formData.model === "") {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <section className="status">
@@ -146,6 +155,7 @@ const Status = ({
       <Button
         additionalStyles={isFinished ? "button__cancel" : ""}
         onClick={() => onButtonClick()}
+        isDisabled={isButtonDisabled()}
       >
         {buttonText()}
       </Button>

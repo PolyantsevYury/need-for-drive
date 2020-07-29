@@ -82,7 +82,18 @@ export const InputText = ({ items, onChange }) => {
             placeholder={item.placeholder}
             onChange={onChange}
             value={item.value}
+            list={item.placeholder}
           />
+          {item.options && (
+            <datalist id={item.placeholder}>
+              <option>{item.options[0]}</option>
+              <option>{item.options[1]}</option>
+              <option>{item.options[2]}</option>
+              <option>{item.options[3]}</option>
+              <option>{item.options[4]}</option>
+              <option>{item.options[5]}</option>
+            </datalist>
+          )}
           <img src={Clean} alt="" />
         </div>
       ))}

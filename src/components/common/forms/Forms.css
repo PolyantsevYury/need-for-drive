@@ -131,6 +131,9 @@
   color: #999999;
   font-weight: 300;
 }
+.input-text__item input::-webkit-calendar-picker-indicator {
+  display: none;
+}
 .input-text__item img {
   position: relative;
   left: -14px;

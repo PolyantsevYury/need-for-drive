@@ -9,11 +9,13 @@ export const Button = ({
   history,
   to,
   onClick,
+  isDisabled,
 }) => {
   return (
     <button
       type="button"
       className={`button ${additionalStyles}`}
+      disabled={isDisabled}
       onClick={(event) => {
         if (onClick) {
           onClick(event);
