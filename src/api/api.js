@@ -13,6 +13,9 @@ const orderAPI = {
   getCity() {
     return instance.get(`db/city/`);
   },
+  getPoint() {
+    return instance.get(`db/point/`);
+  },
 };
 
 export default orderAPI;
