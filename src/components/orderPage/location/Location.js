@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Location.scss";
+import { connect } from "react-redux";
 import Map from "../../../assets/images/map.jpg";
 import { InputText } from "../../common/forms/Forms";
+import { requestCities } from "../../../store/order-reducer";
 
-const Location = ({ formik }) => {
+const Location = ({ formik, cities, requestCities }) => {
   const addresses = {
     Ulyanovsk: ["Орлова 27", "Нариманова 42"],
     Moscow: ["Орлова 20", "Нариманова 422"],
@@ -24,6 +26,9 @@ const Location = ({ formik }) => {
         return false;
     }
   };
+  useEffect(() => {
+    requestCities();
+  }, [requestCities]);
 
   return (
     <section className="location">
@@ -54,4 +59,8 @@ const Location = ({ formik }) => {
   );
 };
 
-export default Location;
+const mapStateToProps = (state) => ({
+  cities: state.orderPage.cities,
+});
+
+export default connect(mapStateToProps, { requestCities })(Location);
