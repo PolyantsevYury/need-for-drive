@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./Status.scss";
-import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { Button, LinkButton } from "../../common/buttons/Buttons";
+import { getPoints } from "../../../store/order-selectors";
 
 const Status = ({
   step,
@@ -10,6 +11,7 @@ const Status = ({
   setIsStepsDisabled,
   isFinished,
   formData,
+  points,
 }) => {
   const [isModal, setIsModal] = useState(false);
   const onModalConfirm = () => {
@@ -46,6 +48,19 @@ const Status = ({
       });
       setStep(nexStep);
     }
+  };
+
+  const isPlaceValid = () =>
+    points.find((point) => point.address === formData.locationPlace);
+
+  const isButtonDisabled = () => {
+    if (step === 1 && !isPlaceValid()) {
+      return true;
+    }
+    if (step === 2 && formData.model === "") {
+      return true;
+    }
+    return false;
   };
 
   return (
@@ -146,6 +161,7 @@ const Status = ({
       <Button
         additionalStyles={isFinished ? "button__cancel" : ""}
         onClick={() => onButtonClick()}
+        isDisabled={isButtonDisabled()}
       >
         {buttonText()}
       </Button>
@@ -153,14 +169,8 @@ const Status = ({
   );
 };
 
-Status.propTypes = {
-  isFinished: PropTypes.bool,
-  step: PropTypes.number.isRequired,
-  setStep: PropTypes.func.isRequired,
-};
+const mapStateToProps = (state) => ({
+  points: getPoints(state),
+});
 
-Status.defaultProps = {
-  isFinished: false,
-};
-
-export default Status;
+export default connect(mapStateToProps, {})(Status);
