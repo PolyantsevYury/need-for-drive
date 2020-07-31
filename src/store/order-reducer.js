@@ -4,8 +4,8 @@ const ADD_CITIES = "ADD_CITIES";
 const ADD_POINTS = "ADD_POINTS";
 
 const initialState = {
-  cities: "",
-  points: "",
+  cities: [],
+  points: [],
 };
 
 const orderReducer = (state = initialState, action) => {

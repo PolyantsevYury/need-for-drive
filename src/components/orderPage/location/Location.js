@@ -4,32 +4,23 @@ import { connect } from "react-redux";
 import Map from "../../../assets/images/map.jpg";
 import { InputText } from "../../common/forms/Forms";
 import { requestCities, requestPoints } from "../../../store/order-reducer";
+import { getCities, getPoints } from "../../../store/order-selectors";
 
 const Location = ({ formik, cities, requestCities, points, requestPoints }) => {
-  const addresses = {
-    Ulyanovsk: ["Орлова 27", "Нариманова 42"],
-    Moscow: ["Орлова 20", "Нариманова 422"],
-    Magadan: ["Орлова 21", "Нариманова 2"],
-    Sochi: ["Орлова 0", "Нариманова 4"],
-  };
-  const getCurrentCityAddresses = () => {
-    switch (formik.values.locationCity) {
-      case "Ульяновск":
-        return addresses.Ulyanovsk;
-      case "Москва":
-        return addresses.Moscow;
-      case "Магадан":
-        return addresses.Magadan;
-      case "Сочи":
-        return addresses.Sochi;
-      default:
-        return false;
-    }
-  };
   useEffect(() => {
     requestCities();
     requestPoints();
   }, [requestCities, requestPoints]);
+
+  const citiesNames = [];
+  cities.map((city) => citiesNames.push(city.name));
+
+  const currentPoints = [];
+  points.map(
+    (point) =>
+      formik.values.locationCity === point.cityId.name &&
+      currentPoints.push(point.address)
+  );
 
   return (
     <section className="location">
@@ -41,14 +32,14 @@ const Location = ({ formik, cities, requestCities, points, requestPoints }) => {
               label: "Город",
               placeholder: "Начните вводить город",
               value: formik.values.locationCity,
-              options: ["Ульяновск", "Москва", "Магадан", "Сочи"],
+              options: citiesNames,
             },
             {
               name: "locationPlace",
               label: "Пункт выдачи",
               placeholder: "Начните вводить пункт",
               value: formik.values.locationPlace,
-              options: getCurrentCityAddresses(),
+              options: currentPoints,
             },
           ]}
           onChange={formik.handleChange}
@@ -61,8 +52,8 @@ const Location = ({ formik, cities, requestCities, points, requestPoints }) => {
 };
 
 const mapStateToProps = (state) => ({
-  cities: state.order.cities,
-  points: state.order.points,
+  cities: getCities(state),
+  points: getPoints(state),
 });
 
 export default connect(mapStateToProps, { requestCities, requestPoints })(
