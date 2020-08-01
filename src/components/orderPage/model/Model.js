@@ -7,12 +7,29 @@ import { getCars } from "../../../store/order-selectors";
 import { requestCars } from "../../../store/order-reducer";
 
 const Model = ({ formik, cars, requestCars }) => {
-  useEffect(() => requestCars(), [requestCars]);
+  let filteredCars = [];
+
+  useEffect(() => {
+    requestCars();
+  }, [requestCars]);
+
+  const filterCars = () => {
+    if (formik.values.modelFilter === "all") {
+      filteredCars = cars;
+      return filteredCars;
+    }
+    return cars.map(
+      (car) =>
+        car.categoryId.name === formik.values.modelFilter &&
+        filteredCars.push(car)
+    );
+  };
+  filterCars();
+
   const cardClass = (carName) =>
     classNames("catalog__car", {
       "catalog__car--active": carName === formik.values.model,
     });
-
   return (
     <section className="model">
       <div className="model__option">
@@ -26,20 +43,20 @@ const Model = ({ formik, cars, requestCars }) => {
             },
             {
               label: "Эконом",
-              value: "economic",
-              checked: formik.values.modelFilter === "economic",
+              value: "Эконом",
+              checked: formik.values.modelFilter === "Эконом",
             },
             {
               label: "Премиум",
-              value: "premium",
-              checked: formik.values.modelFilter === "premium",
+              value: "Премиум",
+              checked: formik.values.modelFilter === "Премиум",
             },
           ]}
           onChange={formik.handleChange}
         />
       </div>
       <div className="catalog">
-        {cars.map((car) => (
+        {filteredCars.map((car) => (
           <button
             type="button"
             onClick={() =>
