@@ -58,7 +58,6 @@ const Status = ({
       return true;
     }
     return step === 2 && formData.model === "";
-
   };
 
   return (
