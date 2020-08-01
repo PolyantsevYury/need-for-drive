@@ -7,3 +7,7 @@ export const getCitiesNames = (state) => {
 export const getPoints = (state) => {
   return state.order.points;
 };
+
+export const getCars = (state) => {
+  return state.order.cars;
+};

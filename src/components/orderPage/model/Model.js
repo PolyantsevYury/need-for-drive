@@ -1,47 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Model.scss";
-import Car1 from "../../../assets/images/car1.png";
-import Car2 from "../../../assets/images/car2.png";
-import Car3 from "../../../assets/images/car3.png";
-import Car4 from "../../../assets/images/car4.png";
-import Car5 from "../../../assets/images/car5.png";
-import Car6 from "../../../assets/images/car6.png";
+import classNames from "classnames";
+import { connect } from "react-redux";
 import { InputRadio } from "../../common/forms/Forms";
+import { getCars } from "../../../store/order-selectors";
+import { requestCars } from "../../../store/order-reducer";
 
-const cars = [
-  {
-    name: "ELANTRA",
-    price: "12 000 - 25 000 ₽",
-    img: Car1,
-  },
-  {
-    name: "i30 N",
-    price: "10 000 - 32 000 ₽",
-    img: Car2,
-  },
-  {
-    name: "CRETA",
-    price: "12 000 - 25 000 ₽",
-    img: Car3,
-  },
-  {
-    name: "SONATA",
-    price: "10 000 - 32 000 ₽",
-    img: Car4,
-  },
-  {
-    name: "ELANTRA",
-    price: "12 000 - 25 000 ₽",
-    img: Car5,
-  },
-  {
-    name: "i30 N",
-    price: "10 000 - 32 000 ₽",
-    img: Car6,
-  },
-];
+const Model = ({ formik, cars, requestCars }) => {
+  useEffect(() => requestCars(), [requestCars]);
+  const cardClass = (carName) =>
+    classNames("catalog__car", {
+      "catalog__car--active": carName === formik.values.model,
+    });
 
-const Model = ({ formik }) => {
   return (
     <section className="model">
       <div className="model__option">
@@ -68,19 +39,35 @@ const Model = ({ formik }) => {
         />
       </div>
       <div className="catalog">
-        {cars.map((car, i) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div className="catalog__car" key={i}>
+        {cars.map((car) => (
+          <button
+            type="button"
+            onClick={() =>
+              formik.setValues({ ...formik.values, model: car.name })
+            }
+            className={cardClass(car.name)}
+            key={car.id}
+          >
             <div className="catalog__car-title">
               <h4>{car.name}</h4>
-              <p>{car.price}</p>
+              <p>{`${car.priceMin} - ${car.priceMax} ₽`}</p>
             </div>
-            <img className="catalog__car-img" src={car.img} alt="" />
-          </div>
+            <img
+              className="catalog__car-img"
+              crossOrigin="anonymous"
+              referrerPolicy="origin"
+              src={`https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/${car.thumbnail.path}`}
+              alt=""
+            />
+          </button>
         ))}
       </div>
     </section>
   );
 };
 
-export default Model;
+const mapStateToProps = (state) => ({
+  cars: getCars(state),
+});
+
+export default connect(mapStateToProps, { requestCars })(Model);
