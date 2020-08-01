@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
-import PropTypes from "prop-types";
 import { Button } from "../../common/buttons/Buttons";
 import "./Slide.scss";
 
@@ -46,23 +45,6 @@ const Slide = ({ totalSlides, slide, currentSlide, previousSlide, index }) => {
       </div>
     )
   );
-};
-
-Slide.propTypes = {
-  totalSlides: PropTypes.number.isRequired,
-  slide: PropTypes.shape({
-    image: PropTypes.string,
-    title: PropTypes.string,
-    info: PropTypes.string,
-    buttonStyle: PropTypes.string,
-  }).isRequired,
-  currentSlide: PropTypes.number.isRequired,
-  previousSlide: PropTypes.number,
-  index: PropTypes.number.isRequired,
-};
-
-Slide.defaultProps = {
-  previousSlide: 0,
 };
 
 export default Slide;

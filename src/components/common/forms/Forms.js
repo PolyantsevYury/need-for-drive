@@ -1,7 +1,6 @@
 import React from "react";
 import "./Forms.scss";
 import classNames from "classnames";
-import PropTypes from "prop-types";
 import Clean from "../../../assets/images/icons/clean_icon.svg";
 
 export const InputRadio = ({ name, items, onChange, direction }) => {
@@ -27,16 +26,6 @@ export const InputRadio = ({ name, items, onChange, direction }) => {
   );
 };
 
-InputRadio.propTypes = {
-  name: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  direction: PropTypes.string,
-};
-
-InputRadio.defaultProps = {
-  direction: "row",
-};
-
 export const InputCheckbox = ({ items, direction, onChange }) => {
   const inputClass = classNames("input", {
     input__column: direction === "column",
@@ -58,15 +47,6 @@ export const InputCheckbox = ({ items, direction, onChange }) => {
       ))}
     </div>
   );
-};
-
-InputCheckbox.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  direction: PropTypes.string,
-};
-
-InputCheckbox.defaultProps = {
-  direction: "row",
 };
 
 export const InputText = ({ items, onChange }) => {
@@ -99,8 +79,4 @@ export const InputText = ({ items, onChange }) => {
       ))}
     </div>
   );
-};
-
-InputText.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
