@@ -113,7 +113,10 @@ const Status = ({
                 <div className="status__info-item">
                   <div className="status__info-name">Цвет</div>
                   <div className="status__info-filler"> </div>
-                  <div className="status__info-value">{formData.color}</div>
+                  <div className="status__info-value">
+                    {formData.color.charAt(0).toUpperCase() +
+                      formData.color.slice(1)}
+                  </div>
                 </div>
                 <div className="status__info-item">
                   <div className="status__info-name">Длительност аренды</div>

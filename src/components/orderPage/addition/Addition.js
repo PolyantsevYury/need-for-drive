@@ -1,31 +1,32 @@
 import React from "react";
 import "./Addition.scss";
+import { connect } from "react-redux";
 import { InputCheckbox, InputRadio, InputText } from "../../common/forms/Forms";
+import { getCars } from "../../../store/order-selectors";
 
-const Addition = ({ formik }) => {
+const Addition = ({ formik, cars }) => {
+  const getCarColors = () => {
+    const carColors = ["любой"];
+    cars.map(
+      (car) => car.name === formik.values.model && carColors.push(...car.colors)
+    );
+    return carColors;
+  };
+  const colorItems = getCarColors().map((color) => {
+    const container = {};
+    container.label = color.charAt(0).toUpperCase() + color.slice(1);
+    container.value = color;
+    container.checked = formik.values.color === color;
+    return container;
+  });
+
   return (
     <section className="addition">
       <div className="addition__option">
         <h4 className="addition__title">Цвет</h4>
         <InputRadio
           name="color"
-          items={[
-            {
-              label: "Любой",
-              value: "Любой",
-              checked: formik.values.color === "Любой",
-            },
-            {
-              label: "Красный",
-              value: "Красный",
-              checked: formik.values.color === "Красный",
-            },
-            {
-              label: "Голубой",
-              value: "Голубой",
-              checked: formik.values.color === "Голубой",
-            },
-          ]}
+          items={colorItems}
           onChange={formik.handleChange}
         />
       </div>
@@ -100,4 +101,8 @@ const Addition = ({ formik }) => {
   );
 };
 
-export default Addition;
+const mapStateToProps = (state) => ({
+  cars: getCars(state),
+});
+
+export default connect(mapStateToProps, {})(Addition);
