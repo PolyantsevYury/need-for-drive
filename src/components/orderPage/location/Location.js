@@ -4,16 +4,19 @@ import { connect } from "react-redux";
 import Map from "../../../assets/images/map.jpg";
 import { InputText } from "../../common/forms/Forms";
 import { requestCities, requestPoints } from "../../../store/order-reducer";
-import { getCities, getPoints } from "../../../store/order-selectors";
+import { getCitiesNames, getPoints } from "../../../store/order-selectors";
 
-const Location = ({ formik, cities, requestCities, points, requestPoints }) => {
+const Location = ({
+  formik,
+  citiesNames,
+  requestCities,
+  points,
+  requestPoints,
+}) => {
   useEffect(() => {
     requestCities();
     requestPoints();
   }, [requestCities, requestPoints]);
-
-  const citiesNames = [];
-  cities.map((city) => citiesNames.push(city.name));
 
   const currentPoints = [];
   points.map(
@@ -52,7 +55,7 @@ const Location = ({ formik, cities, requestCities, points, requestPoints }) => {
 };
 
 const mapStateToProps = (state) => ({
-  cities: getCities(state),
+  citiesNames: getCitiesNames(state),
   points: getPoints(state),
 });
 

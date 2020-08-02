@@ -16,6 +16,9 @@ const orderAPI = {
   getPoint() {
     return instance.get(`db/point/`);
   },
+  getCars() {
+    return instance.get(`db/car/`);
+  },
 };
 
 export default orderAPI;

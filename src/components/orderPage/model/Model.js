@@ -1,47 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Model.scss";
-import Car1 from "../../../assets/images/car1.png";
-import Car2 from "../../../assets/images/car2.png";
-import Car3 from "../../../assets/images/car3.png";
-import Car4 from "../../../assets/images/car4.png";
-import Car5 from "../../../assets/images/car5.png";
-import Car6 from "../../../assets/images/car6.png";
+import classNames from "classnames";
+import { connect } from "react-redux";
 import { InputRadio } from "../../common/forms/Forms";
+import { getCars } from "../../../store/order-selectors";
+import { requestCars } from "../../../store/order-reducer";
+import Preloader from "../../common/preloader/Preloader";
 
-const cars = [
-  {
-    name: "ELANTRA",
-    price: "12 000 - 25 000 ₽",
-    img: Car1,
-  },
-  {
-    name: "i30 N",
-    price: "10 000 - 32 000 ₽",
-    img: Car2,
-  },
-  {
-    name: "CRETA",
-    price: "12 000 - 25 000 ₽",
-    img: Car3,
-  },
-  {
-    name: "SONATA",
-    price: "10 000 - 32 000 ₽",
-    img: Car4,
-  },
-  {
-    name: "ELANTRA",
-    price: "12 000 - 25 000 ₽",
-    img: Car5,
-  },
-  {
-    name: "i30 N",
-    price: "10 000 - 32 000 ₽",
-    img: Car6,
-  },
-];
+const Model = ({ formik, cars, isCarsFetching, requestCars }) => {
+  let filteredCars = [];
 
-const Model = ({ formik }) => {
+  useEffect(() => {
+    requestCars();
+  }, [requestCars]);
+
+  const filterCars = () => {
+    if (formik.values.modelFilter === "all") {
+      filteredCars = cars;
+      return filteredCars;
+    }
+    return cars.map(
+      (car) =>
+        car.categoryId.name === formik.values.modelFilter &&
+        filteredCars.push(car)
+    );
+  };
+  filterCars();
+
+  const cardClass = (carName) =>
+    classNames("catalog__car", {
+      "catalog__car--active": carName === formik.values.model,
+    });
   return (
     <section className="model">
       <div className="model__option">
@@ -55,32 +44,53 @@ const Model = ({ formik }) => {
             },
             {
               label: "Эконом",
-              value: "economic",
-              checked: formik.values.modelFilter === "economic",
+              value: "Эконом",
+              checked: formik.values.modelFilter === "Эконом",
             },
             {
               label: "Премиум",
-              value: "premium",
-              checked: formik.values.modelFilter === "premium",
+              value: "Премиум",
+              checked: formik.values.modelFilter === "Премиум",
             },
           ]}
           onChange={formik.handleChange}
         />
       </div>
       <div className="catalog">
-        {cars.map((car, i) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div className="catalog__car" key={i}>
-            <div className="catalog__car-title">
-              <h4>{car.name}</h4>
-              <p>{car.price}</p>
-            </div>
-            <img className="catalog__car-img" src={car.img} alt="" />
-          </div>
-        ))}
+        {isCarsFetching ? (
+          <Preloader />
+        ) : (
+          filteredCars.map((car) => (
+            <button
+              type="button"
+              onClick={() =>
+                formik.setValues({ ...formik.values, model: car.name })
+              }
+              className={cardClass(car.name)}
+              key={car.id}
+            >
+              <div className="catalog__car-title">
+                <h4>{car.name}</h4>
+                <p>{`${car.priceMin} - ${car.priceMax} ₽`}</p>
+              </div>
+              <img
+                className="catalog__car-img"
+                crossOrigin="anonymous"
+                referrerPolicy="origin"
+                src={`https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/${car.thumbnail.path}`}
+                alt=""
+              />
+            </button>
+          ))
+        )}
       </div>
     </section>
   );
 };
 
-export default Model;
+const mapStateToProps = (state) => ({
+  cars: getCars(state),
+  isCarsFetching: state.order.isCarsFetching,
+});
+
+export default connect(mapStateToProps, { requestCars })(Model);

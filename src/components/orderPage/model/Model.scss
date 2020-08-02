@@ -9,27 +9,31 @@
   display: flex;
   flex-wrap: wrap;
   border-collapse: collapse;
-
-  @media (max-width: $max-tablet) {
-    justify-content: center;
-  }
+  justify-content: center;
 
   &__car {
     width: 340px;
     height: 200px;
     cursor: pointer;
     display: flex;
+    background-color: #ffffff;
     padding: 16px;
     flex-direction: column;
     justify-content: space-between;
+    outline: none;
     border: 1px solid $clr-gray-light;
 
-    &:hover {
+    &:hover,
+    &:focus {
       border: 1px solid $clr-gray-dark;
     }
 
-    &:active {
+    &--active {
       border: 1px solid $clr-main-accent;
+      &:hover,
+      &:focus {
+        border: 1px solid $clr-main-accent;
+      }
     }
   }
 

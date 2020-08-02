@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import classNames from "classnames";
 import { useFormik } from "formik";
 import Header from "../common/header/Header";
@@ -25,7 +24,7 @@ const OrderPage = ({ isFinished }) => {
       locationCity: "",
       locationPlace: "",
       modelFilter: "all",
-      model: "Hyndai, i30 N",
+      model: "",
       color: "Любой",
       dateFrom: "",
       dateTo: "",
@@ -89,14 +88,6 @@ const OrderPage = ({ isFinished }) => {
   );
 };
 
-OrderPage.propTypes = {
-  isFinished: PropTypes.bool,
-};
-
-OrderPage.defaultProps = {
-  isFinished: false,
-};
-
 const Steps = ({ isFinished, step, setStep, isStepsDisabled }) => {
   const stepsTitles = ["Местоположение", "Модель", "Дополнительно", "Итого"];
   const stepTitleClass = (index) =>
@@ -129,16 +120,6 @@ const Steps = ({ isFinished, step, setStep, isStepsDisabled }) => {
       </div>
     </section>
   );
-};
-
-Steps.propTypes = {
-  isFinished: PropTypes.bool,
-  step: PropTypes.number.isRequired,
-  setStep: PropTypes.func.isRequired,
-};
-
-Steps.defaultProps = {
-  isFinished: false,
 };
 
 export default OrderPage;

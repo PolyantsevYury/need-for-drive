@@ -57,10 +57,7 @@ const Status = ({
     if (step === 1 && !isPlaceValid()) {
       return true;
     }
-    if (step === 2 && formData.model === "") {
-      return true;
-    }
-    return false;
+    return step === 2 && formData.model === "";
   };
 
   return (
@@ -104,11 +101,13 @@ const Status = ({
         )}
         {!isStepsDisabled[2] && (
           <>
-            <div className="status__info-item">
-              <div className="status__info-name">Модель</div>
-              <div className="status__info-filler"> </div>
-              <div className="status__info-value">Hyndai, i30 N</div>
-            </div>
+            {formData.model !== "" && (
+              <div className="status__info-item">
+                <div className="status__info-name">Модель</div>
+                <div className="status__info-filler"> </div>
+                <div className="status__info-value">{formData.model}</div>
+              </div>
+            )}
             {!isStepsDisabled[3] && (
               <>
                 <div className="status__info-item">
