@@ -101,11 +101,13 @@ const Status = ({
         )}
         {!isStepsDisabled[2] && (
           <>
-            <div className="status__info-item">
-              <div className="status__info-name">Модель</div>
-              <div className="status__info-filler"> </div>
-              <div className="status__info-value">{formData.model}</div>
-            </div>
+            {formData.model !== "" && (
+              <div className="status__info-item">
+                <div className="status__info-name">Модель</div>
+                <div className="status__info-filler"> </div>
+                <div className="status__info-value">{formData.model}</div>
+              </div>
+            )}
             {!isStepsDisabled[3] && (
               <>
                 <div className="status__info-item">
