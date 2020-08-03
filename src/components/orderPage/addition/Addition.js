@@ -1,7 +1,7 @@
 import React from "react";
 import "./Addition.scss";
 import { connect } from "react-redux";
-import { InputCheckbox, InputRadio, InputText } from "../../common/forms/Forms";
+import { InputCheckbox, InputRadio, InputDate } from "../../common/forms/Forms";
 import { getCars } from "../../../store/order-selectors";
 
 const Addition = ({ formik, cars }) => {
@@ -33,7 +33,7 @@ const Addition = ({ formik, cars }) => {
 
       <div className="addition__option">
         <h4 className="addition__title">Дата аренды</h4>
-        <InputText
+        <InputDate
           items={[
             {
               name: "dateFrom",
@@ -48,7 +48,7 @@ const Addition = ({ formik, cars }) => {
               value: formik.values.dateTo,
             },
           ]}
-          onChange={formik.handleChange}
+          formik={formik}
         />
       </div>
 

@@ -18,7 +18,7 @@ const OrderPage = ({ isFinished }) => {
     3: true,
     4: true,
   });
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
   const formik = useFormik({
     initialValues: {
       locationCity: "",
