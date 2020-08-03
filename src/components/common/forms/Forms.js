@@ -89,6 +89,7 @@ export const InputDate = ({ items, formik }) => {
       <div className="input-text__item" key={items[0].label}>
         <div className="input-text__title">{items[0].label}</div>
         <DatePicker
+          placeholderText={items[0].placeholder}
           selectsStart
           selected={items[0].value}
           onChange={(date) =>
@@ -103,6 +104,7 @@ export const InputDate = ({ items, formik }) => {
       <div className="input-text__item" key={items[1].label}>
         <div className="input-text__title">{items[1].label}</div>
         <DatePicker
+          placeholderText={items[1].placeholder}
           selectsEnd
           selected={items[1].value}
           onChange={(date) =>

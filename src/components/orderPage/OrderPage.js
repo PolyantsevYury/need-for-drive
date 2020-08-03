@@ -18,14 +18,14 @@ const OrderPage = ({ isFinished }) => {
     3: true,
     4: true,
   });
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const formik = useFormik({
     initialValues: {
       locationCity: "",
       locationPlace: "",
       modelFilter: "all",
       model: "",
-      color: "Любой",
+      color: "любой",
       dateFrom: "",
       dateTo: "",
       plan: "day",

@@ -50,6 +50,12 @@ const Status = ({
     }
   };
 
+  const diffTime = Math.abs(formData.dateTo - formData.dateFrom);
+  const diffDays =
+    formData.dateTo && formData.dateFrom !== ""
+      ? Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+      : 0;
+
   const isPlaceValid = () =>
     points.find((point) => point.address === formData.locationPlace);
 
@@ -57,7 +63,13 @@ const Status = ({
     if (step === 1 && !isPlaceValid()) {
       return true;
     }
-    return step === 2 && formData.model === "";
+    if (step === 2 && formData.model === "") {
+      return true;
+    }
+    if (step === 3 && diffDays === 0) {
+      return true;
+    }
+    return false;
   };
 
   return (
@@ -121,7 +133,7 @@ const Status = ({
                 <div className="status__info-item">
                   <div className="status__info-name">Длительност аренды</div>
                   <div className="status__info-filler"> </div>
-                  <div className="status__info-value">1д 2ч</div>
+                  <div className="status__info-value">{diffDays}д</div>
                 </div>
                 <div className="status__info-item">
                   <div className="status__info-name">Тариф</div>
