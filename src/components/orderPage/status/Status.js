@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Status.scss";
 import { connect } from "react-redux";
 import { Button, LinkButton } from "../../common/buttons/Buttons";
-import { getPoints } from "../../../store/order-selectors";
+import { getCars, getPoints } from "../../../store/order-selectors";
 
 const Status = ({
   step,
@@ -12,6 +12,7 @@ const Status = ({
   isFinished,
   formData,
   points,
+  cars,
 }) => {
   const [isModal, setIsModal] = useState(false);
   const onModalConfirm = () => {
@@ -51,6 +52,10 @@ const Status = ({
   };
 
   const diffTime = Math.abs(formData.dateTo - formData.dateFrom);
+  // const diffMinutes =
+  //   formData.dateTo && formData.dateFrom !== ""
+  //     ? Math.ceil(diffTime / (1000 * 60))
+  //     : 0;
   const diffDays =
     formData.dateTo && formData.dateFrom !== ""
       ? Math.ceil(diffTime / (1000 * 60 * 60 * 24))
@@ -70,6 +75,38 @@ const Status = ({
       return true;
     }
     return false;
+  };
+
+  const modelData = cars.find((car) => car.name === formData.model);
+
+  const calculatePrice = () => {
+    let priceMin = 0;
+    let priceMax = 0;
+    let price = 0;
+    if (formData.fullFuel) {
+      priceMin += 500;
+      price += 500;
+    }
+    if (formData.childSeat) {
+      priceMin += 200;
+      price += 200;
+    }
+    if (formData.rightHand) {
+      priceMin += 1600;
+      price += 1600;
+    }
+    if (formData.model !== "") {
+      priceMin =
+        formData.plan === "minute"
+          ? modelData.priceMin * 1.8 + priceMin
+          : modelData.priceMin + priceMin;
+      priceMax = modelData.priceMax + priceMax;
+      price = `${priceMin} - ${priceMax}`;
+    }
+    if (diffDays !== 0) {
+      price = priceMin * diffDays;
+    }
+    return `${price} ₽`;
   };
 
   return (
@@ -170,7 +207,7 @@ const Status = ({
       </div>
       <div className="status__price">
         <h4 className="status__price-title">Цена: </h4>
-        <span>от 8 000 до 12 000 ₽</span>
+        <span>{calculatePrice()}</span>
       </div>
       <Button
         additionalStyles={isFinished ? "button__cancel" : ""}
@@ -185,6 +222,7 @@ const Status = ({
 
 const mapStateToProps = (state) => ({
   points: getPoints(state),
+  cars: getCars(state),
 });
 
 export default connect(mapStateToProps, {})(Status);
