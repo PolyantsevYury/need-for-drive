@@ -1,7 +1,9 @@
 import React from "react";
 import "./Forms.scss";
 import classNames from "classnames";
+import DatePicker from "react-datepicker";
 import Clean from "../../../assets/images/icons/clean_icon.svg";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const InputRadio = ({ name, items, onChange, direction }) => {
   const inputClass = classNames("input", {
@@ -77,6 +79,43 @@ export const InputText = ({ items, onChange }) => {
           <img src={Clean} alt="" />
         </div>
       ))}
+    </div>
+  );
+};
+
+export const InputDate = ({ items, formik }) => {
+  return (
+    <div className="input-text">
+      <div className="input-text__item" key={items[0].label}>
+        <div className="input-text__title">{items[0].label}</div>
+        <DatePicker
+          placeholderText={items[0].placeholder}
+          selectsStart
+          selected={items[0].value}
+          onChange={(date) =>
+            formik.setValues({ ...formik.values, dateFrom: date })
+          }
+          startDate={formik.values.dateFrom}
+          endDate={formik.values.dateTo}
+          maxDate={formik.values.dateTo}
+        />
+        <img src={Clean} alt="" />
+      </div>
+      <div className="input-text__item" key={items[1].label}>
+        <div className="input-text__title">{items[1].label}</div>
+        <DatePicker
+          placeholderText={items[1].placeholder}
+          selectsEnd
+          selected={items[1].value}
+          onChange={(date) =>
+            formik.setValues({ ...formik.values, dateTo: date })
+          }
+          startDate={formik.values.dateFrom}
+          endDate={formik.values.dateTo}
+          minDate={formik.values.dateFrom}
+        />
+        <img src={Clean} alt="" />
+      </div>
     </div>
   );
 };
