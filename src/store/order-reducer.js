@@ -79,4 +79,39 @@ export const requestPoints = () => async (dispatch) => {
   }
 };
 
+export const submitOrder = () => async () => {
+  try {
+    const orderBody = {
+      orderStatusId: {
+        name: "new",
+        id: "5e26a191099b810b946c5d89",
+      },
+      cityId: {
+        name: "Ульяновск",
+        id: "5e26a128099b810b946c5d87",
+      },
+      pointId: {
+        id: "5e26a148099b810b946c5d88",
+      },
+      carId: {
+        id: "5e25ca0d099b810b946c5d65",
+      },
+      color: "голубой",
+      dateFrom: 1468959781804,
+      dateTo: 1469029434776,
+      rateId: {
+        id: "5e26a0e2099b810b946c5d86",
+      },
+      price: 20000,
+      isFullTank: true,
+      isNeedChildChair: true,
+      isRightWheel: true,
+    };
+    await orderAPI.postOrder(orderBody);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+  }
+};
+
 export default orderReducer;

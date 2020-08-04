@@ -10,10 +10,12 @@ const Final = ({ formData, cars }) => {
     <section className="final">
       <div className="final__info">
         <p className="final__model">{modelData.name}</p>
-        <p className="final__number">{modelData.number}</p>
+        <p className="final__number">{modelData.number || "K 761 HA 73"}</p>
         <p className="final__options">
-          Топливо{" "}
-          <span>{formData.fullFuel ? "100%" : `${modelData.tank}%`}</span>
+          Топливо
+          <span>
+            {formData.fullFuel ? " 100%" : ` ${modelData.tank || " 70"} %`}
+          </span>
         </p>
         <p className="final__access">
           Доступна с <span>{formData.dateFrom.toLocaleDateString()} 12:00</span>

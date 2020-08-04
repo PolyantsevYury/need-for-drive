@@ -3,6 +3,7 @@ import "./Status.scss";
 import { connect } from "react-redux";
 import { Button, LinkButton } from "../../common/buttons/Buttons";
 import { getCars, getPoints } from "../../../store/order-selectors";
+import { submitOrder } from "../../../store/order-reducer";
 
 const Status = ({
   step,
@@ -13,13 +14,21 @@ const Status = ({
   formData,
   points,
   cars,
+  submitOrder,
 }) => {
   const [isModal, setIsModal] = useState(false);
+  const modelData = cars.find((car) => car.name === formData.model);
+  // const submitForm = () => {
+  //   submitOrder();
+  // };
   const onModalConfirm = () => {
     if (isFinished) {
       setStep(1);
+      setIsModal(false);
+    } else {
+      submitOrder();
+      setIsModal(false);
     }
-    setIsModal(false);
   };
   const buttonText = () => {
     if (isFinished) {
@@ -62,22 +71,20 @@ const Status = ({
       : 0;
 
   const isPlaceValid = () =>
-    points.find((point) => point.address === formData.locationPlace);
+    points.find((point) => point.address === formData.locationPoint);
 
   const isButtonDisabled = () => {
-    if (step === 1 && !isPlaceValid()) {
+    if (!isPlaceValid()) {
       return true;
     }
-    if (step === 2 && formData.model === "") {
+    if (step > 1 && formData.model === "") {
       return true;
     }
-    if (step === 3 && diffDays === 0) {
+    if (step > 2 && diffDays === 0) {
       return true;
     }
     return false;
   };
-
-  const modelData = cars.find((car) => car.name === formData.model);
 
   const calculatePrice = () => {
     let priceMin = 0;
@@ -108,7 +115,8 @@ const Status = ({
     }
     return `${price} ₽`;
   };
-
+  // 5e26a0d2099b810b946c5d85 min
+  // 5e26a0e2099b810b946c5d86 day
   return (
     <section className="status">
       {isModal && (
@@ -138,13 +146,13 @@ const Status = ({
       )}
       <h2 className="status__title">Ваш заказ:</h2>
       <div className="status__info-items">
-        {formData.locationPlace !== "" && (
+        {formData.locationPoint !== "" && (
           <div className="status__info-item">
             <div className="status__info-name">Пункт выдачи</div>
             <div className="status__info-filler"> </div>
             <div className="status__info-value">
               <p>{formData.locationCity},</p>
-              {formData.locationPlace}
+              {formData.locationPoint}
             </div>
           </div>
         )}
@@ -225,4 +233,4 @@ const mapStateToProps = (state) => ({
   cars: getCars(state),
 });
 
-export default connect(mapStateToProps, {})(Status);
+export default connect(mapStateToProps, { submitOrder })(Status);
