@@ -79,7 +79,19 @@ export const requestPoints = () => async (dispatch) => {
   }
 };
 
-export const submitOrder = () => async () => {
+export const submitOrder = (
+  cityId,
+  pointId,
+  carId,
+  color,
+  dateFrom,
+  dateTo,
+  rateId,
+  price,
+  isFullTank,
+  isNeedChildChair,
+  isRightWheel
+) => async () => {
   try {
     const orderBody = {
       orderStatusId: {
@@ -87,25 +99,24 @@ export const submitOrder = () => async () => {
         id: "5e26a191099b810b946c5d89",
       },
       cityId: {
-        name: "Ульяновск",
-        id: "5e26a128099b810b946c5d87",
+        id: cityId,
       },
       pointId: {
-        id: "5e26a148099b810b946c5d88",
+        id: pointId,
       },
       carId: {
-        id: "5e25ca0d099b810b946c5d65",
+        id: carId,
       },
-      color: "голубой",
-      dateFrom: 1468959781804,
-      dateTo: 1469029434776,
+      color,
+      dateFrom,
+      dateTo,
       rateId: {
-        id: "5e26a0e2099b810b946c5d86",
+        id: rateId,
       },
-      price: 20000,
-      isFullTank: true,
-      isNeedChildChair: true,
-      isRightWheel: true,
+      price,
+      isFullTank,
+      isNeedChildChair,
+      isRightWheel,
     };
     await orderAPI.postOrder(orderBody);
   } catch (e) {

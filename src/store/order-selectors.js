@@ -8,6 +8,10 @@ export const getPoints = (state) => {
   return state.order.points;
 };
 
+export const getCities = (state) => {
+  return state.order.cities;
+};
+
 export const getCars = (state) => {
   return state.order.cars;
 };
