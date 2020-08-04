@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./Status.scss";
 import { connect } from "react-redux";
 import { Button, LinkButton } from "../../common/buttons/Buttons";
-import { getPoints } from "../../../store/order-selectors";
+import { getCars, getCities, getPoints } from "../../../store/order-selectors";
+import { submitOrder } from "../../../store/order-reducer";
 
 const Status = ({
   step,
@@ -11,14 +12,88 @@ const Status = ({
   setIsStepsDisabled,
   isFinished,
   formData,
+  cars,
+  cities,
   points,
+  submitOrder,
 }) => {
+  const modelData = cars.find((car) => car.name === formData.model);
+  const diffTime = Math.abs(formData.dateTo - formData.dateFrom);
+  // const diffMinutes =
+  //   formData.dateTo && formData.dateFrom !== ""
+  //     ? Math.ceil(diffTime / (1000 * 60))
+  //     : 0;
+  const diffDays =
+    formData.dateTo && formData.dateFrom !== ""
+      ? Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+      : 0;
+  const calculatePrice = () => {
+    let priceMin = 0;
+    let priceMax = 0;
+    let price = 0;
+    if (formData.fullFuel) {
+      priceMin += 500;
+      price += 500;
+    }
+    if (formData.childSeat) {
+      priceMin += 200;
+      price += 200;
+    }
+    if (formData.rightHand) {
+      priceMin += 1600;
+      price += 1600;
+    }
+    if (formData.model !== "") {
+      priceMin =
+        formData.plan === "minute"
+          ? modelData.priceMin * 1.8 + priceMin
+          : modelData.priceMin + priceMin;
+      priceMax = modelData.priceMax + priceMax;
+      price = `${priceMin} - ${priceMax}`;
+    }
+    if (diffDays !== 0) {
+      price = priceMin * diffDays;
+    }
+    return `${price} ₽`;
+  };
   const [isModal, setIsModal] = useState(false);
+  const submitForm = () => {
+    const cityId = cities.find((city) => city.name === formData.locationCity)
+      .id;
+    const pointId = points.find(
+      (point) => point.address === formData.locationPoint
+    ).id;
+    const carId = modelData.id;
+    const { color } = formData;
+    const dateFrom = 1468959781804;
+    const dateTo = 1469029434776;
+    const rateId = "5e26a0e2099b810b946c5d86";
+    const price = calculatePrice();
+    const isFullTank = formData.fullFuel;
+    const isNeedChildChair = formData.childSeat;
+    const isRightWheel = formData.rightHand;
+    submitOrder(
+      cityId,
+      pointId,
+      carId,
+      color,
+      dateFrom,
+      dateTo,
+      rateId,
+      price,
+      isFullTank,
+      isNeedChildChair,
+      isRightWheel
+    );
+  };
   const onModalConfirm = () => {
     if (isFinished) {
       setStep(1);
+      setIsModal(false);
+    } else {
+      submitForm();
+      setIsModal(false);
     }
-    setIsModal(false);
   };
   const buttonText = () => {
     if (isFinished) {
@@ -49,29 +124,23 @@ const Status = ({
       setStep(nexStep);
     }
   };
-
-  const diffTime = Math.abs(formData.dateTo - formData.dateFrom);
-  const diffDays =
-    formData.dateTo && formData.dateFrom !== ""
-      ? Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-      : 0;
-
   const isPlaceValid = () =>
-    points.find((point) => point.address === formData.locationPlace);
+    points.find((point) => point.address === formData.locationPoint);
 
   const isButtonDisabled = () => {
-    if (step === 1 && !isPlaceValid()) {
+    if (!isPlaceValid()) {
       return true;
     }
-    if (step === 2 && formData.model === "") {
+    if (step > 1 && formData.model === "") {
       return true;
     }
-    if (step === 3 && diffDays === 0) {
+    if (step > 2 && diffDays === 0) {
       return true;
     }
     return false;
   };
-
+  // 5e26a0d2099b810b946c5d85 min
+  // 5e26a0e2099b810b946c5d86 day
   return (
     <section className="status">
       {isModal && (
@@ -101,13 +170,13 @@ const Status = ({
       )}
       <h2 className="status__title">Ваш заказ:</h2>
       <div className="status__info-items">
-        {formData.locationPlace !== "" && (
+        {formData.locationPoint !== "" && (
           <div className="status__info-item">
             <div className="status__info-name">Пункт выдачи</div>
             <div className="status__info-filler"> </div>
             <div className="status__info-value">
               <p>{formData.locationCity},</p>
-              {formData.locationPlace}
+              {formData.locationPoint}
             </div>
           </div>
         )}
@@ -170,7 +239,7 @@ const Status = ({
       </div>
       <div className="status__price">
         <h4 className="status__price-title">Цена: </h4>
-        <span>от 8 000 до 12 000 ₽</span>
+        <span>{calculatePrice()}</span>
       </div>
       <Button
         additionalStyles={isFinished ? "button__cancel" : ""}
@@ -185,6 +254,8 @@ const Status = ({
 
 const mapStateToProps = (state) => ({
   points: getPoints(state),
+  cars: getCars(state),
+  cities: getCities(state),
 });
 
-export default connect(mapStateToProps, {})(Status);
+export default connect(mapStateToProps, { submitOrder })(Status);

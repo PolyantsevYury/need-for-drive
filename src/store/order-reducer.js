@@ -79,4 +79,50 @@ export const requestPoints = () => async (dispatch) => {
   }
 };
 
+export const submitOrder = (
+  cityId,
+  pointId,
+  carId,
+  color,
+  dateFrom,
+  dateTo,
+  rateId,
+  price,
+  isFullTank,
+  isNeedChildChair,
+  isRightWheel
+) => async () => {
+  try {
+    const orderBody = {
+      orderStatusId: {
+        name: "new",
+        id: "5e26a191099b810b946c5d89",
+      },
+      cityId: {
+        id: cityId,
+      },
+      pointId: {
+        id: pointId,
+      },
+      carId: {
+        id: carId,
+      },
+      color,
+      dateFrom,
+      dateTo,
+      rateId: {
+        id: rateId,
+      },
+      price,
+      isFullTank,
+      isNeedChildChair,
+      isRightWheel,
+    };
+    await orderAPI.postOrder(orderBody);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+  }
+};
+
 export default orderReducer;

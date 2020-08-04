@@ -22,7 +22,7 @@ const OrderPage = ({ isFinished }) => {
   const formik = useFormik({
     initialValues: {
       locationCity: "",
-      locationPlace: "",
+      locationPoint: "",
       modelFilter: "all",
       model: "",
       color: "любой",

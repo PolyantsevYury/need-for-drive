@@ -5,14 +5,10 @@ import { InputCheckbox, InputRadio, InputDate } from "../../common/forms/Forms";
 import { getCars } from "../../../store/order-selectors";
 
 const Addition = ({ formik, cars }) => {
-  const getCarColors = () => {
-    const carColors = ["любой"];
-    cars.map(
-      (car) => car.name === formik.values.model && carColors.push(...car.colors)
-    );
-    return carColors;
-  };
-  const colorItems = getCarColors().map((color) => {
+  const modelData = cars.find((car) => car.name === formik.values.model);
+  const carColorsWithAny = ["любой", ...modelData.colors];
+
+  const colorItems = carColorsWithAny.map((color) => {
     const container = {};
     container.label = color.charAt(0).toUpperCase() + color.slice(1);
     container.value = color;
@@ -59,12 +55,14 @@ const Addition = ({ formik, cars }) => {
           direction="column"
           items={[
             {
-              label: "Поминутно, 7₽/мин",
+              label: `Поминутно, ${Math.round(
+                (modelData.priceMin / (60 * 24)) * 1.8
+              )} ₽/мин`,
               value: "minute",
               checked: formik.values.plan === "minute",
             },
             {
-              label: "На сутки, 1999 ₽/сутки",
+              label: `На сутки, ${modelData.priceMin} ₽/сутки`,
               value: "day",
               checked: formik.values.plan === "day",
             },

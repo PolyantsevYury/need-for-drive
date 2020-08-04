@@ -19,6 +19,9 @@ const orderAPI = {
   getCars() {
     return instance.get(`db/car/`);
   },
+  postOrder(orderBody) {
+    return instance.post(`db/order/`, orderBody);
+  },
 };
 
 export default orderAPI;

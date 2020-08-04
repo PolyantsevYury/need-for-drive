@@ -38,10 +38,10 @@ const Location = ({
               options: citiesNames,
             },
             {
-              name: "locationPlace",
+              name: "locationPoint",
               label: "Пункт выдачи",
               placeholder: "Начните вводить пункт",
-              value: formik.values.locationPlace,
+              value: formik.values.locationPoint,
               options: currentPoints,
             },
           ]}
