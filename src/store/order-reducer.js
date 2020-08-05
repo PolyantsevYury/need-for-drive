@@ -5,6 +5,7 @@ const ADD_POINTS = "ADD_POINTS";
 const ADD_CARS = "ADD_CARS";
 const TOGGLE_IS_CARS_FETCHING = "TOGGLE_IS_CARS_FETCHING";
 const ADD_ORDER_ID = "ADD_ORDER_ID";
+const ADD_FINISHED_ORDER_DATA = "ADD_FINISHED_ORDER_DATA";
 
 const initialState = {
   cities: [],
@@ -12,6 +13,7 @@ const initialState = {
   cars: [],
   isCarsFetching: true,
   orderId: null,
+  finishedOrderData: [],
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -41,6 +43,11 @@ const orderReducer = (state = initialState, action) => {
         ...state,
         orderId: action.orderId,
       };
+    case ADD_FINISHED_ORDER_DATA:
+      return {
+        ...state,
+        finishedOrderData: action.orderData,
+      };
     default:
       return state;
   }
@@ -49,6 +56,10 @@ const orderReducer = (state = initialState, action) => {
 export const addCities = (cities) => ({ type: ADD_CITIES, cities });
 export const addPoints = (points) => ({ type: ADD_POINTS, points });
 export const addCars = (cars) => ({ type: ADD_CARS, cars });
+export const addFinishedOrderData = (orderData) => ({
+  type: ADD_FINISHED_ORDER_DATA,
+  orderData,
+});
 export const toggleIsCarsFetching = (isCarsFetching) => ({
   type: TOGGLE_IS_CARS_FETCHING,
   isCarsFetching,
@@ -98,7 +109,8 @@ export const submitOrder = (
   price,
   isFullTank,
   isNeedChildChair,
-  isRightWheel
+  isRightWheel,
+  setIsModal
 ) => async (dispatch) => {
   try {
     const orderBody = {
@@ -128,6 +140,17 @@ export const submitOrder = (
     };
     const result = await orderAPI.postOrder(orderBody);
     dispatch(addOrderId(result.data.data.id));
+    setIsModal(false);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+  }
+};
+
+export const requestOrder = (orderId) => async (dispatch) => {
+  try {
+    const result = await orderAPI.getOrder(orderId);
+    dispatch(addFinishedOrderData(result.data.data));
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);

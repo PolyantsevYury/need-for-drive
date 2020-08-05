@@ -15,3 +15,11 @@ export const getCities = (state) => {
 export const getCars = (state) => {
   return state.order.cars;
 };
+
+export const getOrderId = (state) => {
+  return state.order.orderId;
+};
+
+export const getOrderData = (state) => {
+  return state.order.finishedOrderData;
+};
