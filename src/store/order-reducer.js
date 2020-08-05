@@ -4,12 +4,14 @@ const ADD_CITIES = "ADD_CITIES";
 const ADD_POINTS = "ADD_POINTS";
 const ADD_CARS = "ADD_CARS";
 const TOGGLE_IS_CARS_FETCHING = "TOGGLE_IS_CARS_FETCHING";
+const ADD_ORDER_ID = "ADD_ORDER_ID";
 
 const initialState = {
   cities: [],
   points: [],
   cars: [],
   isCarsFetching: true,
+  orderId: null,
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -34,6 +36,11 @@ const orderReducer = (state = initialState, action) => {
         ...state,
         isCarsFetching: action.isCarsFetching,
       };
+    case ADD_ORDER_ID:
+      return {
+        ...state,
+        orderId: action.orderId,
+      };
     default:
       return state;
   }
@@ -46,6 +53,7 @@ export const toggleIsCarsFetching = (isCarsFetching) => ({
   type: TOGGLE_IS_CARS_FETCHING,
   isCarsFetching,
 });
+export const addOrderId = (orderId) => ({ type: ADD_ORDER_ID, orderId });
 
 export const requestCities = () => async (dispatch) => {
   try {
@@ -91,7 +99,7 @@ export const submitOrder = (
   isFullTank,
   isNeedChildChair,
   isRightWheel
-) => async () => {
+) => async (dispatch) => {
   try {
     const orderBody = {
       orderStatusId: {
@@ -118,7 +126,8 @@ export const submitOrder = (
       isNeedChildChair,
       isRightWheel,
     };
-    await orderAPI.postOrder(orderBody);
+    const result = await orderAPI.postOrder(orderBody);
+    dispatch(addOrderId(result.data.data.id));
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);

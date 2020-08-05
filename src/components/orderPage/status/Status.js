@@ -65,9 +65,12 @@ const Status = ({
     ).id;
     const carId = modelData.id;
     const { color } = formData;
-    const dateFrom = 1468959781804;
-    const dateTo = 1469029434776;
-    const rateId = "5e26a0e2099b810b946c5d86";
+    const dateFrom = formData.dateFrom.getTime();
+    const dateTo = formData.dateTo.getTime();
+    const rateId =
+      formData.plan === "day"
+        ? "5e26a0e2099b810b946c5d86"
+        : "5e26a0d2099b810b946c5d85";
     const price = calculatePrice();
     const isFullTank = formData.fullFuel;
     const isNeedChildChair = formData.childSeat;
