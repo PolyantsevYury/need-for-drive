@@ -22,6 +22,9 @@ const orderAPI = {
   postOrder(orderBody) {
     return instance.post(`db/order/`, orderBody);
   },
+  getOrder(orderId) {
+    return instance.get(`db/order/${orderId}`);
+  },
 };
 
 export default orderAPI;

@@ -12,7 +12,10 @@ const App = () => {
       <Switch>
         <Route exact path="/need-for-drive" render={() => <MainPage />} />
         <Route exact path="/order" render={() => <OrderPage />} />
-        <Route path="/order/finished" render={() => <OrderPage isFinished />} />
+        <Route
+          path="/order/finished/:orderId?"
+          render={() => <OrderPage isFinished />}
+        />
         <Route path="*" render={() => <div>404 NOT FOUND</div>} />
       </Switch>
     </div>

@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import "./Status.scss";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { Button, LinkButton } from "../../common/buttons/Buttons";
-import { getCars, getCities, getPoints } from "../../../store/order-selectors";
+import {
+  getCars,
+  getCities,
+  getOrderId,
+  getPoints,
+} from "../../../store/order-selectors";
 import { submitOrder } from "../../../store/order-reducer";
 
 const Status = ({
@@ -16,6 +22,7 @@ const Status = ({
   cities,
   points,
   submitOrder,
+  orderId,
 }) => {
   const modelData = cars.find((car) => car.name === formData.model);
   const diffTime = Math.abs(formData.dateTo - formData.dateFrom);
@@ -86,7 +93,8 @@ const Status = ({
       price,
       isFullTank,
       isNeedChildChair,
-      isRightWheel
+      isRightWheel,
+      setIsModal
     );
   };
   const onModalConfirm = () => {
@@ -95,7 +103,6 @@ const Status = ({
       setIsModal(false);
     } else {
       submitForm();
-      setIsModal(false);
     }
   };
   const buttonText = () => {
@@ -142,8 +149,11 @@ const Status = ({
     }
     return false;
   };
-  // 5e26a0d2099b810b946c5d85 min
-  // 5e26a0e2099b810b946c5d86 day
+
+  if (orderId) {
+    return <Redirect to={`/order/finished/${orderId}`} />;
+  }
+
   return (
     <section className="status">
       {isModal && (
@@ -155,7 +165,7 @@ const Status = ({
             </div>
             <div className="modal__buttons">
               <LinkButton
-                to={isFinished ? "/order" : "/order/finished"}
+                to={isFinished ? "/order" : false}
                 onClick={() => onModalConfirm()}
               >
                 Подтвердить
@@ -259,6 +269,7 @@ const mapStateToProps = (state) => ({
   points: getPoints(state),
   cars: getCars(state),
   cities: getCities(state),
+  orderId: getOrderId(state),
 });
 
 export default connect(mapStateToProps, { submitOrder })(Status);
