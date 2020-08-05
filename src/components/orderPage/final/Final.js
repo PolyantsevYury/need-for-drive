@@ -4,19 +4,30 @@ import { connect } from "react-redux";
 import { getCars } from "../../../store/order-selectors";
 
 const FinalContainer = ({ orderData, formData, cars }) => {
-  const modelData = cars.find((car) => car?.name === formData?.model);
-  const modelName = orderData?.carId?.name || modelData?.name;
-  const modelNumber = modelData?.number || "K 761 HA 73";
-  const fuel =
-    orderData?.fuel || formData?.fullFuel
-      ? " 100%"
-      : ` ${modelData?.tank || " 70"} %`;
-  const dateFrom =
-    "12/07/18" ||
-    orderData?.dateFrom?.toLocaleDateString() ||
-    formData?.dateFrom?.toLocaleDateString();
-  const modelImg =
-    orderData?.carId?.thumbnail?.path || modelData?.thumbnail?.path;
+  let modelName;
+  let modelNumber;
+  let fuel;
+  let dateFrom;
+  let modelImg;
+
+  // If we got finished order data from server
+  if (orderData) {
+    modelName = orderData?.carId?.name;
+    modelNumber = "K 761 HA 73";
+    fuel = " 100%";
+    const date = new Date(orderData?.dateFrom);
+    dateFrom = date?.toLocaleDateString();
+    modelImg = orderData?.carId?.thumbnail?.path;
+    // If we got order data from form
+  } else {
+    const modelData = cars.find((car) => car?.name === formData?.model);
+    modelName = modelData?.name;
+    modelNumber = modelData?.number || "K 761 HA 73";
+    fuel = formData?.fullFuel ? " 100%" : ` ${modelData?.tank || " 70"} %`;
+    const date = new Date(formData?.dateFrom);
+    dateFrom = date?.toLocaleDateString();
+    modelImg = modelData?.thumbnail?.path;
+  }
 
   return (
     <Final

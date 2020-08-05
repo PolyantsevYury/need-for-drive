@@ -13,7 +13,7 @@ const initialState = {
   cars: [],
   isCarsFetching: true,
   orderId: null,
-  finishedOrderData: [],
+  finishedOrderData: null,
 };
 
 const orderReducer = (state = initialState, action) => {
