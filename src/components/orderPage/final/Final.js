@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { getCars } from "../../../store/order-selectors";
 
 const FinalContainer = ({ orderData, formData, cars }) => {
-  const modelData = cars.find((car) => car.name === formData.model);
+  const modelData = cars.find((car) => car?.name === formData?.model);
   const modelName = orderData?.carId?.name || modelData?.name;
   const modelNumber = modelData?.number || "K 761 HA 73";
   const fuel =

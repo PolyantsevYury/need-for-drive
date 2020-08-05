@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { withRouter } from "react-router-dom";
 import "./Status.scss";
+import { compose } from "redux";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import { Button, LinkButton } from "../../common/buttons/Buttons";
 import {
   getCars,
@@ -23,7 +24,14 @@ const Status = ({
   points,
   submitOrder,
   orderId,
+  history,
 }) => {
+  useEffect(() => {
+    if (orderId) {
+      history.push(`/order/finished/${orderId}`);
+    }
+  }, [history, orderId]);
+
   const modelData = cars.find((car) => car.name === formData.model);
   const diffTime = Math.abs(formData.dateTo - formData.dateFrom);
   // const diffMinutes =
@@ -138,6 +146,9 @@ const Status = ({
     points.find((point) => point.address === formData.locationPoint);
 
   const isButtonDisabled = () => {
+    if (isFinished) {
+      return false;
+    }
     if (!isPlaceValid()) {
       return true;
     }
@@ -149,10 +160,6 @@ const Status = ({
     }
     return false;
   };
-
-  if (orderId) {
-    return <Redirect to={`/order/finished/${orderId}`} />;
-  }
 
   return (
     <section className="status">
@@ -272,4 +279,7 @@ const mapStateToProps = (state) => ({
   orderId: getOrderId(state),
 });
 
-export default connect(mapStateToProps, { submitOrder })(Status);
+export default compose(
+  connect(mapStateToProps, { submitOrder }),
+  withRouter
+)(Status);
