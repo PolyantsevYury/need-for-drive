@@ -5,8 +5,8 @@ import Header from "../common/header/Header";
 import Location from "./location/Location";
 import Model from "./model/Model";
 import Addition from "./addition/Addition";
-import FinalContainer from "./final/Final";
-import Status from "./status/Status";
+import StatusContainer from "./status/Status";
+import PriceBar from "./priceBar/PriceBar";
 import NextStep from "../../assets/images/icons/next_step_icon.svg";
 import "./OrderPage.scss";
 import Finished from "./finished/Finished";
@@ -44,7 +44,7 @@ const OrderPage = ({ isFinished }) => {
       case 3:
         return <Addition formik={formik} />;
       case 4:
-        return <FinalContainer formData={formik.values} />;
+        return <StatusContainer formData={formik.values} />;
       default:
         return <Location formik={formik} />;
     }
@@ -73,7 +73,7 @@ const OrderPage = ({ isFinished }) => {
         </div>
         <div className="order__status-container">
           <div className="order__status">
-            <Status
+            <PriceBar
               isStepsDisabled={isStepsDisabled}
               setIsStepsDisabled={setIsStepsDisabled}
               isFinished={isFinished}

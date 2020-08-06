@@ -3,7 +3,7 @@ import "./Finished.scss";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withRouter, useParams } from "react-router-dom";
-import FinalContainer from "../final/Final";
+import StatusContainer from "../status/Status";
 import { getOrderData } from "../../../store/order-selectors";
 import { requestOrder } from "../../../store/order-reducer";
 
@@ -18,7 +18,7 @@ const Finished = ({ orderData, requestOrder }) => {
   return (
     <section className="finished">
       <h3 className="finished__title">Ваш заказ подтверждён</h3>
-      <FinalContainer orderData={orderData} />
+      <StatusContainer orderData={orderData} />
     </section>
   );
 };
