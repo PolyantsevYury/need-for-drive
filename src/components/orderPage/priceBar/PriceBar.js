@@ -5,7 +5,6 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { Button, LinkButton } from "../../common/buttons/Buttons";
 import {
-  getCars,
   getCities,
   getOrderId,
   getPoints,
@@ -18,8 +17,7 @@ const PriceBar = ({
   isStepsDisabled,
   setIsStepsDisabled,
   isFinished,
-  formData,
-  cars,
+  orderData,
   cities,
   points,
   submitOrder,
@@ -32,38 +30,37 @@ const PriceBar = ({
     }
   }, [history, orderId]);
 
-  const modelData = cars.find((car) => car.name === formData.model);
-  const diffTime = Math.abs(formData.dateTo - formData.dateFrom);
+  const diffTime = Math.abs(orderData?.dateTo - orderData?.dateFrom);
   // const diffMinutes =
-  //   formData.dateTo && formData.dateFrom !== ""
+  //   orderData.dateTo && orderData.dateFrom !== ""
   //     ? Math.ceil(diffTime / (1000 * 60))
   //     : 0;
   const diffDays =
-    formData.dateTo && formData.dateFrom !== ""
+    orderData?.dateTo && orderData?.dateFrom !== ""
       ? Math.ceil(diffTime / (1000 * 60 * 60 * 24))
       : 0;
   const calculatePrice = () => {
     let priceMin = 0;
     let priceMax = 0;
     let price = 0;
-    if (formData.fullFuel) {
+    if (orderData?.fullFuel) {
       priceMin += 500;
       price += 500;
     }
-    if (formData.childSeat) {
+    if (orderData?.childSeat) {
       priceMin += 200;
       price += 200;
     }
-    if (formData.rightHand) {
+    if (orderData?.rightHand) {
       priceMin += 1600;
       price += 1600;
     }
-    if (formData.model !== "") {
+    if (orderData?.modelName) {
       priceMin =
-        formData.plan === "minute"
-          ? modelData.priceMin * 1.8 + priceMin
-          : modelData.priceMin + priceMin;
-      priceMax = modelData.priceMax + priceMax;
+        orderData.rate === "Поминутно"
+          ? orderData.priceMin * 1.8 + priceMin
+          : orderData.priceMin + priceMin;
+      priceMax = orderData.priceMax + priceMax;
       price = `${priceMin} - ${priceMax}`;
     }
     if (diffDays !== 0) {
@@ -73,23 +70,23 @@ const PriceBar = ({
   };
   const [isModal, setIsModal] = useState(false);
   const submitForm = () => {
-    const cityId = cities.find((city) => city.name === formData.locationCity)
+    const cityId = cities.find((city) => city.name === orderData.locationCity)
       .id;
     const pointId = points.find(
-      (point) => point.address === formData.locationPoint
+      (point) => point.address === orderData.locationPoint
     ).id;
-    const carId = modelData.id;
-    const { color } = formData;
-    const dateFrom = formData.dateFrom.getTime();
-    const dateTo = formData.dateTo.getTime();
+    const { carId } = orderData;
+    const { color } = orderData;
+    const dateFrom = orderData.dateFrom.getTime();
+    const dateTo = orderData.dateTo.getTime();
     const rateId =
-      formData.plan === "day"
+      orderData.rate === "На сутки"
         ? "5e26a0e2099b810b946c5d86"
         : "5e26a0d2099b810b946c5d85";
     const price = calculatePrice();
-    const isFullTank = formData.fullFuel;
-    const isNeedChildChair = formData.childSeat;
-    const isRightWheel = formData.rightHand;
+    const isFullTank = orderData.fullFuel;
+    const isNeedChildChair = orderData.childSeat;
+    const isRightWheel = orderData.rightHand;
     submitOrder(
       cityId,
       pointId,
@@ -143,7 +140,7 @@ const PriceBar = ({
     }
   };
   const isPlaceValid = () =>
-    points.find((point) => point.address === formData.locationPoint);
+    points.find((point) => point.address === orderData?.locationPoint);
 
   const isButtonDisabled = () => {
     if (isFinished) {
@@ -152,7 +149,7 @@ const PriceBar = ({
     if (!isPlaceValid()) {
       return true;
     }
-    if (step > 1 && formData.model === "") {
+    if (step > 1 && !orderData.modelName) {
       return true;
     }
     if (step > 2 && diffDays === 0) {
@@ -190,33 +187,36 @@ const PriceBar = ({
       )}
       <h2 className="price-bar__title">Ваш заказ:</h2>
       <div className="price-bar__info-items">
-        {formData.locationPoint !== "" && (
+        {orderData?.locationPoint && (
           <div className="price-bar__info-item">
             <div className="price-bar__info-name">Пункт выдачи</div>
             <div className="price-bar__info-filler"> </div>
             <div className="price-bar__info-value">
-              <p>{formData.locationCity},</p>
-              {formData.locationPoint}
+              <p>{orderData?.locationCity},</p>
+              {orderData?.locationPoint}
             </div>
           </div>
         )}
-        {!isStepsDisabled[2] && (
+        {((isFinished && orderData.modelName) ||
+          (!isStepsDisabled[2] && orderData.modelName)) && (
           <>
-            {formData.model !== "" && (
+            {orderData?.modelName && (
               <div className="price-bar__info-item">
                 <div className="price-bar__info-name">Модель</div>
                 <div className="price-bar__info-filler"> </div>
-                <div className="price-bar__info-value">{formData.model}</div>
+                <div className="price-bar__info-value">
+                  {orderData?.modelName}
+                </div>
               </div>
             )}
-            {!isStepsDisabled[3] && (
+            {(isFinished || !isStepsDisabled[3]) && (
               <>
                 <div className="price-bar__info-item">
                   <div className="price-bar__info-name">Цвет</div>
                   <div className="price-bar__info-filler"> </div>
                   <div className="price-bar__info-value">
-                    {formData.color.charAt(0).toUpperCase() +
-                      formData.color.slice(1)}
+                    {orderData?.color?.charAt(0).toUpperCase() +
+                      orderData?.color?.slice(1)}
                   </div>
                 </div>
                 <div className="price-bar__info-item">
@@ -227,25 +227,23 @@ const PriceBar = ({
                 <div className="price-bar__info-item">
                   <div className="price-bar__info-name">Тариф</div>
                   <div className="price-bar__info-filler"> </div>
-                  <div className="price-bar__info-value">
-                    {formData.plan === "day" ? "На сутки" : "Поминутно"}
-                  </div>
+                  <div className="price-bar__info-value">{orderData?.rate}</div>
                 </div>
-                {formData.fullFuel && (
+                {orderData?.fullFuel && (
                   <div className="price-bar__info-item">
                     <div className="price-bar__info-name">Полный бак</div>
                     <div className="price-bar__info-filler"> </div>
                     <div className="price-bar__info-value">Да</div>
                   </div>
                 )}
-                {formData.childSeat && (
+                {orderData?.childSeat && (
                   <div className="price-bar__info-item">
                     <div className="price-bar__info-name">Детское кресло</div>
                     <div className="price-bar__info-filler"> </div>
                     <div className="price-bar__info-value">Да</div>
                   </div>
                 )}
-                {formData.rightHand && (
+                {orderData?.rightHand && (
                   <div className="price-bar__info-item">
                     <div className="price-bar__info-name">Правый руль</div>
                     <div className="price-bar__info-filler"> </div>
@@ -259,7 +257,7 @@ const PriceBar = ({
       </div>
       <div className="price-bar__price">
         <h4 className="price-bar__price-title">Цена: </h4>
-        <span>{calculatePrice()}</span>
+        <span>{orderData?.price || calculatePrice()}</span>
       </div>
       <Button
         additionalStyles={isFinished ? "button__cancel" : ""}
@@ -274,7 +272,6 @@ const PriceBar = ({
 
 const mapStateToProps = (state) => ({
   points: getPoints(state),
-  cars: getCars(state),
   cities: getCities(state),
   orderId: getOrderId(state),
 });

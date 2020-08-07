@@ -4,10 +4,16 @@ import classNames from "classnames";
 import { connect } from "react-redux";
 import { InputRadio } from "../../common/forms/Forms";
 import { getCars } from "../../../store/order-selectors";
-import { requestCars } from "../../../store/order-reducer";
+import { requestCars, setCurrentCar } from "../../../store/order-reducer";
 import Preloader from "../../common/preloader/Preloader";
 
-const Model = ({ formik, cars, isCarsFetching, requestCars }) => {
+const Model = ({
+  formik,
+  cars,
+  isCarsFetching,
+  requestCars,
+  setCurrentCar,
+}) => {
   let filteredCars = [];
 
   useEffect(() => {
@@ -26,6 +32,11 @@ const Model = ({ formik, cars, isCarsFetching, requestCars }) => {
     );
   };
   filterCars();
+
+  const onModelClick = (car) => {
+    formik.setValues({ ...formik.values, model: car.name });
+    setCurrentCar(car);
+  };
 
   const cardClass = (carName) =>
     classNames("catalog__car", {
@@ -63,9 +74,7 @@ const Model = ({ formik, cars, isCarsFetching, requestCars }) => {
           filteredCars.map((car) => (
             <button
               type="button"
-              onClick={() =>
-                formik.setValues({ ...formik.values, model: car.name })
-              }
+              onClick={() => onModelClick(car)}
               className={cardClass(car.name)}
               key={car.id}
             >
@@ -93,4 +102,4 @@ const mapStateToProps = (state) => ({
   isCarsFetching: state.order.isCarsFetching,
 });
 
-export default connect(mapStateToProps, { requestCars })(Model);
+export default connect(mapStateToProps, { requestCars, setCurrentCar })(Model);

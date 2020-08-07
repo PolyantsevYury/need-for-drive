@@ -3,14 +3,13 @@ import "./Finished.scss";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withRouter, useParams } from "react-router-dom";
-import StatusContainer from "../status/Status";
-import { getOrderData } from "../../../store/order-selectors";
+import Status from "../status/Status";
+import { getFinishedOrderData } from "../../../store/order-selectors";
 import { requestOrder } from "../../../store/order-reducer";
 
-const Finished = ({ orderData, requestOrder }) => {
+const Finished = ({ finishedOrderData, requestOrder }) => {
   const params = useParams();
   const { orderId } = params;
-
   useEffect(() => {
     requestOrder(orderId);
   }, [orderId, requestOrder]);
@@ -18,14 +17,14 @@ const Finished = ({ orderData, requestOrder }) => {
   return (
     <section className="finished">
       <h3 className="finished__title">Ваш заказ подтверждён</h3>
-      <StatusContainer orderData={orderData} />
+      <Status orderData={finishedOrderData} />
     </section>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    orderData: getOrderData(state),
+    finishedOrderData: getFinishedOrderData(state),
   };
 };
 

@@ -3,6 +3,7 @@ import orderAPI from "../api/api";
 const ADD_CITIES = "ADD_CITIES";
 const ADD_POINTS = "ADD_POINTS";
 const ADD_CARS = "ADD_CARS";
+const SET_CURRENT_CAR = "SET_CURRENT_CAR";
 const TOGGLE_IS_CARS_FETCHING = "TOGGLE_IS_CARS_FETCHING";
 const ADD_ORDER_ID = "ADD_ORDER_ID";
 const ADD_FINISHED_ORDER_DATA = "ADD_FINISHED_ORDER_DATA";
@@ -11,6 +12,7 @@ const initialState = {
   cities: [],
   points: [],
   cars: [],
+  currentModel: null,
   isCarsFetching: true,
   orderId: null,
   finishedOrderData: null,
@@ -32,6 +34,11 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         cars: action.cars,
+      };
+    case SET_CURRENT_CAR:
+      return {
+        ...state,
+        currentModel: action.car,
       };
     case TOGGLE_IS_CARS_FETCHING:
       return {
@@ -56,6 +63,7 @@ const orderReducer = (state = initialState, action) => {
 export const addCities = (cities) => ({ type: ADD_CITIES, cities });
 export const addPoints = (points) => ({ type: ADD_POINTS, points });
 export const addCars = (cars) => ({ type: ADD_CARS, cars });
+export const setCurrentCar = (car) => ({ type: SET_CURRENT_CAR, car });
 export const addFinishedOrderData = (orderData) => ({
   type: ADD_FINISHED_ORDER_DATA,
   orderData,

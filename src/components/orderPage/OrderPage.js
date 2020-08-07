@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 import { useFormik } from "formik";
+import { connect } from "react-redux";
 import Header from "../common/header/Header";
 import Location from "./location/Location";
 import Model from "./model/Model";
 import Addition from "./addition/Addition";
-import StatusContainer from "./status/Status";
+import Status from "./status/Status";
 import PriceBar from "./priceBar/PriceBar";
 import NextStep from "../../assets/images/icons/next_step_icon.svg";
 import "./OrderPage.scss";
 import Finished from "./finished/Finished";
+import {
+  getCurrentModel,
+  getFinishedOrderData,
+} from "../../store/order-selectors";
 
-const OrderPage = ({ isFinished }) => {
+const OrderPage = ({ isFinished, finishedOrderData, currentModel }) => {
   const [isStepsDisabled, setIsStepsDisabled] = useState({
     1: false,
     2: true,
@@ -28,13 +33,31 @@ const OrderPage = ({ isFinished }) => {
       color: "любой",
       dateFrom: "",
       dateTo: "",
-      plan: "day",
+      rate: "day",
       fullFuel: false,
       childSeat: false,
       rightHand: false,
     },
   });
-
+  const formData = formik.values;
+  const formOrderData = {
+    locationCity: formData?.locationCity,
+    locationPoint: formData?.locationPoint,
+    modelName: currentModel?.name,
+    modelNumber: currentModel?.number || "K 761 HA 73",
+    carId: currentModel?.id,
+    color: formData?.color,
+    priceMin: currentModel?.priceMin,
+    priceMax: currentModel?.priceMax,
+    tank: currentModel?.tank,
+    fullFuel: formData?.fullFuel,
+    childSeat: formData?.childSeat,
+    rightHand: formData?.rightHand,
+    rate: formData?.rate === "day" ? "На сутки" : "Поминутно",
+    dateFrom: formData?.dateFrom,
+    dateTo: formData?.dateTo,
+    modelImg: currentModel?.thumbnail?.path,
+  };
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -44,7 +67,7 @@ const OrderPage = ({ isFinished }) => {
       case 3:
         return <Addition formik={formik} />;
       case 4:
-        return <StatusContainer formData={formik.values} />;
+        return <Status orderData={formOrderData} />;
       default:
         return <Location formik={formik} />;
     }
@@ -79,7 +102,7 @@ const OrderPage = ({ isFinished }) => {
               isFinished={isFinished}
               step={step}
               setStep={setStep}
-              formData={formik.values}
+              orderData={isFinished ? finishedOrderData : formOrderData}
             />
           </div>
         </div>
@@ -122,4 +145,9 @@ const Steps = ({ isFinished, step, setStep, isStepsDisabled }) => {
   );
 };
 
-export default OrderPage;
+const mapStateToProps = (state) => ({
+  currentModel: getCurrentModel(state),
+  finishedOrderData: getFinishedOrderData(state),
+});
+
+export default connect(mapStateToProps, {})(OrderPage);
