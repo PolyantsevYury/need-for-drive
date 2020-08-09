@@ -257,6 +257,7 @@ const PriceBar = ({
       </div>
       <div className="price-bar__price">
         <h4 className="price-bar__price-title">Цена: </h4>
+        {/* get price from finished order data or calculate it if the order is being formed */}
         <span>{orderData?.price || calculatePrice()}</span>
       </div>
       <Button

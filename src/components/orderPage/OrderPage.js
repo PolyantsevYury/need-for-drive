@@ -17,13 +17,13 @@ import {
 } from "../../store/order-selectors";
 
 const OrderPage = ({ isFinished, finishedOrderData, currentModel }) => {
+  const [step, setStep] = useState(1);
   const [isStepsDisabled, setIsStepsDisabled] = useState({
     1: false,
     2: true,
     3: true,
     4: true,
   });
-  const [step, setStep] = useState(1);
   const formik = useFormik({
     initialValues: {
       locationCity: "",
@@ -40,36 +40,36 @@ const OrderPage = ({ isFinished, finishedOrderData, currentModel }) => {
     },
   });
   const formData = formik.values;
-  const formOrderData = {
+  const orderData = {
     locationCity: formData?.locationCity,
     locationPoint: formData?.locationPoint,
-    modelName: currentModel?.name,
-    modelNumber: currentModel?.number || "K 761 HA 73",
-    carId: currentModel?.id,
     color: formData?.color,
-    priceMin: currentModel?.priceMin,
-    priceMax: currentModel?.priceMax,
-    tank: currentModel?.tank,
     fullFuel: formData?.fullFuel,
     childSeat: formData?.childSeat,
     rightHand: formData?.rightHand,
     rate: formData?.rate === "day" ? "На сутки" : "Поминутно",
     dateFrom: formData?.dateFrom,
     dateTo: formData?.dateTo,
+    modelName: currentModel?.name,
+    modelNumber: currentModel?.number || "K 761 HA 73",
+    carId: currentModel?.id,
+    priceMin: currentModel?.priceMin,
+    priceMax: currentModel?.priceMax,
+    tank: currentModel?.tank,
     modelImg: currentModel?.thumbnail?.path,
   };
   const renderStep = () => {
     switch (step) {
       case 1:
-        return <Location formik={formik} />;
+        return <Location formData={formData} onChange={formik.handleChange} />;
       case 2:
         return <Model formik={formik} />;
       case 3:
-        return <Addition formik={formik} />;
+        return <Addition formik={formik} modelData={currentModel} />;
       case 4:
-        return <Status orderData={formOrderData} />;
+        return <Status orderData={orderData} />;
       default:
-        return <Location formik={formik} />;
+        return <Location formData={formData} onChange={formik.handleChange} />;
     }
   };
 
@@ -102,7 +102,7 @@ const OrderPage = ({ isFinished, finishedOrderData, currentModel }) => {
               isFinished={isFinished}
               step={step}
               setStep={setStep}
-              orderData={isFinished ? finishedOrderData : formOrderData}
+              orderData={isFinished ? finishedOrderData : orderData}
             />
           </div>
         </div>
