@@ -14,7 +14,7 @@ const Model = ({
   requestCars,
   setCurrentCar,
 }) => {
-  const [models, setModels] = useState([cars]);
+  const [models, setModels] = useState([...cars]);
 
   useEffect(() => {
     requestCars();
@@ -47,6 +47,7 @@ const Model = ({
       "catalog__car--blur":
         formik.values.model && carName !== formik.values.model,
     });
+
   return (
     <section className="model">
       <div className="model__option">
@@ -91,7 +92,7 @@ const Model = ({
                 className="catalog__car-img"
                 crossOrigin="anonymous"
                 referrerPolicy="origin"
-                src={`https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/${car.thumbnail.path}`}
+                src={`https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/${car?.thumbnail?.path}`}
                 alt=""
               />
             </button>

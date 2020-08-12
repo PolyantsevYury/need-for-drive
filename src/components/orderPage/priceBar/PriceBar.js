@@ -21,6 +21,7 @@ const PriceBar = ({
   cities,
   points,
   submitOrder,
+  isOrderSubmitting,
   orderId,
   history,
 }) => {
@@ -171,6 +172,7 @@ const PriceBar = ({
               <LinkButton
                 to={isFinished ? "/order" : false}
                 onClick={() => onModalConfirm()}
+                isLoading={isOrderSubmitting}
               >
                 Подтвердить
               </LinkButton>
@@ -275,6 +277,7 @@ const mapStateToProps = (state) => ({
   points: getPoints(state),
   cities: getCities(state),
   orderId: getOrderId(state),
+  isOrderSubmitting: state.order.isOrderSubmitting,
 });
 
 export default compose(
