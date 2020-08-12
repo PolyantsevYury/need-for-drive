@@ -5,6 +5,7 @@ const ADD_POINTS = "ADD_POINTS";
 const ADD_CARS = "ADD_CARS";
 const SET_CURRENT_CAR = "SET_CURRENT_CAR";
 const TOGGLE_IS_CARS_FETCHING = "TOGGLE_IS_CARS_FETCHING";
+const TOGGLE_IS_ORDER_SUBMITTING = "TOGGLE_IS_ORDER_SUBMITTING";
 const ADD_ORDER_ID = "ADD_ORDER_ID";
 const ADD_FINISHED_ORDER_DATA = "ADD_FINISHED_ORDER_DATA";
 
@@ -12,8 +13,9 @@ const initialState = {
   cities: [],
   points: [],
   cars: [],
-  currentModel: null,
   isCarsFetching: true,
+  currentModel: null,
+  isOrderSubmitting: false,
   orderId: null,
   finishedOrderData: null,
 };
@@ -45,6 +47,11 @@ const orderReducer = (state = initialState, action) => {
         ...state,
         isCarsFetching: action.isCarsFetching,
       };
+    case TOGGLE_IS_ORDER_SUBMITTING:
+      return {
+        ...state,
+        isOrderSubmitting: action.isOrderSubmitting,
+      };
     case ADD_ORDER_ID:
       return {
         ...state,
@@ -71,6 +78,10 @@ export const addFinishedOrderData = (orderData) => ({
 export const toggleIsCarsFetching = (isCarsFetching) => ({
   type: TOGGLE_IS_CARS_FETCHING,
   isCarsFetching,
+});
+export const toggleIsOrderSubmitting = (isOrderSubmitting) => ({
+  type: TOGGLE_IS_ORDER_SUBMITTING,
+  isOrderSubmitting,
 });
 export const addOrderId = (orderId) => ({ type: ADD_ORDER_ID, orderId });
 
@@ -121,6 +132,7 @@ export const submitOrder = (
   setIsModal
 ) => async (dispatch) => {
   try {
+    dispatch(toggleIsOrderSubmitting(true));
     const orderBody = {
       orderStatusId: {
         name: "new",
@@ -147,6 +159,7 @@ export const submitOrder = (
       isRightWheel,
     };
     const result = await orderAPI.postOrder(orderBody);
+    dispatch(toggleIsOrderSubmitting(false));
     dispatch(addOrderId(result.data.data.id));
     setIsModal(false);
   } catch (e) {

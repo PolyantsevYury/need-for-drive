@@ -1,6 +1,7 @@
 import React from "react";
 import "./Buttons.scss";
 import { withRouter } from "react-router-dom";
+import preloader from "../../../assets/buttonPreloader.svg";
 
 export const Button = ({
   additionalStyles,
@@ -9,6 +10,7 @@ export const Button = ({
   to,
   onClick,
   isDisabled,
+  isLoading,
 }) => {
   return (
     <button
@@ -24,7 +26,11 @@ export const Button = ({
         }
       }}
     >
-      {children}
+      {isLoading ? (
+        <img className="button__preloader" src={preloader} alt="" />
+      ) : (
+        children
+      )}
     </button>
   );
 };

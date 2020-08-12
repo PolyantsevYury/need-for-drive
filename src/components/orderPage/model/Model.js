@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Model.scss";
 import classNames from "classnames";
 import { connect } from "react-redux";
@@ -14,24 +14,27 @@ const Model = ({
   requestCars,
   setCurrentCar,
 }) => {
-  let filteredCars = [];
+  const [models, setModels] = useState([...cars]);
 
   useEffect(() => {
     requestCars();
   }, [requestCars]);
 
-  const filterCars = () => {
-    if (formik.values.modelFilter === "all") {
-      filteredCars = cars;
-      return filteredCars;
-    }
-    return cars.map(
-      (car) =>
-        car.categoryId.name === formik.values.modelFilter &&
-        filteredCars.push(car)
-    );
-  };
-  filterCars();
+  useEffect(() => {
+    const filterCars = () => {
+      if (formik.values.modelFilter === "all") {
+        return setModels(cars);
+      }
+      const filteredCars = [];
+      cars.map(
+        (car) =>
+          car.categoryId.name === formik.values.modelFilter &&
+          filteredCars.push(car)
+      );
+      return setModels(filteredCars);
+    };
+    filterCars();
+  }, [cars, formik.values.modelFilter]);
 
   const onModelClick = (car) => {
     formik.setValues({ ...formik.values, model: car.name });
@@ -41,7 +44,10 @@ const Model = ({
   const cardClass = (carName) =>
     classNames("catalog__car", {
       "catalog__car--active": carName === formik.values.model,
+      "catalog__car--blur":
+        formik.values.model && carName !== formik.values.model,
     });
+
   return (
     <section className="model">
       <div className="model__option">
@@ -71,7 +77,7 @@ const Model = ({
         {isCarsFetching ? (
           <Preloader />
         ) : (
-          filteredCars.map((car) => (
+          models.map((car) => (
             <button
               type="button"
               onClick={() => onModelClick(car)}
@@ -86,7 +92,7 @@ const Model = ({
                 className="catalog__car-img"
                 crossOrigin="anonymous"
                 referrerPolicy="origin"
-                src={`https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/${car.thumbnail.path}`}
+                src={`https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/${car?.thumbnail?.path}`}
                 alt=""
               />
             </button>

@@ -1,6 +1,9 @@
 @import "../../../assets/variables";
 
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: Roboto, sans-serif;
   font-size: 18px;
   font-weight: 500;
@@ -16,6 +19,10 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
+
+  &__preloader {
+    width: 26px;
+  }
 
   a {
     color: #fff;

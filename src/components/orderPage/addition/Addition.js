@@ -1,11 +1,8 @@
 import React from "react";
 import "./Addition.scss";
-import { connect } from "react-redux";
 import { InputCheckbox, InputRadio, InputDate } from "../../common/forms/Forms";
-import { getCars } from "../../../store/order-selectors";
 
-const Addition = ({ formik, cars }) => {
-  const modelData = cars.find((car) => car.name === formik.values.model);
+const Addition = ({ formik, modelData }) => {
   const carColorsWithAny = ["любой", ...modelData.colors];
 
   const colorItems = carColorsWithAny.map((color) => {
@@ -99,8 +96,4 @@ const Addition = ({ formik, cars }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  cars: getCars(state),
-});
-
-export default connect(mapStateToProps, {})(Addition);
+export default Addition;

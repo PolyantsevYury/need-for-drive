@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <div className="header">
       <div className="header__logo">
-        <Link to="/need-for-drive">Need for drive</Link>
+        <Link to="/">Need for drive</Link>
       </div>
       <div className="header__location">
         <img src={locationIcon} alt="" />

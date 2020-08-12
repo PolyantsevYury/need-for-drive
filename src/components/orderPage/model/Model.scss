@@ -28,6 +28,10 @@
       border: 1px solid $clr-gray-dark;
     }
 
+    &--blur {
+      opacity: 0.4;
+    }
+
     &--active {
       border: 1px solid $clr-main-accent;
       &:hover,

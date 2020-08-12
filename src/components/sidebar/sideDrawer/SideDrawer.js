@@ -11,14 +11,13 @@ const RoutedSideDrawer = ({ location, isMenuOpen, setIsMenuOpen }) => {
   const sideDrawerClass = classNames(
     "side-drawer",
     {
-      "side-drawer--show-slider": location.pathname.includes("/need-for-drive"),
+      "side-drawer--show-slider": !location.pathname.includes("/order"),
     },
     { "side-drawer--open": isMenuOpen }
   );
 
   const backDropClass = classNames("backdrop", {
-    "backdrop--active":
-      isMenuOpen && location.pathname.includes("/need-for-drive"),
+    "backdrop--active": isMenuOpen && !location.pathname.includes("/order"),
   });
 
   return (
@@ -28,7 +27,7 @@ const RoutedSideDrawer = ({ location, isMenuOpen, setIsMenuOpen }) => {
           <ul className="side-drawer__navigation-items">
             <li>
               <Link
-                to="/need-for-drive"
+                to="/"
                 className="side-drawer__navigation-item"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -37,7 +36,7 @@ const RoutedSideDrawer = ({ location, isMenuOpen, setIsMenuOpen }) => {
             </li>
             <li>
               <Link
-                to="/need-for-drive"
+                to="/"
                 className="side-drawer__navigation-item"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -46,7 +45,7 @@ const RoutedSideDrawer = ({ location, isMenuOpen, setIsMenuOpen }) => {
             </li>
             <li>
               <Link
-                to="/need-for-drive"
+                to="/"
                 className="side-drawer__navigation-item"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -55,7 +54,7 @@ const RoutedSideDrawer = ({ location, isMenuOpen, setIsMenuOpen }) => {
             </li>
             <li>
               <Link
-                to="/need-for-drive"
+                to="/"
                 className="side-drawer__navigation-item"
                 onClick={() => setIsMenuOpen(false)}
               >

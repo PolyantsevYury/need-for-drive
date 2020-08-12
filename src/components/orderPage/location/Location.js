@@ -7,7 +7,8 @@ import { requestCities, requestPoints } from "../../../store/order-reducer";
 import { getCitiesNames, getPoints } from "../../../store/order-selectors";
 
 const Location = ({
-  formik,
+  formData,
+  onChange,
   citiesNames,
   requestCities,
   points,
@@ -21,7 +22,7 @@ const Location = ({
   const currentPoints = [];
   points.map(
     (point) =>
-      formik.values.locationCity === point.cityId.name &&
+      formData.locationCity === point.cityId.name &&
       currentPoints.push(point.address)
   );
 
@@ -34,18 +35,18 @@ const Location = ({
               name: "locationCity",
               label: "Город",
               placeholder: "Начните вводить город",
-              value: formik.values.locationCity,
+              value: formData.locationCity,
               options: citiesNames,
             },
             {
               name: "locationPoint",
               label: "Пункт выдачи",
               placeholder: "Начните вводить пункт",
-              value: formik.values.locationPoint,
+              value: formData.locationPoint,
               options: currentPoints,
             },
           ]}
-          onChange={formik.handleChange}
+          onChange={onChange}
         />
       </div>
       <p>Выбрать на карте:</p>
