@@ -1,10 +1,34 @@
 import React, { useEffect } from "react";
-import "./Location.scss";
 import { connect } from "react-redux";
-import Map from "../../../assets/images/map.jpg";
+import "./Location.scss";
+import {
+  GoogleMap,
+  useLoadScript,
+  Marker,
+  InfoWindow,
+} from "@react-google-maps/api";
+import mapStyles from "./mapStyles";
 import { InputText } from "../../common/forms/Forms";
 import { requestCities, requestPoints } from "../../../store/order-reducer";
 import { getCitiesNames, getPoints } from "../../../store/order-selectors";
+
+const libraries = ["places"];
+const mapContainerStyle = {
+  maxWidth: 700,
+  width: "100%",
+  height: 340,
+  marginTop: 16,
+};
+const options = {
+  styles: mapStyles,
+  disableDefaultUI: true,
+  zoomControl: true,
+};
+
+const center = {
+  lat: 54.308025,
+  lng: 48.375888,
+};
 
 const Location = ({
   formData,
@@ -14,6 +38,10 @@ const Location = ({
   points,
   requestPoints,
 }) => {
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyDy6vONFHc9t69wZ0rx5FgoXbCGiH7S74w",
+    libraries,
+  });
   useEffect(() => {
     requestCities();
     requestPoints();
@@ -25,6 +53,9 @@ const Location = ({
       formData.locationCity === point.cityId.name &&
       currentPoints.push(point.address)
   );
+
+  if (loadError) return "Error";
+  if (!isLoaded) return "Loading...";
 
   return (
     <section className="location">
@@ -50,7 +81,14 @@ const Location = ({
         />
       </div>
       <p>Выбрать на карте:</p>
-      <img className="location__map" src={Map} alt="" />
+      <div className="location__map">
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          zoom={8}
+          center={center}
+          options={options}
+        />
+      </div>
     </section>
   );
 };

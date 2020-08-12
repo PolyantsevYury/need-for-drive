@@ -15,7 +15,6 @@ const Model = ({
   setCurrentCar,
 }) => {
   const [models, setModels] = useState([...cars]);
-
   useEffect(() => {
     requestCars();
   }, [requestCars]);

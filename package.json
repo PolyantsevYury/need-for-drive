@@ -4,11 +4,13 @@
   "private": true,
   "homepage": "https://polyantsevyury.github.io/need-for-drive",
   "dependencies": {
+    "@react-google-maps/api": "^1.9.12",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
+    "date-fns": "^2.15.0",
     "formik": "^2.1.5",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
