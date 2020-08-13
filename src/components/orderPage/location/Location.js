@@ -7,10 +7,11 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
-import mapStyles from "./mapStyles";
 import { InputText } from "../../common/forms/Forms";
 import { requestCities, requestPoints } from "../../../store/order-reducer";
 import { getCitiesNames, getPoints } from "../../../store/order-selectors";
+import Preloader from "../../common/preloader/Preloader";
+import MarkerIcon from "../../../assets/images/marker.svg";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -20,7 +21,6 @@ const mapContainerStyle = {
   marginTop: 16,
 };
 const options = {
-  styles: mapStyles,
   disableDefaultUI: true,
   zoomControl: true,
 };
@@ -38,7 +38,7 @@ const Location = ({
   points,
   requestPoints,
 }) => {
-  const { isLoaded, loadError } = useLoadScript({
+  const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyDy6vONFHc9t69wZ0rx5FgoXbCGiH7S74w",
     libraries,
   });
@@ -54,8 +54,9 @@ const Location = ({
       currentPoints.push(point.address)
   );
 
-  if (loadError) return "Error";
-  if (!isLoaded) return "Loading...";
+  const [markers, setMarkers] = React.useState([]);
+
+  if (!isLoaded) return <Preloader />;
 
   return (
     <section className="location">
@@ -87,7 +88,27 @@ const Location = ({
           zoom={8}
           center={center}
           options={options}
-        />
+          onClick={(event) => {
+            setMarkers((current) => [
+              ...current,
+              {
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng(),
+                time: new Date(),
+              },
+            ]);
+          }}
+        >
+          {markers.map((marker) => (
+            <Marker
+              key={marker.time.toISOString()}
+              position={{ lat: marker.lat, lng: marker.lng }}
+              icon={{
+                url: MarkerIcon,
+              }}
+            />
+          ))}
+        </GoogleMap>
       </div>
     </section>
   );
