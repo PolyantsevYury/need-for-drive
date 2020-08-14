@@ -55,6 +55,7 @@ const Location = ({
   );
 
   const [markers, setMarkers] = React.useState([]);
+  const [selected, setSelected] = React.useState(null);
 
   if (!isLoaded) return <Preloader />;
 
@@ -105,9 +106,28 @@ const Location = ({
               position={{ lat: marker.lat, lng: marker.lng }}
               icon={{
                 url: MarkerIcon,
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(10, 10),
+                scaledSize: new window.google.maps.Size(20, 20),
+              }}
+              onClick={() => {
+                setSelected(marker);
               }}
             />
           ))}
+
+          {selected ? (
+            <InfoWindow
+              position={{ lat: selected.lat, lng: selected.lng }}
+              onCloseClick={() => {
+                setSelected(null);
+              }}
+            >
+              <div>
+                <h2>Выбрано</h2>
+              </div>
+            </InfoWindow>
+          ) : null}
         </GoogleMap>
       </div>
     </section>
