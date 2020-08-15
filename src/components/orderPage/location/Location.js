@@ -7,6 +7,18 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+} from "@reach/combobox";
+import "@reach/combobox/styles.css";
 import { InputText } from "../../common/forms/Forms";
 import { requestCities, requestPoints } from "../../../store/order-reducer";
 import { getCitiesNames, getPoints } from "../../../store/order-selectors";
@@ -38,14 +50,38 @@ const Location = ({
   points,
   requestPoints,
 }) => {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyDy6vONFHc9t69wZ0rx5FgoXbCGiH7S74w",
-    libraries,
-  });
   useEffect(() => {
     requestCities();
     requestPoints();
   }, [requestCities, requestPoints]);
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyDy6vONFHc9t69wZ0rx5FgoXbCGiH7S74w",
+    libraries,
+  });
+  const [markers, setMarkers] = React.useState([]);
+  const [selected, setSelected] = React.useState(null);
+
+  const onMapClick = React.useCallback((e) => {
+    setMarkers((current) => [
+      ...current,
+      {
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng(),
+        time: new Date(),
+      },
+    ]);
+  }, []);
+
+  const mapRef = React.useRef();
+  const onMapLoad = React.useCallback((map) => {
+    mapRef.current = map;
+  }, []);
+
+  const panTo = React.useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(14);
+  }, []);
 
   const currentPoints = [];
   points.map(
@@ -54,14 +90,12 @@ const Location = ({
       currentPoints.push(point.address)
   );
 
-  const [markers, setMarkers] = React.useState([]);
-  const [selected, setSelected] = React.useState(null);
-
   if (!isLoaded) return <Preloader />;
 
   return (
     <section className="location">
       <div className="location__form">
+        <Search panTo={panTo} />
         <InputText
           items={[
             {
@@ -85,20 +119,13 @@ const Location = ({
       <p>Выбрать на карте:</p>
       <div className="location__map">
         <GoogleMap
+          id="map"
           mapContainerStyle={mapContainerStyle}
           zoom={8}
           center={center}
           options={options}
-          onClick={(event) => {
-            setMarkers((current) => [
-              ...current,
-              {
-                lat: event.latLng.lat(),
-                lng: event.latLng.lng(),
-                time: new Date(),
-              },
-            ]);
-          }}
+          onClick={onMapClick}
+          onLoad={onMapLoad}
         >
           {markers.map((marker) => (
             <Marker
@@ -113,6 +140,7 @@ const Location = ({
               onClick={() => {
                 setSelected(marker);
               }}
+              onLoad={onMapLoad}
             />
           ))}
 
@@ -133,6 +161,57 @@ const Location = ({
     </section>
   );
 };
+
+function Search({ panTo }) {
+  const {
+    ready,
+    value,
+    suggestions: { status, data },
+    setValue,
+    clearSuggestions,
+  } = usePlacesAutocomplete({
+    requestOptions: {
+      location: { lat: () => 54.308025, lng: () => 48.375888 },
+      radius: 200 * 1000,
+    },
+  });
+
+  const handleInput = (e) => {
+    setValue(e.target.value);
+  };
+
+  const handleSelect = async (address) => {
+    setValue(address, false);
+    clearSuggestions();
+
+    try {
+      const results = await getGeocode({ address });
+      const { lat, lng } = await getLatLng(results[0]);
+      panTo({ lat, lng });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  return (
+    <Combobox onSelect={handleSelect}>
+      <ComboboxInput
+        value={value}
+        onChange={handleInput}
+        disabled={!ready}
+        placeholder="Начните вводить пункт"
+      />
+      <ComboboxPopover>
+        <ComboboxList>
+          {status === "OK" &&
+            data.map(({ place_id, description }) => (
+              <ComboboxOption key={place_id} value={description} />
+            ))}
+        </ComboboxList>
+      </ComboboxPopover>
+    </Combobox>
+  );
+}
 
 const mapStateToProps = (state) => ({
   citiesNames: getCitiesNames(state),
