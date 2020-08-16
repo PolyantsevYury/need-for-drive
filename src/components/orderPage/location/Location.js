@@ -16,7 +16,6 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import { useThrottle } from "@react-hook/throttle";
 import matchSorter from "match-sorter";
 import { Search } from "../../common/forms/Forms";
 import { requestCities, requestPoints } from "../../../store/order-reducer";
@@ -57,18 +56,30 @@ const Location = ({
     googleMapsApiKey: "AIzaSyDy6vONFHc9t69wZ0rx5FgoXbCGiH7S74w",
     libraries,
   });
+
   const [markers, setMarkers] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
+  const [currentAddresses, setCurrentAddresses] = React.useState([]);
 
-  const onMapClick = React.useCallback((e) => {
-    setMarkers((current) => [
-      ...current,
-      {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-      },
-    ]);
-  }, []);
+  useEffect(() => {
+    const currentPoints = [];
+    const addresses = [];
+    const getPointLatLng = async (point) => {
+      const pointAddress = point.address;
+      const address = `${pointAddress}, ${point.cityId.name}`;
+      const results = await getGeocode({ address });
+      const { lat, lng } = await getLatLng(results[0]);
+      addresses.push(pointAddress);
+      currentPoints.push({ lat, lng, address: pointAddress, name: point.name });
+    };
+    points.map(
+      (point) =>
+        formik.values.locationCity === point.cityId.name &&
+        getPointLatLng(point)
+    );
+    setCurrentAddresses(addresses);
+    setMarkers(currentPoints);
+  }, [formik.values.locationCity, points]);
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
@@ -77,15 +88,8 @@ const Location = ({
 
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(14);
+    mapRef.current.setZoom(12);
   }, []);
-
-  const currentPoints = [];
-  points.map(
-    (point) =>
-      formik.values.locationCity === point.cityId.name &&
-      currentPoints.push(point.address)
-  );
 
   if (!isLoaded) return <Preloader />;
 
@@ -95,8 +99,9 @@ const Location = ({
         <GoogleSearch
           panTo={panTo}
           formik={formik}
-          currentPoints={currentPoints}
+          currentAddresses={currentAddresses}
           citiesNames={citiesNames}
+          markers={markers}
         />
       </div>
       <p>Выбрать на карте:</p>
@@ -107,7 +112,6 @@ const Location = ({
           zoom={8}
           center={center}
           options={options}
-          onClick={onMapClick}
           onLoad={onMapLoad}
         >
           {markers.map((marker) => (
@@ -121,9 +125,12 @@ const Location = ({
                 scaledSize: new window.google.maps.Size(20, 20),
               }}
               onClick={() => {
+                formik.setValues({
+                  ...formik.values,
+                  locationPoint: marker.address,
+                });
                 setSelected(marker);
               }}
-              onLoad={onMapLoad}
             />
           ))}
 
@@ -135,7 +142,7 @@ const Location = ({
               }}
             >
               <div>
-                <h2>Выбрано</h2>
+                <h4>{selected.name}</h4>
               </div>
             </InfoWindow>
           ) : null}
@@ -145,7 +152,13 @@ const Location = ({
   );
 };
 
-function GoogleSearch({ panTo, formik, citiesNames, currentPoints }) {
+function GoogleSearch({
+  panTo,
+  formik,
+  citiesNames,
+  currentAddresses,
+  markers,
+}) {
   const handleCitySelect = async (address) => {
     formik.setValues({ ...formik.values, locationCity: address });
     try {
@@ -157,7 +170,6 @@ function GoogleSearch({ panTo, formik, citiesNames, currentPoints }) {
     }
   };
   function useCityMatch(location) {
-    const throttledLocation = useThrottle(location, 100);
     return useMemo(
       () =>
         location.trim() === "" ? null : matchSorter(citiesNames, location),
@@ -166,21 +178,16 @@ function GoogleSearch({ panTo, formik, citiesNames, currentPoints }) {
   }
   const cityResults = useCityMatch(formik.values.locationCity);
 
-  const handlePointSelect = async (address) => {
+  const handlePointSelect = (address) => {
     formik.setValues({ ...formik.values, locationPoint: address });
-    try {
-      const results = await getGeocode({ address });
-      const { lat, lng } = await getLatLng(results[0]);
-      panTo({ lat, lng });
-    } catch (error) {
-      console.log("Error", error);
-    }
+    const currentPoint = markers.find((point) => point.address === address);
+    const { lat, lng } = currentPoint;
+    panTo({ lat, lng });
   };
   function usePointMatch(location) {
-    const throttledLocation = useThrottle(location, 100);
     return useMemo(
       () =>
-        location.trim() === "" ? null : matchSorter(currentPoints, location),
+        location.trim() === "" ? null : matchSorter(currentAddresses, location),
       [location]
     );
   }
