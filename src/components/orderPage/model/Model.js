@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Model.scss";
 import classNames from "classnames";
 import { connect } from "react-redux";
-import { InputRadio } from "../../common/forms/Forms";
+import { Radio } from "../../common/forms/Forms";
 import { getCars } from "../../../store/order-selectors";
 import { requestCars, setCurrentCar } from "../../../store/order-reducer";
 import Preloader from "../../common/preloader/Preloader";
@@ -50,7 +50,7 @@ const Model = ({
   return (
     <section className="model">
       <div className="model__option">
-        <InputRadio
+        <Radio
           name="modelFilter"
           items={[
             {

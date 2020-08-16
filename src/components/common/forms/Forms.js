@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import Clean from "../../../assets/images/icons/clean_icon.svg";
 import "react-datepicker/dist/react-datepicker.css";
 
-export const InputRadio = ({ name, items, onChange, direction }) => {
+export const Radio = ({ name, items, onChange, direction }) => {
   const inputClass = classNames("input", {
     input__column: direction === "column",
   });
@@ -28,7 +28,7 @@ export const InputRadio = ({ name, items, onChange, direction }) => {
   );
 };
 
-export const InputCheckbox = ({ items, direction, onChange }) => {
+export const Checkbox = ({ items, direction, onChange }) => {
   const inputClass = classNames("input", {
     input__column: direction === "column",
   });
@@ -51,7 +51,7 @@ export const InputCheckbox = ({ items, direction, onChange }) => {
   );
 };
 
-export const InputText = ({ items, onChange }) => {
+export const Search = ({ items, onChange }) => {
   return (
     <div className="input-text">
       {items.map((item) => (
@@ -83,7 +83,7 @@ export const InputText = ({ items, onChange }) => {
   );
 };
 
-export const InputDate = ({ items, formik }) => {
+export const Date = ({ items, formik }) => {
   return (
     <div className="input-text">
       <div className="input-text__item" key={items[0].label}>

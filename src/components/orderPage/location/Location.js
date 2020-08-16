@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { connect } from "react-redux";
 import "./Location.scss";
 import {
@@ -7,10 +7,7 @@ import {
   Marker,
   InfoWindow,
 } from "@react-google-maps/api";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
+import { getGeocode, getLatLng } from "use-places-autocomplete";
 import {
   Combobox,
   ComboboxInput,
@@ -19,7 +16,9 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import { InputText } from "../../common/forms/Forms";
+import { useThrottle } from "@react-hook/throttle";
+import matchSorter from "match-sorter";
+import { Search } from "../../common/forms/Forms";
 import { requestCities, requestPoints } from "../../../store/order-reducer";
 import { getCitiesNames, getPoints } from "../../../store/order-selectors";
 import Preloader from "../../common/preloader/Preloader";
@@ -43,8 +42,7 @@ const center = {
 };
 
 const Location = ({
-  formData,
-  onChange,
+  formik,
   citiesNames,
   requestCities,
   points,
@@ -68,7 +66,6 @@ const Location = ({
       {
         lat: e.latLng.lat(),
         lng: e.latLng.lng(),
-        time: new Date(),
       },
     ]);
   }, []);
@@ -86,7 +83,7 @@ const Location = ({
   const currentPoints = [];
   points.map(
     (point) =>
-      formData.locationCity === point.cityId.name &&
+      formik.values.locationCity === point.cityId.name &&
       currentPoints.push(point.address)
   );
 
@@ -95,25 +92,11 @@ const Location = ({
   return (
     <section className="location">
       <div className="location__form">
-        <Search panTo={panTo} />
-        <InputText
-          items={[
-            {
-              name: "locationCity",
-              label: "Город",
-              placeholder: "Начните вводить город",
-              value: formData.locationCity,
-              options: citiesNames,
-            },
-            {
-              name: "locationPoint",
-              label: "Пункт выдачи",
-              placeholder: "Начните вводить пункт",
-              value: formData.locationPoint,
-              options: currentPoints,
-            },
-          ]}
-          onChange={onChange}
+        <GoogleSearch
+          panTo={panTo}
+          formik={formik}
+          currentPoints={currentPoints}
+          citiesNames={citiesNames}
         />
       </div>
       <p>Выбрать на карте:</p>
@@ -129,7 +112,7 @@ const Location = ({
         >
           {markers.map((marker) => (
             <Marker
-              key={marker.time.toISOString()}
+              key={marker.lat}
               position={{ lat: marker.lat, lng: marker.lng }}
               icon={{
                 url: MarkerIcon,
@@ -162,28 +145,9 @@ const Location = ({
   );
 };
 
-function Search({ panTo }) {
-  const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete({
-    requestOptions: {
-      location: { lat: () => 54.308025, lng: () => 48.375888 },
-      radius: 200 * 1000,
-    },
-  });
-
-  const handleInput = (e) => {
-    setValue(e.target.value);
-  };
-
-  const handleSelect = async (address) => {
-    setValue(address, false);
-    clearSuggestions();
-
+function GoogleSearch({ panTo, formik, citiesNames, currentPoints }) {
+  const handleCitySelect = async (address) => {
+    formik.setValues({ ...formik.values, locationCity: address });
     try {
       const results = await getGeocode({ address });
       const { lat, lng } = await getLatLng(results[0]);
@@ -192,24 +156,90 @@ function Search({ panTo }) {
       console.log("Error", error);
     }
   };
+  function useCityMatch(location) {
+    const throttledLocation = useThrottle(location, 100);
+    return useMemo(
+      () =>
+        location.trim() === "" ? null : matchSorter(citiesNames, location),
+      [location]
+    );
+  }
+  const cityResults = useCityMatch(formik.values.locationCity);
+
+  const handlePointSelect = async (address) => {
+    formik.setValues({ ...formik.values, locationPoint: address });
+    try {
+      const results = await getGeocode({ address });
+      const { lat, lng } = await getLatLng(results[0]);
+      panTo({ lat, lng });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+  function usePointMatch(location) {
+    const throttledLocation = useThrottle(location, 100);
+    return useMemo(
+      () =>
+        location.trim() === "" ? null : matchSorter(currentPoints, location),
+      [location]
+    );
+  }
+  const pointResults = usePointMatch(formik.values.locationPoint);
 
   return (
-    <Combobox onSelect={handleSelect}>
-      <ComboboxInput
-        value={value}
-        onChange={handleInput}
-        disabled={!ready}
-        placeholder="Начните вводить пункт"
-      />
-      <ComboboxPopover>
-        <ComboboxList>
-          {status === "OK" &&
-            data.map(({ place_id, description }) => (
-              <ComboboxOption key={place_id} value={description} />
-            ))}
-        </ComboboxList>
-      </ComboboxPopover>
-    </Combobox>
+    <>
+      {/* City */}
+      <Combobox onSelect={handleCitySelect}>
+        <ComboboxInput
+          id="locationCity"
+          name="locationCity"
+          value={formik.values.locationCity}
+          onChange={formik.handleChange}
+          placeholder="Начните вводить город"
+        />
+        {cityResults && (
+          <ComboboxPopover>
+            {cityResults.length > 0 ? (
+              <ComboboxList>
+                {cityResults.slice(0, 10).map((result, index) => (
+                  <ComboboxOption key={index} value={result} />
+                ))}
+              </ComboboxList>
+            ) : (
+              <span style={{ display: "block", margin: 8 }}>
+                Город не найден
+              </span>
+            )}
+          </ComboboxPopover>
+        )}
+      </Combobox>
+
+      {/* Point */}
+      <Combobox onSelect={handlePointSelect}>
+        <ComboboxInput
+          id="locationPoint"
+          name="locationPoint"
+          value={formik.values.locationPoint}
+          onChange={formik.handleChange}
+          placeholder="Начните вводить пункт"
+        />
+        {pointResults && (
+          <ComboboxPopover>
+            {pointResults.length > 0 ? (
+              <ComboboxList>
+                {pointResults.slice(0, 10).map((result, index) => (
+                  <ComboboxOption key={index} value={result} />
+                ))}
+              </ComboboxList>
+            ) : (
+              <span style={{ display: "block", margin: 8 }}>
+                Пункт не найден
+              </span>
+            )}
+          </ComboboxPopover>
+        )}
+      </Combobox>
+    </>
   );
 }
 

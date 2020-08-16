@@ -1,6 +1,6 @@
 import React from "react";
 import "./Addition.scss";
-import { InputCheckbox, InputRadio, InputDate } from "../../common/forms/Forms";
+import { Checkbox, Radio, Date } from "../../common/forms/Forms";
 
 const Addition = ({ formik, modelData }) => {
   const carColorsWithAny = ["любой", ...modelData.colors];
@@ -17,16 +17,12 @@ const Addition = ({ formik, modelData }) => {
     <section className="addition">
       <div className="addition__option">
         <h4 className="addition__title">Цвет</h4>
-        <InputRadio
-          name="color"
-          items={colorItems}
-          onChange={formik.handleChange}
-        />
+        <Radio name="color" items={colorItems} onChange={formik.handleChange} />
       </div>
 
       <div className="addition__option">
         <h4 className="addition__title">Дата аренды</h4>
-        <InputDate
+        <Date
           items={[
             {
               name: "dateFrom",
@@ -47,7 +43,7 @@ const Addition = ({ formik, modelData }) => {
 
       <div className="addition__option">
         <h4 className="addition__title">Тариф</h4>
-        <InputRadio
+        <Radio
           name="rate"
           direction="column"
           items={[
@@ -70,7 +66,7 @@ const Addition = ({ formik, modelData }) => {
 
       <div className="addition__option">
         <h4 className="addition__title">Доп услуги</h4>
-        <InputCheckbox
+        <Checkbox
           direction="column"
           items={[
             {
