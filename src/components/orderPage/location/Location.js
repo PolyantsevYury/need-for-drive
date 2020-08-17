@@ -17,7 +17,6 @@ import {
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import matchSorter from "match-sorter";
-import { Search } from "../../common/forms/Forms";
 import { requestCities, requestPoints } from "../../../store/order-reducer";
 import { getCitiesNames, getPoints } from "../../../store/order-selectors";
 import Preloader from "../../common/preloader/Preloader";
@@ -30,11 +29,10 @@ const mapContainerStyle = {
   height: 340,
   marginTop: 16,
 };
-const options = {
+const mapOptions = {
   disableDefaultUI: true,
   zoomControl: true,
 };
-
 const center = {
   lat: 54.308025,
   lng: 48.375888,
@@ -44,7 +42,7 @@ const Location = ({
   formik,
   citiesNames,
   requestCities,
-  points,
+  pointsData,
   requestPoints,
 }) => {
   useEffect(() => {
@@ -57,29 +55,18 @@ const Location = ({
     libraries,
   });
 
-  const [markers, setMarkers] = React.useState([]);
+  const [points, setPoints] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
-  const [currentAddresses, setCurrentAddresses] = React.useState([]);
 
   useEffect(() => {
     const currentPoints = [];
-    const addresses = [];
-    const getPointLatLng = async (point) => {
-      const pointAddress = point.address;
-      const address = `${pointAddress}, ${point.cityId.name}`;
-      const results = await getGeocode({ address });
-      const { lat, lng } = await getLatLng(results[0]);
-      addresses.push(pointAddress);
-      currentPoints.push({ lat, lng, address: pointAddress, name: point.name });
-    };
-    points.map(
+    pointsData.map(
       (point) =>
         formik.values.locationCity === point.cityId.name &&
-        getPointLatLng(point)
+        currentPoints.push(point)
     );
-    setCurrentAddresses(addresses);
-    setMarkers(currentPoints);
-  }, [formik.values.locationCity, points]);
+    setPoints(currentPoints);
+  }, [formik.values.locationCity, pointsData]);
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
@@ -88,7 +75,7 @@ const Location = ({
 
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(12);
+    mapRef.current.setZoom(11);
   }, []);
 
   if (!isLoaded) return <Preloader />;
@@ -96,12 +83,11 @@ const Location = ({
   return (
     <section className="location">
       <div className="location__form">
-        <GoogleSearch
+        <Search
           panTo={panTo}
           formik={formik}
-          currentAddresses={currentAddresses}
           citiesNames={citiesNames}
-          markers={markers}
+          points={points}
         />
       </div>
       <p>Выбрать на карте:</p>
@@ -109,15 +95,15 @@ const Location = ({
         <GoogleMap
           id="map"
           mapContainerStyle={mapContainerStyle}
-          zoom={8}
+          zoom={10}
           center={center}
-          options={options}
+          options={mapOptions}
           onLoad={onMapLoad}
         >
-          {markers.map((marker) => (
+          {points.map((point) => (
             <Marker
-              key={marker.lat}
-              position={{ lat: marker.lat, lng: marker.lng }}
+              key={point.lat}
+              position={{ lat: point.lat, lng: point.lng }}
               icon={{
                 url: MarkerIcon,
                 origin: new window.google.maps.Point(0, 0),
@@ -127,9 +113,9 @@ const Location = ({
               onClick={() => {
                 formik.setValues({
                   ...formik.values,
-                  locationPoint: marker.address,
+                  locationPoint: point.address,
                 });
-                setSelected(marker);
+                setSelected(point);
               }}
             />
           ))}
@@ -142,7 +128,7 @@ const Location = ({
               }}
             >
               <div>
-                <h4>{selected.name}</h4>
+                <span>{selected.name}</span>
               </div>
             </InfoWindow>
           ) : null}
@@ -152,13 +138,7 @@ const Location = ({
   );
 };
 
-function GoogleSearch({
-  panTo,
-  formik,
-  citiesNames,
-  currentAddresses,
-  markers,
-}) {
+function Search({ panTo, formik, citiesNames, points }) {
   const handleCitySelect = async (address) => {
     formik.setValues({ ...formik.values, locationCity: address });
     try {
@@ -166,6 +146,7 @@ function GoogleSearch({
       const { lat, lng } = await getLatLng(results[0]);
       panTo({ lat, lng });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log("Error", error);
     }
   };
@@ -180,15 +161,16 @@ function GoogleSearch({
 
   const handlePointSelect = (address) => {
     formik.setValues({ ...formik.values, locationPoint: address });
-    const currentPoint = markers.find((point) => point.address === address);
+    const currentPoint = points.find((point) => point.address === address);
     const { lat, lng } = currentPoint;
     panTo({ lat, lng });
   };
   function usePointMatch(location) {
+    const addresses = [];
+    points.map((point) => addresses.push(point.address));
     return useMemo(
-      () =>
-        location.trim() === "" ? null : matchSorter(currentAddresses, location),
-      [location]
+      () => (location.trim() === "" ? null : matchSorter(addresses, location)),
+      [addresses, location]
     );
   }
   const pointResults = usePointMatch(formik.values.locationPoint);
@@ -208,8 +190,8 @@ function GoogleSearch({
           <ComboboxPopover>
             {cityResults.length > 0 ? (
               <ComboboxList>
-                {cityResults.slice(0, 10).map((result, index) => (
-                  <ComboboxOption key={index} value={result} />
+                {cityResults.slice(0, 10).map((result) => (
+                  <ComboboxOption key={result} value={result} />
                 ))}
               </ComboboxList>
             ) : (
@@ -234,8 +216,8 @@ function GoogleSearch({
           <ComboboxPopover>
             {pointResults.length > 0 ? (
               <ComboboxList>
-                {pointResults.slice(0, 10).map((result, index) => (
-                  <ComboboxOption key={index} value={result} />
+                {pointResults.slice(0, 10).map((result) => (
+                  <ComboboxOption key={result} value={result} />
                 ))}
               </ComboboxList>
             ) : (
@@ -252,7 +234,7 @@ function GoogleSearch({
 
 const mapStateToProps = (state) => ({
   citiesNames: getCitiesNames(state),
-  points: getPoints(state),
+  pointsData: getPoints(state),
 });
 
 export default connect(mapStateToProps, { requestCities, requestPoints })(

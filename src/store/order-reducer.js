@@ -1,3 +1,4 @@
+import { getGeocode, getLatLng } from "use-places-autocomplete";
 import orderAPI from "../api/api";
 
 const ADD_CITIES = "ADD_CITIES";
@@ -110,7 +111,18 @@ export const requestCars = () => async (dispatch) => {
 export const requestPoints = () => async (dispatch) => {
   try {
     const result = await orderAPI.getPoint();
-    dispatch(addPoints(result.data.data));
+    const points = result.data.data;
+    const getPointLatLng = async (point) => {
+      const address = `${point.address}, ${point.cityId.name}`;
+      const results = await getGeocode({ address });
+      const { lat, lng } = await getLatLng(results[0]);
+      const pointWithLatLng = point;
+      pointWithLatLng.lat = lat;
+      pointWithLatLng.lng = lng;
+      return pointWithLatLng;
+    };
+    points.map((point) => getPointLatLng(point));
+    dispatch(addPoints(points));
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);
