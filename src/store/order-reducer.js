@@ -89,19 +89,18 @@ export const addOrderId = (orderId) => ({ type: ADD_ORDER_ID, orderId });
 export const requestCities = () => async (dispatch) => {
   try {
     const result = await orderAPI.getCity();
-    dispatch(addCities(result.data.data));
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log(e);
-  }
-};
-
-export const requestCars = () => async (dispatch) => {
-  try {
-    dispatch(toggleIsCarsFetching(true));
-    const result = await orderAPI.getCars();
-    dispatch(toggleIsCarsFetching(false));
-    dispatch(addCars(result.data.data));
+    const cities = result.data.data;
+    const getCityLatLng = async (city) => {
+      const address = city.name;
+      const results = await getGeocode({ address });
+      const { lat, lng } = await getLatLng(results[0]);
+      const cityWithLatLng = city;
+      cityWithLatLng.lat = lat;
+      cityWithLatLng.lng = lng;
+      return cityWithLatLng;
+    };
+    cities.map((city) => getCityLatLng(city));
+    dispatch(addCities(cities));
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);
@@ -123,6 +122,18 @@ export const requestPoints = () => async (dispatch) => {
     };
     points.map((point) => getPointLatLng(point));
     dispatch(addPoints(points));
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+  }
+};
+
+export const requestCars = () => async (dispatch) => {
+  try {
+    dispatch(toggleIsCarsFetching(true));
+    const result = await orderAPI.getCars();
+    dispatch(toggleIsCarsFetching(false));
+    dispatch(addCars(result.data.data));
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);

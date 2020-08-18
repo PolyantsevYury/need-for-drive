@@ -6,6 +6,10 @@
 
   &__form {
     margin-bottom: 16px;
+    width: min-content;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
   }
 
   &__map {
