@@ -123,7 +123,8 @@ export const SearchPoints = ({ formik, panTo, points }) => {
     const addresses = [];
     points.map((point) => addresses.push(point.address));
     return useMemo(
-      () => (location.trim() === "" ? null : matchSorter(addresses, location)),
+      () =>
+        location.trim().length < 2 ? null : matchSorter(addresses, location),
       [addresses, location]
     );
   }
@@ -177,6 +178,8 @@ export const Date = ({ items, formik }) => {
             formik.setValues({ ...formik.values, dateFrom: date })
           }
           startDate={formik.values.dateFrom}
+          showTimeSelect
+          dateFormat="dd.MM.yyyy h:mm aa"
           endDate={formik.values.dateTo}
           maxDate={formik.values.dateTo}
         />
@@ -192,6 +195,8 @@ export const Date = ({ items, formik }) => {
             formik.setValues({ ...formik.values, dateTo: date })
           }
           startDate={formik.values.dateFrom}
+          showTimeSelect
+          dateFormat="dd.MM.yyyy h:mm aa"
           endDate={formik.values.dateTo}
           minDate={formik.values.dateFrom}
         />

@@ -32,10 +32,14 @@ const PriceBar = ({
   }, [history, orderId]);
 
   const diffTime = Math.abs(orderData?.dateTo - orderData?.dateFrom);
-  // const diffMinutes =
-  //   orderData.dateTo && orderData.dateFrom !== ""
-  //     ? Math.ceil(diffTime / (1000 * 60))
-  //     : 0;
+  const diffMinutes =
+    orderData.dateTo && orderData.dateFrom !== ""
+      ? Math.ceil(diffTime / (1000 * 60))
+      : 0;
+  const diffHours =
+    orderData.dateTo && orderData.dateFrom !== ""
+      ? Math.ceil(diffTime / (1000 * 60 * 60))
+      : 0;
   const diffDays =
     orderData?.dateTo && orderData?.dateFrom !== ""
       ? Math.ceil(diffTime / (1000 * 60 * 60 * 24))
@@ -64,8 +68,12 @@ const PriceBar = ({
       priceMax = orderData.priceMax + priceMax;
       price = `${priceMin} - ${priceMax}`;
     }
-    if (diffDays !== 0) {
-      price = priceMin * diffDays;
+    if (diffMinutes !== 0) {
+      price = Math.round(
+        orderData.rate === "Поминутно"
+          ? (priceMin / 1440) * diffMinutes
+          : priceMin * diffDays
+      );
     }
     return `${price} ₽`;
   };
@@ -224,7 +232,9 @@ const PriceBar = ({
                 <div className="price-bar__info-item">
                   <div className="price-bar__info-name">Длительност аренды</div>
                   <div className="price-bar__info-filler"> </div>
-                  <div className="price-bar__info-value">{diffDays}д</div>
+                  <div className="price-bar__info-value">{`${Math.floor(
+                    diffHours / 24
+                  )}д ${diffHours % 24}ч`}</div>
                 </div>
                 <div className="price-bar__info-item">
                   <div className="price-bar__info-name">Тариф</div>

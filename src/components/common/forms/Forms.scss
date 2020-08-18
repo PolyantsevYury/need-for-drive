@@ -2,18 +2,17 @@
 
 .input {
   display: flex;
+  flex-wrap: wrap;
   color: $clr-gray-dark;
 
   &__column {
     flex-direction: column;
 
     .input__radio-item {
-      margin-bottom: 8px;
       margin-right: 0;
     }
 
     .input__checkbox-item {
-      margin-bottom: 8px;
       margin-right: 0;
     }
   }
@@ -21,6 +20,7 @@
   &__radio-item {
     display: flex;
     align-items: center;
+    margin-bottom: 8px;
 
     &:not(:last-child) {
       margin-right: 16px;
@@ -68,6 +68,7 @@
 
     &:not(:last-child) {
       margin-right: 16px;
+      margin-bottom: 8px;
     }
 
     input[type="checkbox"] {
