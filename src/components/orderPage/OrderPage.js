@@ -61,7 +61,7 @@ const OrderPage = ({ isFinished, finishedOrderData, currentModel }) => {
   const renderStep = () => {
     switch (step) {
       case 1:
-        return <Location formData={formData} onChange={formik.handleChange} />;
+        return <Location formik={formik} />;
       case 2:
         return <Model formik={formik} />;
       case 3:

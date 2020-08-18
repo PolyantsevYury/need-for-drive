@@ -1,62 +1,126 @@
 import React, { useEffect } from "react";
-import "./Location.scss";
 import { connect } from "react-redux";
-import Map from "../../../assets/images/map.jpg";
-import { InputText } from "../../common/forms/Forms";
+import "./Location.scss";
+import {
+  GoogleMap,
+  useLoadScript,
+  Marker,
+  InfoWindow,
+} from "@react-google-maps/api";
+import "@reach/combobox/styles.css";
 import { requestCities, requestPoints } from "../../../store/order-reducer";
-import { getCitiesNames, getPoints } from "../../../store/order-selectors";
+import { getCities, getPoints } from "../../../store/order-selectors";
+import Preloader from "../../common/preloader/Preloader";
+import MarkerIcon from "../../../assets/images/marker.svg";
+import { SearchCity, SearchPoints } from "../../common/forms/Forms";
 
-const Location = ({
-  formData,
-  onChange,
-  citiesNames,
-  requestCities,
-  points,
-  requestPoints,
-}) => {
+const mapContainerStyle = {
+  maxWidth: 700,
+  width: "100%",
+  height: 340,
+  marginTop: 16,
+};
+const mapOptions = {
+  disableDefaultUI: true,
+  zoomControl: true,
+};
+const center = {
+  lat: 54.308025,
+  lng: 48.375888,
+};
+
+const Location = ({ formik, cities, requestCities, points, requestPoints }) => {
   useEffect(() => {
     requestCities();
     requestPoints();
   }, [requestCities, requestPoints]);
 
-  const currentPoints = [];
-  points.map(
-    (point) =>
-      formData.locationCity === point.cityId.name &&
-      currentPoints.push(point.address)
-  );
+  // Set points for current city
+  const [currentPoints, setCurrentPoints] = React.useState([]);
+  useEffect(() => {
+    const sortedPoints = [];
+    points.map(
+      (point) =>
+        formik.values.locationCity === point.cityId.name &&
+        sortedPoints.push(point)
+    );
+    setCurrentPoints(sortedPoints);
+  }, [formik.values.locationCity, points]);
+
+  const [selectedPoint, setSelectedPoint] = React.useState(null);
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyDy6vONFHc9t69wZ0rx5FgoXbCGiH7S74w",
+  });
+
+  const mapRef = React.useRef();
+  const onMapLoad = React.useCallback((map) => {
+    mapRef.current = map;
+  }, []);
+
+  const panTo = React.useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(11);
+  }, []);
+
+  if (!isLoaded) return <Preloader />;
 
   return (
     <section className="location">
       <div className="location__form">
-        <InputText
-          items={[
-            {
-              name: "locationCity",
-              label: "Город",
-              placeholder: "Начните вводить город",
-              value: formData.locationCity,
-              options: citiesNames,
-            },
-            {
-              name: "locationPoint",
-              label: "Пункт выдачи",
-              placeholder: "Начните вводить пункт",
-              value: formData.locationPoint,
-              options: currentPoints,
-            },
-          ]}
-          onChange={onChange}
-        />
+        <SearchCity formik={formik} panTo={panTo} cities={cities} />
+        <SearchPoints formik={formik} panTo={panTo} points={currentPoints} />
       </div>
       <p>Выбрать на карте:</p>
-      <img className="location__map" src={Map} alt="" />
+      <div className="location__map">
+        <GoogleMap
+          id="map"
+          mapContainerStyle={mapContainerStyle}
+          zoom={10}
+          center={center}
+          options={mapOptions}
+          onLoad={onMapLoad}
+        >
+          {currentPoints.map((point) => (
+            <Marker
+              key={point.id}
+              position={{ lat: point.lat, lng: point.lng }}
+              icon={{
+                url: MarkerIcon,
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(10, 10),
+                scaledSize: new window.google.maps.Size(20, 20),
+              }}
+              onClick={() => {
+                formik.setValues({
+                  ...formik.values,
+                  locationPoint: point.address,
+                });
+                setSelectedPoint(point);
+              }}
+            />
+          ))}
+
+          {selectedPoint ? (
+            <InfoWindow
+              position={{ lat: selectedPoint.lat, lng: selectedPoint.lng }}
+              onCloseClick={() => {
+                setSelectedPoint(null);
+              }}
+            >
+              <div>
+                <span>{selectedPoint.name}</span>
+              </div>
+            </InfoWindow>
+          ) : null}
+        </GoogleMap>
+      </div>
     </section>
   );
 };
 
 const mapStateToProps = (state) => ({
-  citiesNames: getCitiesNames(state),
+  cities: getCities(state),
   points: getPoints(state),
 });
 

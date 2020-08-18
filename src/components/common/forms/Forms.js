@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useMemo } from "react";
 import "./Forms.scss";
 import classNames from "classnames";
 import DatePicker from "react-datepicker";
-import Clean from "../../../assets/images/icons/clean_icon.svg";
 import "react-datepicker/dist/react-datepicker.css";
+import matchSorter from "match-sorter";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxList,
+  ComboboxOption,
+  ComboboxPopover,
+} from "@reach/combobox";
+import Clean from "../../../assets/images/icons/clean_icon.svg";
 
-export const InputRadio = ({ name, items, onChange, direction }) => {
+export const Radio = ({ name, items, onChange, direction }) => {
   const inputClass = classNames("input", {
     input__column: direction === "column",
   });
@@ -28,7 +36,7 @@ export const InputRadio = ({ name, items, onChange, direction }) => {
   );
 };
 
-export const InputCheckbox = ({ items, direction, onChange }) => {
+export const Checkbox = ({ items, direction, onChange }) => {
   const inputClass = classNames("input", {
     input__column: direction === "column",
   });
@@ -51,39 +59,112 @@ export const InputCheckbox = ({ items, direction, onChange }) => {
   );
 };
 
-export const InputText = ({ items, onChange }) => {
+export const SearchCity = ({ formik, panTo, cities }) => {
+  const handleSelect = async (address) => {
+    formik.setValues({ ...formik.values, locationCity: address });
+    const currentCity = cities.find((city) => city.name === address);
+    const { lat, lng } = currentCity;
+    panTo({ lat, lng });
+  };
+  function useCityMatch(location) {
+    const citiesNames = [];
+    cities.map((city) => citiesNames.push(city.name));
+    return useMemo(
+      () =>
+        location.trim().length < 2 ? null : matchSorter(citiesNames, location),
+      [citiesNames, location]
+    );
+  }
+  const cityResults = useCityMatch(formik.values.locationCity);
+
   return (
     <div className="input-text">
-      {items.map((item) => (
-        <div className="input-text__item" key={item.label}>
-          <div className="input-text__title">{item.label}</div>
-          <input
-            type="text"
-            id={item.name}
-            name={item.name}
-            placeholder={item.placeholder}
-            onChange={onChange}
-            value={item.value}
-            list={item.placeholder}
+      <div className="input-text__item">
+        <div className="input-text__title">Город</div>
+        <Combobox onSelect={handleSelect}>
+          <ComboboxInput
+            id="locationCity"
+            name="locationCity"
+            value={formik.values.locationCity}
+            onChange={formik.handleChange}
+            placeholder="Начните вводить город"
+            autoComplete="off"
           />
-          {item.options && (
-            <datalist id={item.placeholder}>
-              <option>{item.options[0]}</option>
-              <option>{item.options[1]}</option>
-              <option>{item.options[2]}</option>
-              <option>{item.options[3]}</option>
-              <option>{item.options[4]}</option>
-              <option>{item.options[5]}</option>
-            </datalist>
+          {cityResults && (
+            <ComboboxPopover>
+              {cityResults.length > 0 ? (
+                <ComboboxList>
+                  {cityResults.slice(0, 10).map((result) => (
+                    <ComboboxOption key={result} value={result} />
+                  ))}
+                </ComboboxList>
+              ) : (
+                <span style={{ display: "block", margin: 8 }}>
+                  Город не найден
+                </span>
+              )}
+            </ComboboxPopover>
           )}
-          <img src={Clean} alt="" />
-        </div>
-      ))}
+        </Combobox>
+        <img src={Clean} alt="" />
+      </div>
     </div>
   );
 };
 
-export const InputDate = ({ items, formik }) => {
+export const SearchPoints = ({ formik, panTo, points }) => {
+  const handlePointSelect = (address) => {
+    formik.setValues({ ...formik.values, locationPoint: address });
+    const currentPoint = points.find((point) => point.address === address);
+    const { lat, lng } = currentPoint;
+    panTo({ lat, lng });
+  };
+  function usePointMatch(location) {
+    const addresses = [];
+    points.map((point) => addresses.push(point.address));
+    return useMemo(
+      () => (location.trim() === "" ? null : matchSorter(addresses, location)),
+      [addresses, location]
+    );
+  }
+  const pointResults = usePointMatch(formik.values.locationPoint);
+
+  return (
+    <div className="input-text">
+      <div className="input-text__item">
+        <div className="input-text__title">Пункт выдачи</div>
+        <Combobox onSelect={handlePointSelect}>
+          <ComboboxInput
+            id="locationPoint"
+            name="locationPoint"
+            value={formik.values.locationPoint}
+            onChange={formik.handleChange}
+            placeholder="Начните вводить пункт"
+            autoComplete="off"
+          />
+          {pointResults && (
+            <ComboboxPopover>
+              {pointResults.length > 0 ? (
+                <ComboboxList>
+                  {pointResults.slice(0, 10).map((result) => (
+                    <ComboboxOption key={result} value={result} />
+                  ))}
+                </ComboboxList>
+              ) : (
+                <span style={{ display: "block", margin: 8 }}>
+                  Пункт не найден
+                </span>
+              )}
+            </ComboboxPopover>
+          )}
+        </Combobox>
+        <img src={Clean} alt="" />
+      </div>
+    </div>
+  );
+};
+
+export const Date = ({ items, formik }) => {
   return (
     <div className="input-text">
       <div className="input-text__item" key={items[0].label}>
