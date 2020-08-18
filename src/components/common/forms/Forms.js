@@ -71,7 +71,7 @@ export const SearchCity = ({ formik, panTo, cities }) => {
     cities.map((city) => citiesNames.push(city.name));
     return useMemo(
       () =>
-        location.trim() === "" ? null : matchSorter(citiesNames, location),
+        location.trim().length < 2 ? null : matchSorter(citiesNames, location),
       [citiesNames, location]
     );
   }
@@ -88,6 +88,7 @@ export const SearchCity = ({ formik, panTo, cities }) => {
             value={formik.values.locationCity}
             onChange={formik.handleChange}
             placeholder="Начните вводить город"
+            autoComplete="off"
           />
           {cityResults && (
             <ComboboxPopover>
@@ -139,6 +140,7 @@ export const SearchPoints = ({ formik, panTo, points }) => {
             value={formik.values.locationPoint}
             onChange={formik.handleChange}
             placeholder="Начните вводить пункт"
+            autoComplete="off"
           />
           {pointResults && (
             <ComboboxPopover>
