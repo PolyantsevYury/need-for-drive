@@ -15,6 +15,7 @@ import {
   getCurrentModel,
   getFinishedOrderData,
 } from "../../store/order-selectors";
+import SideBar from "../sidebar/Sidebar";
 
 const OrderPage = ({ isFinished, finishedOrderData, currentModel }) => {
   const [step, setStep] = useState(1);
@@ -74,40 +75,43 @@ const OrderPage = ({ isFinished, finishedOrderData, currentModel }) => {
   };
 
   return (
-    <section className="order-page">
-      <div className="order-page__header">
-        <Header />
-      </div>
-      <div className="order-page__steps-border">
-        <div className="order-page__steps">
-          <Steps
-            isStepsDisabled={isStepsDisabled}
-            isFinished={isFinished}
-            step={step}
-            setStep={setStep}
-          />
+    <>
+      <SideBar />
+      <section className="order-page">
+        <div className="order-page__header">
+          <Header />
         </div>
-      </div>
-      <div className="order">
-        <div className="order__content-container">
-          <div className="order__content">
-            {isFinished ? <Finished /> : renderStep()}
-          </div>
-        </div>
-        <div className="order__status-container">
-          <div className="order__status">
-            <PriceBar
+        <div className="order-page__steps-border">
+          <div className="order-page__steps">
+            <Steps
               isStepsDisabled={isStepsDisabled}
-              setIsStepsDisabled={setIsStepsDisabled}
               isFinished={isFinished}
               step={step}
               setStep={setStep}
-              orderData={isFinished ? finishedOrderData : orderData}
             />
           </div>
         </div>
-      </div>
-    </section>
+        <div className="order">
+          <div className="order__content-container">
+            <div className="order__content">
+              {isFinished ? <Finished /> : renderStep()}
+            </div>
+          </div>
+          <div className="order__status-container">
+            <div className="order__status">
+              <PriceBar
+                isStepsDisabled={isStepsDisabled}
+                setIsStepsDisabled={setIsStepsDisabled}
+                isFinished={isFinished}
+                step={step}
+                setStep={setStep}
+                orderData={isFinished ? finishedOrderData : orderData}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 
