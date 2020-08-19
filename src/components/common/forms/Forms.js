@@ -106,7 +106,15 @@ export const SearchCity = ({ formik, panTo, cities }) => {
             </ComboboxPopover>
           )}
         </Combobox>
-        <img src={Clean} alt="" />
+        <button
+          className="clear-btn"
+          type="button"
+          onClick={() =>
+            formik.setValues({ ...formik.values, locationCity: "" })
+          }
+        >
+          <img src={Clean} alt="" />
+        </button>
       </div>
     </div>
   );
@@ -159,7 +167,15 @@ export const SearchPoints = ({ formik, panTo, points }) => {
             </ComboboxPopover>
           )}
         </Combobox>
-        <img src={Clean} alt="" />
+        <button
+          className="clear-btn"
+          type="button"
+          onClick={() =>
+            formik.setValues({ ...formik.values, locationPoint: "" })
+          }
+        >
+          <img src={Clean} alt="" />
+        </button>
       </div>
     </div>
   );
@@ -183,7 +199,13 @@ export const Date = ({ items, formik }) => {
           endDate={formik.values.dateTo}
           maxDate={formik.values.dateTo}
         />
-        <img src={Clean} alt="" />
+        <button
+          className="clear-btn"
+          type="button"
+          onClick={() => formik.setValues({ ...formik.values, dateFrom: "" })}
+        >
+          <img src={Clean} alt="" />
+        </button>
       </div>
       <div className="input-text__item" key={items[1].label}>
         <div className="input-text__title">{items[1].label}</div>
@@ -200,7 +222,13 @@ export const Date = ({ items, formik }) => {
           endDate={formik.values.dateTo}
           minDate={formik.values.dateFrom}
         />
-        <img src={Clean} alt="" />
+        <button
+          className="clear-btn"
+          type="button"
+          onClick={() => formik.setValues({ ...formik.values, dateTo: "" })}
+        >
+          <img src={Clean} alt="" />
+        </button>
       </div>
     </div>
   );

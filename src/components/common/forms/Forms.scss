@@ -161,9 +161,17 @@
       }
     }
 
-    img {
+    .clear-btn {
+      cursor: pointer;
       position: relative;
-      left: -14px;
+      left: -20px;
+      background: rgba(0,0,0,0);
+      border: none;
+
+      &:focus,
+      &:hover {
+        outline: none;
+      }
     }
   }
 }
