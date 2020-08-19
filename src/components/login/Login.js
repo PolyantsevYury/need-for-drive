@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "../../assets/images/loginLogo.svg";
 import "./Login.scss";
+import { Button } from "../common/buttons/Buttons";
 
 const Login = () => {
   return (
@@ -13,7 +14,10 @@ const Login = () => {
           <div className="login-form__input" />
           <div className="login-form__footer">
             <div className="login-form__request">Запросить доступ</div>
-            <button className="login-form__submit-btn" type="button" />
+            <Button additionalStyles="button__admin button__login">
+              Войти
+            </Button>
+            {/* <button className="login-form__submit-btn" type="button" /> */}
           </div>
         </div>
       </div>
