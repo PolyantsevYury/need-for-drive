@@ -31,9 +31,11 @@ const center = {
 
 const Location = ({ formik, cities, requestCities, points, requestPoints }) => {
   useEffect(() => {
-    requestCities();
-    requestPoints();
-  }, [requestCities, requestPoints]);
+    if (points.length === 0) {
+      requestCities();
+      requestPoints();
+    }
+  }, [points, requestCities, requestPoints]);
 
   // Set points for current city
   const [currentPoints, setCurrentPoints] = React.useState([]);
@@ -47,29 +49,49 @@ const Location = ({ formik, cities, requestCities, points, requestPoints }) => {
     setCurrentPoints(sortedPoints);
   }, [formik.values.locationCity, points]);
 
+  const mapRef = React.useRef();
+  const onMapLoad = React.useCallback((map) => {
+    mapRef.current = map;
+  }, []);
+
+  // Change the center of the map depending on the city
+  useEffect(() => {
+    const isCityValid = cities.find(
+      (city) => city.name === formik.values.locationCity
+    );
+    if (isCityValid && mapRef.current) {
+      const { lat, lng } = isCityValid;
+      mapRef.current.panTo({ lat, lng });
+      mapRef.current.setZoom(11);
+    }
+  }, [cities, formik.values.locationCity]);
+
+  // Change the center of the map depending on the point
+  useEffect(() => {
+    const isPointValid = currentPoints.find(
+      (point) => point.address === formik.values.locationPoint
+    );
+
+    if (isPointValid && mapRef.current) {
+      const { lat, lng } = isPointValid;
+      mapRef.current.panTo({ lat, lng });
+      mapRef.current.setZoom(12);
+    }
+  }, [currentPoints, formik.values.locationPoint]);
+
   const [selectedPoint, setSelectedPoint] = React.useState(null);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyDy6vONFHc9t69wZ0rx5FgoXbCGiH7S74w",
   });
 
-  const mapRef = React.useRef();
-  const onMapLoad = React.useCallback((map) => {
-    mapRef.current = map;
-  }, []);
-
-  const panTo = React.useCallback(({ lat, lng }) => {
-    mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(11);
-  }, []);
-
   if (!isLoaded) return <Preloader />;
 
   return (
     <section className="location">
       <div className="location__form">
-        <SearchCity formik={formik} panTo={panTo} cities={cities} />
-        <SearchPoints formik={formik} panTo={panTo} points={currentPoints} />
+        <SearchCity formik={formik} cities={cities} />
+        <SearchPoints formik={formik} points={currentPoints} />
       </div>
       <p>Выбрать на карте:</p>
       <div className="location__map">
