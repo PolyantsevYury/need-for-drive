@@ -161,10 +161,7 @@ const PriceBar = ({
     if (step > 1 && !orderData.modelName) {
       return true;
     }
-    if (step > 2 && diffDays === 0) {
-      return true;
-    }
-    return false;
+    return step > 2 && diffDays === 0;
   };
 
   return (

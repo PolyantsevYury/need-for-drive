@@ -16,8 +16,10 @@ const Model = ({
 }) => {
   const [models, setModels] = useState([...cars]);
   useEffect(() => {
-    requestCars();
-  }, [requestCars]);
+    if (cars.length === 0) {
+      requestCars();
+    }
+  }, [cars, requestCars]);
 
   useEffect(() => {
     const filterCars = () => {
