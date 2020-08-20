@@ -29,7 +29,14 @@ const center = {
   lng: 48.375888,
 };
 
-const Location = ({ formik, cities, requestCities, points, requestPoints }) => {
+const Location = ({
+  formik,
+  cities,
+  requestCities,
+  points,
+  requestPoints,
+  isPointsFetching,
+}) => {
   useEffect(() => {
     if (points.length === 0) {
       requestCities();
@@ -85,7 +92,7 @@ const Location = ({ formik, cities, requestCities, points, requestPoints }) => {
     googleMapsApiKey: "AIzaSyDy6vONFHc9t69wZ0rx5FgoXbCGiH7S74w",
   });
 
-  if (!isLoaded) return <Preloader />;
+  if (!isLoaded || isPointsFetching) return <Preloader />;
 
   return (
     <section className="location">
@@ -144,6 +151,7 @@ const Location = ({ formik, cities, requestCities, points, requestPoints }) => {
 const mapStateToProps = (state) => ({
   cities: getCities(state),
   points: getPoints(state),
+  isPointsFetching: state.order.isPointsFetching,
 });
 
 export default connect(mapStateToProps, { requestCities, requestPoints })(

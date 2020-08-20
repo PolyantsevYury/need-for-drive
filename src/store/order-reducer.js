@@ -1,8 +1,9 @@
-import { getGeocode, getLatLng } from "use-places-autocomplete";
+import Geocode from "react-geocode";
 import orderAPI from "../api/api";
 
 const ADD_CITIES = "ADD_CITIES";
 const ADD_POINTS = "ADD_POINTS";
+const TOGGLE_IS_POINTS_FETCHING = "TOGGLE_IS_POINTS_FETCHING";
 const ADD_CARS = "ADD_CARS";
 const SET_CURRENT_CAR = "SET_CURRENT_CAR";
 const TOGGLE_IS_CARS_FETCHING = "TOGGLE_IS_CARS_FETCHING";
@@ -10,9 +11,12 @@ const TOGGLE_IS_ORDER_SUBMITTING = "TOGGLE_IS_ORDER_SUBMITTING";
 const ADD_ORDER_ID = "ADD_ORDER_ID";
 const ADD_FINISHED_ORDER_DATA = "ADD_FINISHED_ORDER_DATA";
 
+Geocode.setApiKey("AIzaSyDy6vONFHc9t69wZ0rx5FgoXbCGiH7S74w");
+
 const initialState = {
   cities: [],
   points: [],
+  isPointsFetching: true,
   cars: [],
   isCarsFetching: true,
   currentModel: null,
@@ -32,6 +36,11 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         points: action.points,
+      };
+    case TOGGLE_IS_POINTS_FETCHING:
+      return {
+        ...state,
+        isPointsFetching: action.isPointsFetching,
       };
     case ADD_CARS:
       return {
@@ -80,6 +89,10 @@ export const toggleIsCarsFetching = (isCarsFetching) => ({
   type: TOGGLE_IS_CARS_FETCHING,
   isCarsFetching,
 });
+export const toggleIsPointsFetching = (isPointsFetching) => ({
+  type: TOGGLE_IS_POINTS_FETCHING,
+  isPointsFetching,
+});
 export const toggleIsOrderSubmitting = (isOrderSubmitting) => ({
   type: TOGGLE_IS_ORDER_SUBMITTING,
   isOrderSubmitting,
@@ -91,13 +104,19 @@ export const requestCities = () => async (dispatch) => {
     const result = await orderAPI.getCity();
     const cities = result.data.data;
     const getCityLatLng = async (city) => {
-      const address = city.name;
-      const results = await getGeocode({ address });
-      const { lat, lng } = await getLatLng(results[0]);
-      const cityWithLatLng = city;
-      cityWithLatLng.lat = lat;
-      cityWithLatLng.lng = lng;
-      return cityWithLatLng;
+      try {
+        const address = city.name;
+        const response = await Geocode.fromAddress(address);
+        const { lat, lng } = response.results[0].geometry.location;
+        const cityWithLatLng = city;
+        cityWithLatLng.lat = lat;
+        cityWithLatLng.lng = lng;
+        return cityWithLatLng;
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log(e);
+        return null;
+      }
     };
     cities.map((city) => getCityLatLng(city));
     dispatch(addCities(cities));
@@ -109,18 +128,26 @@ export const requestCities = () => async (dispatch) => {
 
 export const requestPoints = () => async (dispatch) => {
   try {
+    dispatch(toggleIsPointsFetching(true));
     const result = await orderAPI.getPoint();
     const points = result.data.data;
     const getPointLatLng = async (point) => {
-      const address = `${point.address}, ${point.cityId.name}`;
-      const results = await getGeocode({ address });
-      const { lat, lng } = await getLatLng(results[0]);
-      const pointWithLatLng = point;
-      pointWithLatLng.lat = lat;
-      pointWithLatLng.lng = lng;
-      return pointWithLatLng;
+      try {
+        const address = `${point.address}, ${point.cityId.name}`;
+        const response = await Geocode.fromAddress(address);
+        const { lat, lng } = response.results[0].geometry.location;
+        const pointWithLatLng = point;
+        pointWithLatLng.lat = lat;
+        pointWithLatLng.lng = lng;
+        return pointWithLatLng;
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log(e);
+        return null;
+      }
     };
     points.map((point) => getPointLatLng(point));
+    dispatch(toggleIsPointsFetching(false));
     dispatch(addPoints(points));
   } catch (e) {
     // eslint-disable-next-line no-console
