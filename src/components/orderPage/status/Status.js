@@ -2,7 +2,6 @@ import React from "react";
 import "./Status.scss";
 
 const Status = ({ orderData }) => {
-  const dateFrom = new Date(orderData?.dateFrom);
   return (
     <section className="status">
       <div className="status__info">
@@ -17,7 +16,8 @@ const Status = ({ orderData }) => {
         <p className="status__access">
           Доступна с{" "}
           <span>
-            {orderData?.dateFrom && `${dateFrom.toLocaleDateString()} 12:00`}
+            {orderData?.dateFrom &&
+              `${orderData?.dateFrom.toLocaleDateString()} 12:00`}
           </span>
         </p>
       </div>

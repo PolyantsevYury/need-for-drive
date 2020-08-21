@@ -193,7 +193,9 @@ export const Date = ({ items, formik }) => {
           }
           startDate={formik.values.dateFrom}
           showTimeSelect
-          dateFormat="dd.MM.yyyy h:mm aa"
+          timeFormat="HH:mm"
+          timeIntervals={60}
+          dateFormat="dd.MM.yyyy HH:mm"
           endDate={formik.values.dateTo}
           maxDate={formik.values.dateTo}
         />
@@ -216,7 +218,9 @@ export const Date = ({ items, formik }) => {
           }
           startDate={formik.values.dateFrom}
           showTimeSelect
-          dateFormat="dd.MM.yyyy h:mm aa"
+          timeFormat="HH:mm"
+          timeIntervals={60}
+          dateFormat="dd.MM.yyyy HH:mm"
           endDate={formik.values.dateTo}
           minDate={formik.values.dateFrom}
         />
