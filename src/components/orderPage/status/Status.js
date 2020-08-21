@@ -17,7 +17,8 @@ const Status = ({ orderData }) => {
         <p className="status__access">
           Доступна с{" "}
           <span>
-            {orderData?.dateFrom && `${dateFrom.toLocaleDateString()} 12:00`}
+            {orderData?.dateFrom &&
+              `${dateFrom.getDate()}.${dateFrom.getMonth()}.${dateFrom.getFullYear()} ${dateFrom.getHours()}:00`}
           </span>
         </p>
       </div>

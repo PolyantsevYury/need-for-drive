@@ -70,7 +70,7 @@ const OrderPage = ({ isFinished, finishedOrderData, currentModel }) => {
       case 4:
         return <Status orderData={orderData} />;
       default:
-        return <Location formData={formData} onChange={formik.handleChange} />;
+        return <Location formik={formik} />;
     }
   };
 

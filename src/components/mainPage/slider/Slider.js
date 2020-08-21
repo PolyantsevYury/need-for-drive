@@ -82,7 +82,7 @@ const Slider = () => {
       <div className="slider__content-wrapper">
         {slides.map((slide, index) => (
           <Slide
-            key={slide.title}
+            key={slide.buttonStyle}
             totalSlides={slides.length - 1}
             slide={slide}
             currentSlide={currentSlide}

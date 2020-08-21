@@ -59,13 +59,7 @@ export const Checkbox = ({ items, direction, onChange }) => {
   );
 };
 
-export const SearchCity = ({ formik, panTo, cities }) => {
-  const handleSelect = async (address) => {
-    formik.setValues({ ...formik.values, locationCity: address });
-    const currentCity = cities.find((city) => city.name === address);
-    const { lat, lng } = currentCity;
-    panTo({ lat, lng });
-  };
+export const SearchCity = ({ formik, cities }) => {
   function useCityMatch(location) {
     const citiesNames = [];
     cities.map((city) => citiesNames.push(city.name));
@@ -81,7 +75,11 @@ export const SearchCity = ({ formik, panTo, cities }) => {
     <div className="input-text">
       <div className="input-text__item">
         <div className="input-text__title">Город</div>
-        <Combobox onSelect={handleSelect}>
+        <Combobox
+          onSelect={(city) =>
+            formik.setValues({ ...formik.values, locationCity: city })
+          }
+        >
           <ComboboxInput
             id="locationCity"
             name="locationCity"
@@ -106,25 +104,29 @@ export const SearchCity = ({ formik, panTo, cities }) => {
             </ComboboxPopover>
           )}
         </Combobox>
-        <img src={Clean} alt="" />
+        <button
+          className="clear-btn"
+          type="button"
+          onClick={() =>
+            formik.setValues({ ...formik.values, locationCity: "" })
+          }
+        >
+          <img src={Clean} alt="" />
+        </button>
       </div>
     </div>
   );
 };
 
-export const SearchPoints = ({ formik, panTo, points }) => {
-  const handlePointSelect = (address) => {
-    formik.setValues({ ...formik.values, locationPoint: address });
-    const currentPoint = points.find((point) => point.address === address);
-    const { lat, lng } = currentPoint;
-    panTo({ lat, lng });
-  };
+export const SearchPoints = ({ formik, points }) => {
   function usePointMatch(location) {
     const addresses = [];
     points.map((point) => addresses.push(point.address));
     return useMemo(
       () =>
-        location.trim().length < 2 ? null : matchSorter(addresses, location),
+        location.trim().length < 2 || addresses.includes(location)
+          ? null
+          : matchSorter(addresses, location),
       [addresses, location]
     );
   }
@@ -134,7 +136,11 @@ export const SearchPoints = ({ formik, panTo, points }) => {
     <div className="input-text">
       <div className="input-text__item">
         <div className="input-text__title">Пункт выдачи</div>
-        <Combobox onSelect={handlePointSelect}>
+        <Combobox
+          onSelect={(address) =>
+            formik.setValues({ ...formik.values, locationPoint: address })
+          }
+        >
           <ComboboxInput
             id="locationPoint"
             name="locationPoint"
@@ -159,7 +165,15 @@ export const SearchPoints = ({ formik, panTo, points }) => {
             </ComboboxPopover>
           )}
         </Combobox>
-        <img src={Clean} alt="" />
+        <button
+          className="clear-btn"
+          type="button"
+          onClick={() =>
+            formik.setValues({ ...formik.values, locationPoint: "" })
+          }
+        >
+          <img src={Clean} alt="" />
+        </button>
       </div>
     </div>
   );
@@ -179,11 +193,19 @@ export const Date = ({ items, formik }) => {
           }
           startDate={formik.values.dateFrom}
           showTimeSelect
-          dateFormat="dd.MM.yyyy h:mm aa"
+          timeFormat="HH:mm"
+          timeIntervals={60}
+          dateFormat="dd.MM.yyyy HH:mm"
           endDate={formik.values.dateTo}
           maxDate={formik.values.dateTo}
         />
-        <img src={Clean} alt="" />
+        <button
+          className="clear-btn"
+          type="button"
+          onClick={() => formik.setValues({ ...formik.values, dateFrom: "" })}
+        >
+          <img src={Clean} alt="" />
+        </button>
       </div>
       <div className="input-text__item" key={items[1].label}>
         <div className="input-text__title">{items[1].label}</div>
@@ -196,11 +218,19 @@ export const Date = ({ items, formik }) => {
           }
           startDate={formik.values.dateFrom}
           showTimeSelect
-          dateFormat="dd.MM.yyyy h:mm aa"
+          timeFormat="HH:mm"
+          timeIntervals={60}
+          dateFormat="dd.MM.yyyy HH:mm"
           endDate={formik.values.dateTo}
           minDate={formik.values.dateFrom}
         />
-        <img src={Clean} alt="" />
+        <button
+          className="clear-btn"
+          type="button"
+          onClick={() => formik.setValues({ ...formik.values, dateTo: "" })}
+        >
+          <img src={Clean} alt="" />
+        </button>
       </div>
     </div>
   );
