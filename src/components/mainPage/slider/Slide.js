@@ -23,27 +23,29 @@ const Slide = ({ totalSlides, slide, currentSlide, previousSlide, index }) => {
       (previousSlide > currentSlide &&
         !(previousSlide === totalSlides && currentSlide === 0)),
   });
+  const slideClass = classNames({
+    slide: true,
+    "slide--active": render,
+  });
 
   return (
-    render && (
+    <div
+      className={slideClass}
+      style={{ animation: `${isCurrent ? "fadeIn" : "fadeOut"} 0.5s` }}
+      onAnimationEnd={onAnimationEnd}
+    >
       <div
-        className="slide"
-        style={{ animation: `${isCurrent ? "fadeIn" : "fadeOut"} 0.5s` }}
-        onAnimationEnd={onAnimationEnd}
-      >
-        <div
-          className={`slide__background ${previousClass}`}
-          style={{ backgroundImage: `url(${slide.image})` }}
-        />
-        <div className={`slide__content ${previousClass}`}>
-          <h2 className="slide__content-title">{slide.title}</h2>
-          <p className="slide__content-info">{slide.info}</p>
-          <div className={`slide__button ${previousClass}`}>
-            <Button additionalStyles={slide.buttonStyle}>Подробнее</Button>
-          </div>
+        className={`slide__background ${previousClass}`}
+        style={{ backgroundImage: `url(${slide.image})` }}
+      />
+      <div className={`slide__content ${previousClass}`}>
+        <h2 className="slide__content-title">{slide.title}</h2>
+        <p className="slide__content-info">{slide.info}</p>
+        <div className={`slide__button ${previousClass}`}>
+          <Button additionalStyles={slide.buttonStyle}>Подробнее</Button>
         </div>
       </div>
-    )
+    </div>
   );
 };
 

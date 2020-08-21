@@ -1,5 +1,10 @@
 .slide {
   width: 100%;
+  display: none;
+
+  &--active {
+    display: block;
+  }
 
   &__background {
     position: absolute;
