@@ -45,35 +45,40 @@ const PriceBar = ({
       ? Math.ceil(diffTime / (1000 * 60 * 60 * 24))
       : 0;
   const calculatePrice = () => {
-    let priceMin = 0;
-    let priceMax = 0;
     let price = 0;
-    if (orderData?.fullFuel) {
-      priceMin += 500;
-      price += 500;
-    }
-    if (orderData?.childSeat) {
-      priceMin += 200;
-      price += 200;
-    }
-    if (orderData?.rightHand) {
-      priceMin += 1600;
-      price += 1600;
-    }
-    if (orderData?.modelName) {
-      priceMin =
-        orderData.rate === "Поминутно"
-          ? orderData.priceMin * 1.8 + priceMin
-          : orderData.priceMin + priceMin;
-      priceMax = orderData.priceMax + priceMax;
-      price = `${priceMin} - ${priceMax}`;
-    }
-    if (diffMinutes !== 0) {
-      price = Math.round(
-        orderData.rate === "Поминутно"
-          ? (priceMin / 1440) * diffMinutes
-          : priceMin * diffDays
-      );
+    if (orderData.modelName) {
+      if (diffMinutes === 0) {
+        let priceMin =
+          orderData.rate === "Поминутно"
+            ? orderData.priceMin * 1.5
+            : orderData.priceMin;
+        const { priceMax } = orderData;
+        if (orderData?.fullFuel) {
+          priceMin += 500;
+        }
+        if (orderData?.childSeat) {
+          priceMin += 200;
+        }
+        if (orderData?.rightHand) {
+          priceMin += 1600;
+        }
+        price = `${priceMin} - ${priceMax}`;
+      } else {
+        price = Math.round(
+          orderData.rate === "Поминутно"
+            ? (orderData.priceMin / 1440) * diffMinutes * 1.5
+            : orderData.priceMin * diffDays
+        );
+        if (orderData?.fullFuel) {
+          price += 500;
+        }
+        if (orderData?.childSeat) {
+          price += 200;
+        }
+        if (orderData?.rightHand) {
+          price += 1600;
+        }
+      }
     }
     return `${price} ₽`;
   };
