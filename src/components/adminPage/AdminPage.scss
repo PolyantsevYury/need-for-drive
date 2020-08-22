@@ -1,0 +1,62 @@
+@import "../../assets/variables";
+
+.admin {
+  overflow: auto;
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  color: $clr-blue-dark;
+
+  &__side-bar {
+    z-index: 10;
+    min-width: 220px;
+    box-shadow:
+      0 1px 75px rgba(90, 97, 105, 0.11),
+      0 2px 4px rgba(90, 97, 105, 0.12),
+      0 7.5px 11px rgba(90, 97, 105, 0.1),
+      0 3.5px 17.5px rgba(165, 182, 201, 0.1);
+  }
+
+  &__header {
+    height: 60px;
+  }
+
+  &__content {
+    z-index: 4;
+    padding: 20px;
+    height: 100%;
+    background-color: #F5F6F8;
+  }
+
+  &__footer {
+    height: 60px;
+  }
+}
+
+.content-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.content {
+
+  &__title {
+    font-size: 26px;
+    font-weight: normal;
+    margin-bottom: 20px;
+  }
+
+  &__card {
+    min-height: 320px;
+    background-color: #ffffff;
+    box-shadow:
+      0 2px 0 rgba(90, 97, 105, 0.11),
+      0 4px 8px rgba(90, 97, 105, 0.12),
+      0 10px 10px rgba(90, 97, 105, 0.06),
+      0 7px 70px rgba(90, 97, 105, 0.1);
+    border-radius: 9px;
+  }
+}
