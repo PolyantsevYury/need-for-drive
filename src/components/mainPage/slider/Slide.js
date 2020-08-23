@@ -5,17 +5,15 @@ import "./Slide.scss";
 
 const Slide = ({ totalSlides, slide, currentSlide, previousSlide, index }) => {
   const isCurrent = currentSlide === index;
-  const [render, setRender] = useState(isCurrent);
+  const [isVisible, setIsVisible] = useState(isCurrent);
 
   useEffect(() => {
-    if (isCurrent) setRender(true);
-  }, [isCurrent]);
-
-  const onAnimationEnd = () => {
-    if (!isCurrent) {
-      setRender(false);
+    if (isCurrent) {
+      setIsVisible(true);
+    } else {
+      setTimeout(() => setIsVisible(false), 500);
     }
-  };
+  }, [index, isCurrent, isVisible]);
 
   const previousClass = classNames({
     "is-prev":
@@ -25,14 +23,15 @@ const Slide = ({ totalSlides, slide, currentSlide, previousSlide, index }) => {
   });
   const slideClass = classNames({
     slide: true,
-    "slide--active": render,
+    "slide--active": isVisible,
   });
 
   return (
     <div
       className={slideClass}
-      style={{ animation: `${isCurrent ? "fadeIn" : "fadeOut"} 0.5s` }}
-      onAnimationEnd={onAnimationEnd}
+      style={{
+        animation: `${isCurrent ? "fadeIn" : "fadeOut"} 0.5s`,
+      }}
     >
       <div
         className={`slide__background ${previousClass}`}

@@ -66,12 +66,6 @@ const Slider = () => {
 
   return (
     <section className="slider">
-      <div className="img-preload">
-        {slides.forEach((slide) => {
-          const img = new Image();
-          img.src = slide.image;
-        })}
-      </div>
       <button
         type="button"
         className="slider__control slider__control-prev"
@@ -82,7 +76,7 @@ const Slider = () => {
       <div className="slider__content-wrapper">
         {slides.map((slide, index) => (
           <Slide
-            key={slide.buttonStyle}
+            key={slide.title}
             totalSlides={slides.length - 1}
             slide={slide}
             currentSlide={currentSlide}
