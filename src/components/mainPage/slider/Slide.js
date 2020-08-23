@@ -4,21 +4,16 @@ import { Button } from "../../common/buttons/Buttons";
 import "./Slide.scss";
 
 const Slide = ({ totalSlides, slide, currentSlide, previousSlide, index }) => {
-  const [isVisible, setIsVisible] = useState(currentSlide === index);
+  const isCurrent = currentSlide === index;
+  const [isVisible, setIsVisible] = useState(isCurrent);
 
   useEffect(() => {
-    if (currentSlide === index) {
+    if (isCurrent) {
       setIsVisible(true);
     } else {
       setTimeout(() => setIsVisible(false), 500);
     }
-  }, [currentSlide, index]);
-
-  // const onAnimationEnd = () => {
-  //   if (currentSlide !== index) {
-  //     setIsVisible(false);
-  //   }
-  // };
+  }, [index, isCurrent, isVisible]);
 
   const previousClass = classNames({
     "is-prev":
@@ -32,7 +27,12 @@ const Slide = ({ totalSlides, slide, currentSlide, previousSlide, index }) => {
   });
 
   return (
-    <div className={slideClass}>
+    <div
+      className={slideClass}
+      style={{
+        animation: `${isCurrent ? "fadeIn" : "fadeOut"} 0.5s`,
+      }}
+    >
       <div
         className={`slide__background ${previousClass}`}
         style={{ backgroundImage: `url(${slide.image})` }}

@@ -4,7 +4,6 @@
 
   &--active {
     display: block;
-    animation: fadeIn 0.5s;
   }
 
   &__background {
@@ -19,7 +18,7 @@
     transform: translateX(0);
     animation-duration: 4500ms;
     animation-timing-function: ease-out;
-    animation-fill-mode: forwards;
+    animation-fill-mode: backwards;
 
     &.is-prev {
       left: 0;
@@ -130,6 +129,16 @@
   100% {
     transform: translateX(0px) rotate(0.01deg);
     opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1
+  }
+
+  100% {
+    opacity: 0
   }
 }
 
