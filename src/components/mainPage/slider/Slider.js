@@ -66,6 +66,12 @@ const Slider = () => {
 
   return (
     <section className="slider">
+      <div className="img-preload">
+        {slides.forEach((slide) => {
+          const img = new Image();
+          img.src = slide.image;
+        })}
+      </div>
       <button
         type="button"
         className="slider__control slider__control-prev"

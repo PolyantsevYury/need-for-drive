@@ -7,9 +7,9 @@
   width: 100%;
   color: $clr-blue-dark;
 
-  &__side-bar {
+  &__nav-bar {
     z-index: 10;
-    min-width: 220px;
+    min-width: 240px;
     box-shadow:
       0 1px 75px rgba(90, 97, 105, 0.11),
       0 2px 4px rgba(90, 97, 105, 0.12),
@@ -17,32 +17,32 @@
       0 3.5px 17.5px rgba(165, 182, 201, 0.1);
   }
 
+  &__container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
   &__header {
-    height: 60px;
+    z-index: 4;
+    box-shadow: 10px 2.5px 9.5px rgba(90, 97, 105, 0.12);
+    height: 64px;
   }
 
   &__content {
-    z-index: 4;
     padding: 20px;
-    height: 100%;
+    flex-grow: 1;
     background-color: #F5F6F8;
   }
 
   &__footer {
-    height: 60px;
+    height: 64px;
   }
 }
 
-.content-wrapper {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 .content {
-
   &__title {
     font-size: 26px;
     font-weight: normal;
@@ -50,7 +50,6 @@
   }
 
   &__card {
-    min-height: 320px;
     background-color: #ffffff;
     box-shadow:
       0 2px 0 rgba(90, 97, 105, 0.11),
@@ -58,5 +57,54 @@
       0 10px 10px rgba(90, 97, 105, 0.06),
       0 7px 70px rgba(90, 97, 105, 0.1);
     border-radius: 9px;
+  }
+}
+
+.nav-bar {
+  display: flex;
+  flex-direction: column;
+
+  &__logo {
+    height: 64px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__logo-img {
+    margin-left: 40px;
+    width: 110px;
+  }
+
+  .menu {
+    &__item {
+      display: flex;
+      align-items: center;
+      height: 54px;
+      border-bottom: 1px solid #E1E5EB;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+
+      &--active {
+        color: $clr-main-blue;
+        background-color: #FBFBFB;
+        border-left: 3px solid $clr-main-blue;
+
+        svg {
+          fill: $clr-main-blue;
+        }
+      }
+
+      &:first-child {
+        border-top: 1px solid #E1E5EB;
+      }
+    }
+
+    &__item-icon {
+      display: flex;
+      align-items: center;
+      margin-left: 14px;
+      margin-right: 8px;
+    }
   }
 }

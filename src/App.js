@@ -12,7 +12,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" render={() => <MainPage />} />
         <Route exact path="/login" render={() => <Login />} />
-        <Route exact path="/admin" render={() => <AdminPage />} />
+        <Route path="/admin" render={() => <AdminPage />} />
         <Route exact path="/order" render={() => <OrderPage />} />
         <Route
           path="/order/finished/:orderId?"
