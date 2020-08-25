@@ -1,5 +1,73 @@
+@import "../../../assets/variables";
+
 .orders {
   &__card {
     min-height: 320px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    padding: 0 0 14px 14px;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: $max-mobile) {
+      padding: 0 0 8px 8px;
+    }
+  }
+
+  &__filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    select {
+      margin-right: 8px;
+
+      @media (max-width: $max-tablet) {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__filter-items {
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+
+    .container {
+      display: flex;
+      margin-top: 16px;
+
+      @media (max-width: $max-mobile) {
+        margin-top: 8px;
+      }
+    }
+  }
+
+  &__filter-btn {
+    margin: 14px 14px 0 0;
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: $max-mobile) {
+      margin: 8px 8px 0 0;
+    }
+  }
+
+  &__content {
+    flex-grow: 1;
+    border-top: 1px solid #F5F6F8;
+    border-bottom: 1px solid #F5F6F8;
+  }
+
+  &__footer {
+    height: 56px;
+
+    @media (max-width: $max-mobile) {
+      height: 50px;
+    }
   }
 }

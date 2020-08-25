@@ -202,3 +202,34 @@
     }
   }
 }
+
+.admin-filter {
+  border: 1px solid #E1E5EB;
+  border-radius: 4px;
+  height: 29px;
+  font-size: 11px;
+  color: #868E96;
+  width: 100%;
+  max-width: 120px;
+  min-width: 100px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  padding-left: 4px;
+
+  &:focus,
+  &:hover {
+    outline: none;
+  }
+
+  &__arrows {
+    position: relative;
+    right: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @media (max-width: $max-tablet) {
+      right: 16px;
+    }
+  }
+}
