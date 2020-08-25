@@ -1,15 +1,17 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Logo from "../../assets/images/loginLogo.svg";
+import Logo from "../../assets/images/icons/logo_icon.svg";
 import CarIcon from "../common/icons/CarIcon";
 import TableIcon from "../common/icons/TableIcon";
 import OrdersIcon from "../common/icons/OrdersIcon";
+import "./NavBar.scss";
 
 const NavBar = () => {
   return (
     <div className="nav-bar">
       <div className="nav-bar__logo">
         <img className="nav-bar__logo-img" src={Logo} alt="" />
+        <span className="nav-bar__logo-text">Need for Drive</span>
       </div>
       <div className="nav-bar__menu menu">
         <NavLink

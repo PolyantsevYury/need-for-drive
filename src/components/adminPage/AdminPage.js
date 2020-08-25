@@ -1,16 +1,18 @@
 import React from "react";
 import "./AdminPage.scss";
 import { withRouter } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 import Orders from "./orders/Orders";
 import NavBar from "./NavBar";
 import Header from "./Header";
+import NavBarMobile from "./NavBarMobile";
 
 const AdminPage = ({ location }) => {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
   return (
     <div className="admin">
-      <div className="admin__nav-bar">
-        <NavBar />
-      </div>
+      {isMobile ? <NavBarMobile /> : <NavBar />}
       <div className="admin__container">
         <div className="admin__header">
           <Header />
