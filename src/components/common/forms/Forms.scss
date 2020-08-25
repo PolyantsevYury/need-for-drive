@@ -83,6 +83,7 @@
         display: flex;
         align-items: center;
         cursor: pointer;
+        min-width: max-content;
 
         &::before {
           content: "";
