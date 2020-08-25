@@ -11,7 +11,10 @@ import {
   ComboboxOption,
   ComboboxPopover,
 } from "@reach/combobox";
+import { Field } from "formik";
 import Clean from "../../../assets/images/icons/clean_icon.svg";
+import dropDown from "../../../assets/images/icons/arrow_drop_down.svg";
+import dropUp from "../../../assets/images/icons/arrow_drop_up.svg";
 
 export const Radio = ({ name, items, onChange, direction }) => {
   const inputClass = classNames("input", {
@@ -246,5 +249,25 @@ export const Text = ({ title, placeholder, type }) => {
         placeholder={placeholder}
       />
     </div>
+  );
+};
+
+export const Filter = ({ name, options }) => {
+  return (
+    <>
+      <Field className="admin-filter" as="select" id={name} name={name}>
+        {options.map((option) => {
+          return (
+            <option key={option.value} value={option.value}>
+              {option.key}
+            </option>
+          );
+        })}
+      </Field>
+      <div className="admin-filter__arrows">
+        <img src={dropUp} alt=" " />
+        <img src={dropDown} alt=" " />
+      </div>
+    </>
   );
 };
