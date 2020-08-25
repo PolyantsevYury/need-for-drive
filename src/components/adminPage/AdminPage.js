@@ -1,13 +1,14 @@
 import React from "react";
 import "./AdminPage.scss";
-import { withRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import Orders from "./orders/Orders";
 import NavBar from "./NavBar";
 import Header from "./Header";
 import NavBarMobile from "./NavBarMobile";
+import Error from "./error/Error";
 
-const AdminPage = ({ location }) => {
+const AdminPage = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   return (
@@ -18,7 +19,10 @@ const AdminPage = ({ location }) => {
           <Header />
         </div>
         <div className="admin__content content">
-          {location.pathname === "/admin/orders" && <Orders />}
+          <Switch>
+            <Route exact path="/admin/orders" render={() => <Orders />} />
+            <Route path="*" render={() => <Error />} />
+          </Switch>
         </div>
         <div className="admin__footer">
           <a className="admin__footer-link" href="/">
@@ -33,4 +37,4 @@ const AdminPage = ({ location }) => {
   );
 };
 
-export default withRouter(AdminPage);
+export default AdminPage;
