@@ -202,7 +202,7 @@ const PriceBar = ({
         {orderData?.locationPoint && (
           <div className="price-bar__info-item">
             <div className="price-bar__info-name">Пункт выдачи</div>
-            <div className="price-bar__info-filler"> </div>
+            <div className="price-bar__info-filler" />
             <div className="price-bar__info-value">
               <p>{orderData?.locationCity},</p>
               {orderData?.locationPoint}
@@ -215,7 +215,7 @@ const PriceBar = ({
             {orderData?.modelName && (
               <div className="price-bar__info-item">
                 <div className="price-bar__info-name">Модель</div>
-                <div className="price-bar__info-filler"> </div>
+                <div className="price-bar__info-filler" />
                 <div className="price-bar__info-value">
                   {orderData?.modelName}
                 </div>
@@ -225,7 +225,7 @@ const PriceBar = ({
               <>
                 <div className="price-bar__info-item">
                   <div className="price-bar__info-name">Цвет</div>
-                  <div className="price-bar__info-filler"> </div>
+                  <div className="price-bar__info-filler" />
                   <div className="price-bar__info-value">
                     {orderData?.color?.charAt(0).toUpperCase() +
                       orderData?.color?.slice(1)}
@@ -233,34 +233,34 @@ const PriceBar = ({
                 </div>
                 <div className="price-bar__info-item">
                   <div className="price-bar__info-name">Длительност аренды</div>
-                  <div className="price-bar__info-filler"> </div>
+                  <div className="price-bar__info-filler" />
                   <div className="price-bar__info-value">{`${Math.floor(
                     diffHours / 24
                   )}д ${diffHours % 24}ч`}</div>
                 </div>
                 <div className="price-bar__info-item">
                   <div className="price-bar__info-name">Тариф</div>
-                  <div className="price-bar__info-filler"> </div>
+                  <div className="price-bar__info-filler" />
                   <div className="price-bar__info-value">{orderData?.rate}</div>
                 </div>
                 {orderData?.fullFuel && (
                   <div className="price-bar__info-item">
                     <div className="price-bar__info-name">Полный бак</div>
-                    <div className="price-bar__info-filler"> </div>
+                    <div className="price-bar__info-filler" />
                     <div className="price-bar__info-value">Да</div>
                   </div>
                 )}
                 {orderData?.childSeat && (
                   <div className="price-bar__info-item">
                     <div className="price-bar__info-name">Детское кресло</div>
-                    <div className="price-bar__info-filler"> </div>
+                    <div className="price-bar__info-filler" />
                     <div className="price-bar__info-value">Да</div>
                   </div>
                 )}
                 {orderData?.rightHand && (
                   <div className="price-bar__info-item">
                     <div className="price-bar__info-name">Правый руль</div>
-                    <div className="price-bar__info-filler"> </div>
+                    <div className="price-bar__info-filler" />
                     <div className="price-bar__info-value">Да</div>
                   </div>
                 )}
