@@ -1,0 +1,251 @@
+@import "../../../assets/variables";
+
+.car-setting {
+  display: flex;
+  flex-direction: column;
+
+  &__content {
+    display: flex;
+    height: 100%;
+
+    @media (max-width: $max-tablet) {
+      flex-direction: column;
+    }
+  }
+
+  &__info-card {
+    width: 300px;
+    margin-right: 14px;
+
+    @media (max-width: $max-tablet) {
+      margin-right: 0;
+      margin-bottom: 14px;
+      width: 100%;
+    }
+  }
+
+  &__form-card {
+    flex-grow: 1;
+  }
+}
+
+.info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__model {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__model-img {
+    width: 200px;
+    margin-bottom: 8px;
+  }
+
+  &__model-title {
+    font-size: 22px;
+    font-weight: normal;
+  }
+
+  &__model-subtitle {
+    margin: 6px 0;
+    font-size: 13px;
+    color: #818EA3;
+  }
+
+  &__model-input {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__progress {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #868E96;
+    font-size: 14px;
+    border-top: 1px solid #F5F6F8;
+    border-bottom: 1px solid #F5F6F8;
+  }
+
+  &__progress-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    max-width: 250px;
+    width: 100%;
+
+    h4 {
+      font-weight: 400;
+    }
+  }
+
+  &__progress-bar {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  &__description {
+    padding: 14px;
+    color: #868E96;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  &__description-title {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  &__description-text {
+    font-size: 13px;
+    color: #5A6169;
+  }
+}
+
+.form-card {
+  padding: 14px;
+
+  @media (max-width: $max-mobile) {
+    padding: 7px;
+  }
+
+  &__container {
+    display: flex;
+  }
+
+  &__title {
+    font-size: 17px;
+    font-weight: 400;
+    margin-bottom: 24px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  &__form-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  &__form-item {
+    margin-right: 14px;
+    max-width: 280px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__clr-btn {
+    cursor: pointer;
+    background-color: #fff;
+    border: 0.5px solid #BECAD6;
+    height: 30px;
+    width: 30px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 7px;
+  }
+
+  &__footer {
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__checkbox {
+    input {
+      &:checked + label {
+        color: #495057 !important;
+        font-size: 11px;
+        &::before {
+          background-color: $clr-main-blue;
+          border: none !important;
+          border-radius: 2px;
+        }
+        &::after {
+          width: 7px !important;
+          height: 4px !important;
+          left: 5px;
+          bottom: 3px;
+          border-color: #fff;
+          border-width: 1px;
+        }
+     }
+    }
+  }
+}
+
+/*
+ * File
+ */
+
+.file {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  height: 2rem;
+  color: #495057;
+  font-size: 12px;
+}
+.file input {
+  width: 14rem;
+  margin: 0;
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+.file-custom {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 5;
+  height: 2rem;
+  padding: .5rem 1rem;
+  line-height: 1;
+  color: #555;
+  background-color: #fff;
+  border: .075rem solid #ddd;
+  border-radius: .25rem;
+  box-shadow: inset 0 .2rem .4rem rgba(0,0,0,.05);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.file-custom:after {
+  content: "Выберите файл...";
+}
+.file-custom:before {
+  position: absolute;
+  top: -.075rem;
+  right: -.075rem;
+  bottom: -.075rem;
+  z-index: 6;
+  display: block;
+  content: "Обзор";
+  padding: .5rem 1rem;
+  line-height: 1;
+  color: #555;
+  background-color: #eee;
+  border: .075rem solid #ddd;
+  border-radius: 0 .25rem .25rem 0;
+}
+
+.file input:focus ~ .file-custom {
+  box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem #0074d9;
+}
