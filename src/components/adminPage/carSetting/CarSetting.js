@@ -64,7 +64,7 @@ const CarSetting = () => {
           <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
             <Form className="form-card__form">
               <h4 className="form-card__title">Настройки автомобиля</h4>
-              <div className="form-card__form-items">
+              <div className="form-card__model-inputs">
                 <div className="form-card__form-item">
                   <Text
                     title="Модель автомобиля"
@@ -79,16 +79,12 @@ const CarSetting = () => {
                     type="text"
                   />
                 </div>
-                <div className="form-card__form-item">
-                  <Text
-                    title="Доступные цвета"
-                    placeholder="Синий"
-                    type="text"
-                  />
-                  <button className="form-card__clr-btn" type="button">
-                    <img src={plusIcon} alt=" " />
-                  </button>
-                </div>
+              </div>
+              <div className="form-card__form-item">
+                <Text title="Доступные цвета" placeholder="Синий" type="text" />
+                <button className="form-card__clr-btn" type="button">
+                  <img src={plusIcon} alt=" " />
+                </button>
               </div>
               <div className="form-card__checkbox">
                 <Checkbox
