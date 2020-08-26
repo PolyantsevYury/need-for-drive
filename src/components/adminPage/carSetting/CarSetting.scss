@@ -6,21 +6,33 @@
 
   &__content {
     display: flex;
+    height: 100%;
+
+    @media (max-width: $max-tablet) {
+      flex-direction: column;
+    }
   }
 
   &__info-card {
     width: 300px;
+    margin-right: 14px;
+
+    @media (max-width: $max-tablet) {
+      margin-right: 0;
+      margin-bottom: 14px;
+      width: 100%;
+    }
   }
 
   &__form-card {
     flex-grow: 1;
-    padding: 14px;
   }
 }
 
 .info-card {
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   &__model {
     padding: 14px;
@@ -55,6 +67,7 @@
     padding: 14px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     color: #868E96;
     font-size: 14px;
     border-top: 1px solid #F5F6F8;
@@ -65,6 +78,8 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
+    max-width: 250px;
+    width: 100%;
 
     h4 {
       font-weight: 400;
@@ -72,12 +87,15 @@
   }
 
   &__progress-bar {
-
+    width: 100%;
+    max-width: 250px;
   }
 
   &__description {
     padding: 14px;
     color: #868E96;
+    width: 100%;
+    max-width: 300px;
   }
 
   &__description-title {
@@ -89,6 +107,86 @@
   &__description-text {
     font-size: 13px;
     color: #5A6169;
+  }
+}
+
+.form-card {
+  padding: 14px;
+
+  @media (max-width: $max-mobile) {
+    padding: 7px;
+  }
+
+  &__container {
+    display: flex;
+  }
+
+  &__title {
+    font-size: 17px;
+    font-weight: 400;
+    margin-bottom: 24px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  &__form-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  &__form-item {
+    margin-right: 14px;
+    max-width: 280px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__clr-btn {
+    cursor: pointer;
+    background-color: #fff;
+    border: 0.5px solid #BECAD6;
+    height: 30px;
+    width: 30px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 7px;
+  }
+
+  &__footer {
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__checkbox {
+    input {
+      &:checked + label {
+        color: #495057 !important;
+        font-size: 11px;
+        &::before {
+          background-color: $clr-main-blue;
+          border: none !important;
+          border-radius: 2px;
+        }
+        &::after {
+          width: 7px !important;
+          height: 4px !important;
+          left: 5px;
+          bottom: 3px;
+          border-color: #fff;
+          border-width: 1px;
+        }
+     }
+    }
   }
 }
 

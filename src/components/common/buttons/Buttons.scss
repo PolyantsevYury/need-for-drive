@@ -55,6 +55,20 @@
     line-height: 13px;
   }
 
+  &__admin-cancel {
+    background-color: #E9ECEF;
+    color: $clr-blue-dark;
+    margin-left: 14px;
+
+    @media (max-width: $max-mobile) {
+      margin-left: 7px;
+    }
+  }
+
+  &__admin-delete {
+    background-color: #CB3656;
+  }
+
   &__login {
     width: 110px;
   }

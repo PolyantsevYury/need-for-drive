@@ -2,23 +2,26 @@ import React from "react";
 import "./CarSetting.scss";
 import { Form, Formik } from "formik";
 import { Button } from "../../common/buttons/Buttons";
-import { Checkbox } from "../../common/forms/Forms";
+import { Checkbox, Text } from "../../common/forms/Forms";
 import modelExample from "../../../assets/images/adminModel.png";
 import progressBar from "../../../assets/images/progressBar.png";
+import plusIcon from "../../../assets/images/icons/plus_icon.svg";
 
 const CarSetting = () => {
-  const periodOptions = [
-    { key: "За год", value: "year" },
-    { key: "За месяц", value: "month" },
-    { key: "За неделю", value: "week" },
-    { key: "За день", value: "day" },
+  const colorOptions = [
+    { label: "Красный", value: "Красный", checked: true },
+    { label: "Белый", value: "Белый", checked: true },
+    { label: "Черный", value: "Черный", checked: true },
   ];
   const initialValues = {
-    period: "week",
-    model: "all",
-    city: "Ульяновск",
-    status: "process",
+    model: "Hyndai, i30 N",
+    modelType: "Компакт-кар",
+    colors: "Синий",
   };
+  // eslint-disable-next-line no-console
+  const onFilterSubmit = (value) => console.log(value);
+  // eslint-disable-next-line no-console
+  const onCheck = () => console.log("Check");
 
   return (
     <div className="car-setting">
@@ -57,7 +60,57 @@ const CarSetting = () => {
             </article>
           </div>
         </div>
-        <div className="content__card car-setting__form-card">c</div>
+        <div className="content__card car-setting__form-card form-card">
+          <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
+            <Form className="form-card__form">
+              <h4 className="form-card__title">Настройки автомобиля</h4>
+              <div className="form-card__form-items">
+                <div className="form-card__form-item">
+                  <Text
+                    title="Модель автомобиля"
+                    placeholder="Hyndai, i30 N"
+                    type="text"
+                  />
+                </div>
+                <div className="form-card__form-item">
+                  <Text
+                    title="Тип автомобиля"
+                    placeholder="Компакт-кар"
+                    type="text"
+                  />
+                </div>
+                <div className="form-card__form-item">
+                  <Text
+                    title="Доступные цвета"
+                    placeholder="Синий"
+                    type="text"
+                  />
+                  <button className="form-card__clr-btn" type="button">
+                    <img src={plusIcon} alt=" " />
+                  </button>
+                </div>
+              </div>
+              <div className="form-card__checkbox">
+                <Checkbox
+                  direction="column"
+                  items={colorOptions}
+                  onChange={onCheck}
+                />
+              </div>
+              <div className="form-card__footer">
+                <div className="form-card__container">
+                  <Button additionalStyles="button__admin">Сохранить</Button>
+                  <Button additionalStyles="button__admin button__admin-cancel">
+                    Отменить
+                  </Button>
+                </div>
+                <Button additionalStyles="button__admin button__admin-delete">
+                  Удалить
+                </Button>
+              </div>
+            </Form>
+          </Formik>
+        </div>
       </div>
     </div>
   );
