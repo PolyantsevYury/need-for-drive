@@ -1,0 +1,153 @@
+@import "../../../assets/variables";
+
+.car-setting {
+  display: flex;
+  flex-direction: column;
+
+  &__content {
+    display: flex;
+  }
+
+  &__info-card {
+    width: 300px;
+  }
+
+  &__form-card {
+    flex-grow: 1;
+    padding: 14px;
+  }
+}
+
+.info-card {
+  display: flex;
+  flex-direction: column;
+
+  &__model {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__model-img {
+    width: 200px;
+    margin-bottom: 8px;
+  }
+
+  &__model-title {
+    font-size: 22px;
+    font-weight: normal;
+  }
+
+  &__model-subtitle {
+    margin: 6px 0;
+    font-size: 13px;
+    color: #818EA3;
+  }
+
+  &__model-input {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__progress {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    color: #868E96;
+    font-size: 14px;
+    border-top: 1px solid #F5F6F8;
+    border-bottom: 1px solid #F5F6F8;
+  }
+
+  &__progress-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+
+    h4 {
+      font-weight: 400;
+    }
+  }
+
+  &__progress-bar {
+
+  }
+
+  &__description {
+    padding: 14px;
+    color: #868E96;
+  }
+
+  &__description-title {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  &__description-text {
+    font-size: 13px;
+    color: #5A6169;
+  }
+}
+
+/*
+ * File
+ */
+
+.file {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  height: 2rem;
+  color: #495057;
+  font-size: 12px;
+}
+.file input {
+  width: 14rem;
+  margin: 0;
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+.file-custom {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 5;
+  height: 2rem;
+  padding: .5rem 1rem;
+  line-height: 1;
+  color: #555;
+  background-color: #fff;
+  border: .075rem solid #ddd;
+  border-radius: .25rem;
+  box-shadow: inset 0 .2rem .4rem rgba(0,0,0,.05);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.file-custom:after {
+  content: "Выберите файл...";
+}
+.file-custom:before {
+  position: absolute;
+  top: -.075rem;
+  right: -.075rem;
+  bottom: -.075rem;
+  z-index: 6;
+  display: block;
+  content: "Обзор";
+  padding: .5rem 1rem;
+  line-height: 1;
+  color: #555;
+  background-color: #eee;
+  border: .075rem solid #ddd;
+  border-radius: 0 .25rem .25rem 0;
+}
+
+.file input:focus ~ .file-custom {
+  box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem #0074d9;
+}
