@@ -6,6 +6,10 @@ export const getCities = (state) => {
   return state.order.cities;
 };
 
+export const getRate = (state) => {
+  return state.order.rate;
+};
+
 export const getCars = (state) => {
   return state.order.cars;
 };

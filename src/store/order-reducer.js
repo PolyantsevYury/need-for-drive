@@ -10,6 +10,7 @@ const TOGGLE_IS_CARS_FETCHING = "TOGGLE_IS_CARS_FETCHING";
 const TOGGLE_IS_ORDER_SUBMITTING = "TOGGLE_IS_ORDER_SUBMITTING";
 const ADD_ORDER_ID = "ADD_ORDER_ID";
 const ADD_FINISHED_ORDER_DATA = "ADD_FINISHED_ORDER_DATA";
+const ADD_RATE = "ADD_RATE";
 
 Geocode.setApiKey("AIzaSyDy6vONFHc9t69wZ0rx5FgoXbCGiH7S74w");
 
@@ -18,6 +19,7 @@ const initialState = {
   points: [],
   isPointsFetching: true,
   cars: [],
+  rate: [],
   isCarsFetching: true,
   currentModel: null,
   isOrderSubmitting: false,
@@ -36,6 +38,11 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         points: action.points,
+      };
+    case ADD_RATE:
+      return {
+        ...state,
+        rate: action.rate,
       };
     case TOGGLE_IS_POINTS_FETCHING:
       return {
@@ -80,6 +87,7 @@ const orderReducer = (state = initialState, action) => {
 export const addCities = (cities) => ({ type: ADD_CITIES, cities });
 export const addPoints = (points) => ({ type: ADD_POINTS, points });
 export const addCars = (cars) => ({ type: ADD_CARS, cars });
+export const addRate = (rate) => ({ type: ADD_RATE, rate });
 export const setCurrentCar = (car) => ({ type: SET_CURRENT_CAR, car });
 export const addFinishedOrderData = (orderData) => ({
   type: ADD_FINISHED_ORDER_DATA,
@@ -161,6 +169,16 @@ export const requestCars = () => async (dispatch) => {
     const result = await orderAPI.getCars();
     dispatch(toggleIsCarsFetching(false));
     dispatch(addCars(result.data.data));
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+  }
+};
+
+export const requestRate = () => async (dispatch) => {
+  try {
+    const result = await orderAPI.getRate();
+    dispatch(addRate(result.data.data));
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);

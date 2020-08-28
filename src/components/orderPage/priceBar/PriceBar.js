@@ -8,8 +8,9 @@ import {
   getCities,
   getOrderId,
   getPoints,
+  getRate,
 } from "../../../store/order-selectors";
-import { submitOrder } from "../../../store/order-reducer";
+import { requestRate, submitOrder } from "../../../store/order-reducer";
 
 const PriceBar = ({
   step,
@@ -18,6 +19,8 @@ const PriceBar = ({
   setIsStepsDisabled,
   isFinished,
   orderData,
+  requestRate,
+  rate,
   cities,
   points,
   submitOrder,
@@ -30,6 +33,9 @@ const PriceBar = ({
       history.push(`/order/finished/${orderId}`);
     }
   }, [history, orderId]);
+  useEffect(() => {
+    requestRate();
+  }, [requestRate]);
 
   const diffTime = Math.abs(orderData?.dateTo - orderData?.dateFrom);
   const diffMinutes =
@@ -95,8 +101,8 @@ const PriceBar = ({
     const dateTo = orderData.dateTo.getTime();
     const rateId =
       orderData.rate === "На сутки"
-        ? "5e26a0e2099b810b946c5d86"
-        : "5e26a0d2099b810b946c5d85";
+        ? rate.find((rate) => rate.rateTypeId.name === "На сутки").id
+        : rate.find((rate) => rate.rateTypeId.name === "Поминутно").id;
     const price = calculatePrice();
     const isFullTank = orderData.fullFuel;
     const isNeedChildChair = orderData.childSeat;
@@ -289,10 +295,11 @@ const mapStateToProps = (state) => ({
   points: getPoints(state),
   cities: getCities(state),
   orderId: getOrderId(state),
+  rate: getRate(state),
   isOrderSubmitting: state.order.isOrderSubmitting,
 });
 
 export default compose(
-  connect(mapStateToProps, { submitOrder }),
+  connect(mapStateToProps, { requestRate, submitOrder }),
   withRouter
 )(PriceBar);
