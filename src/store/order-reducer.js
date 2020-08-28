@@ -201,10 +201,14 @@ export const submitOrder = (
 ) => async (dispatch) => {
   try {
     dispatch(toggleIsOrderSubmitting(true));
+    const statusId = await orderAPI.getStatusId();
+    const newStatusId = statusId.data.data.find(
+      (status) => status.name === "new"
+    ).id;
     const orderBody = {
       orderStatusId: {
         name: "new",
-        id: "5e26a191099b810b946c5d89",
+        id: { newStatusId },
       },
       cityId: {
         id: cityId,
