@@ -1,6 +1,6 @@
 import React from "react";
 import "./Addition.scss";
-import { Checkbox, Radio, Date } from "../../common/forms/Forms";
+import { Checkbox, Radio, DateForm } from "../../common/forms/Forms";
 
 const Addition = ({ formik, modelData }) => {
   const carColorsWithAny = ["любой", ...modelData.colors];
@@ -22,7 +22,7 @@ const Addition = ({ formik, modelData }) => {
 
       <div className="addition__option">
         <h4 className="addition__title">Дата аренды</h4>
-        <Date
+        <DateForm
           items={[
             {
               name: "dateFrom",
