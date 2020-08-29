@@ -16,7 +16,7 @@ const Finished = ({ finishedOrderData, requestOrder }) => {
 
   return (
     <section className="finished">
-      <h3 className="finished__title">Ваш заказ подтверждён</h3>
+      <h3 className="finished__title">Ваш заказ {finishedOrderData?.status}</h3>
       <Status orderData={finishedOrderData} />
     </section>
   );

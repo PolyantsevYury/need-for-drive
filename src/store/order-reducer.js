@@ -208,7 +208,7 @@ export const submitOrder = (
     const orderBody = {
       orderStatusId: {
         name: "new",
-        id: { newStatusId },
+        id: newStatusId,
       },
       cityId: {
         id: cityId,
