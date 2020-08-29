@@ -22,6 +22,9 @@ const orderAPI = {
   postOrder(orderBody) {
     return instance.post(`db/order/`, orderBody);
   },
+  cancelOrder(orderBody, orderId) {
+    return instance.put(`db/order/${orderId}`, orderBody);
+  },
   getOrder(orderId) {
     return instance.get(`db/order/${orderId}`);
   },

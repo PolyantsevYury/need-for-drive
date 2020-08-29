@@ -3,14 +3,18 @@ import { withRouter } from "react-router-dom";
 import "./PriceBar.scss";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { Button, LinkButton } from "../../common/buttons/Buttons";
+import { Button } from "../../common/buttons/Buttons";
 import {
   getCities,
   getOrderId,
   getPoints,
   getRate,
 } from "../../../store/order-selectors";
-import { requestRate, submitOrder } from "../../../store/order-reducer";
+import {
+  cancelOrder,
+  requestRate,
+  submitOrder,
+} from "../../../store/order-reducer";
 
 const PriceBar = ({
   step,
@@ -24,7 +28,9 @@ const PriceBar = ({
   cities,
   points,
   submitOrder,
+  cancelOrder,
   isOrderSubmitting,
+  isOrderCancelling,
   orderId,
   history,
 }) => {
@@ -124,15 +130,16 @@ const PriceBar = ({
   };
   const onModalConfirm = () => {
     if (isFinished) {
-      setStep(1);
-      setIsModal(false);
+      cancelOrder(orderId, setIsModal);
     } else {
       submitForm();
     }
   };
   const buttonText = () => {
     if (isFinished) {
-      return "Отменить";
+      return orderData?.status === "отменен"
+        ? "Оформить новый заказ"
+        : "Отменить";
     }
     switch (step) {
       case 1:
@@ -185,13 +192,12 @@ const PriceBar = ({
               {isFinished ? "Отменить заказ" : "Подтвердить заказ"}
             </div>
             <div className="modal__buttons">
-              <LinkButton
-                to={isFinished ? "/order" : false}
+              <Button
                 onClick={() => onModalConfirm()}
-                isLoading={isOrderSubmitting}
+                isLoading={isFinished ? isOrderCancelling : isOrderSubmitting}
               >
                 Подтвердить
-              </LinkButton>
+              </Button>
               <div className="modal__buttons-space" />
               <Button
                 additionalStyles="button__cancel"
@@ -281,8 +287,14 @@ const PriceBar = ({
         <span>{orderData?.price || calculatePrice()}</span>
       </div>
       <Button
-        additionalStyles={isFinished ? "button__cancel" : ""}
-        onClick={() => onButtonClick()}
+        additionalStyles={
+          isFinished && orderData?.status !== "отменен" ? "button__cancel" : ""
+        }
+        onClick={() =>
+          orderData?.status === "отменен"
+            ? history.push("/order/")
+            : onButtonClick()
+        }
         isDisabled={isButtonDisabled()}
       >
         {buttonText()}
@@ -297,9 +309,10 @@ const mapStateToProps = (state) => ({
   orderId: getOrderId(state),
   rate: getRate(state),
   isOrderSubmitting: state.order.isOrderSubmitting,
+  isOrderCancelling: state.order.isOrderCancelling,
 });
 
 export default compose(
-  connect(mapStateToProps, { requestRate, submitOrder }),
+  connect(mapStateToProps, { requestRate, submitOrder, cancelOrder }),
   withRouter
 )(PriceBar);

@@ -5,14 +5,18 @@ import { connect } from "react-redux";
 import { withRouter, useParams } from "react-router-dom";
 import Status from "../status/Status";
 import { getFinishedOrderData } from "../../../store/order-selectors";
-import { requestOrder } from "../../../store/order-reducer";
+import { addOrderId, requestOrder } from "../../../store/order-reducer";
 
-const Finished = ({ finishedOrderData, requestOrder }) => {
+const Finished = ({ finishedOrderData, requestOrder, addOrderId }) => {
   const params = useParams();
   const { orderId } = params;
   useEffect(() => {
     requestOrder(orderId);
   }, [orderId, requestOrder]);
+
+  useEffect(() => {
+    addOrderId(orderId);
+  }, [orderId, addOrderId]);
 
   return (
     <section className="finished">
@@ -29,6 +33,6 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
-  connect(mapStateToProps, { requestOrder }),
+  connect(mapStateToProps, { requestOrder, addOrderId }),
   withRouter
 )(Finished);
