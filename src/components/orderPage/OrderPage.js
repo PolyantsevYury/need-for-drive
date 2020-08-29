@@ -14,10 +14,16 @@ import Finished from "./finished/Finished";
 import {
   getCurrentModel,
   getFinishedOrderData,
+  getOrderId,
 } from "../../store/order-selectors";
 import SideBar from "../sidebar/Sidebar";
 
-const OrderPage = ({ isFinished, finishedOrderData, currentModel }) => {
+const OrderPage = ({
+  isFinished,
+  finishedOrderData,
+  currentModel,
+  orderId,
+}) => {
   const [step, setStep] = useState(1);
   const [isStepsDisabled, setIsStepsDisabled] = useState({
     1: false,
@@ -86,6 +92,7 @@ const OrderPage = ({ isFinished, finishedOrderData, currentModel }) => {
             <Steps
               isStepsDisabled={isStepsDisabled}
               isFinished={isFinished}
+              orderId={orderId}
               step={step}
               setStep={setStep}
             />
@@ -115,7 +122,7 @@ const OrderPage = ({ isFinished, finishedOrderData, currentModel }) => {
   );
 };
 
-const Steps = ({ isFinished, step, setStep, isStepsDisabled }) => {
+const Steps = ({ isFinished, orderId, step, setStep, isStepsDisabled }) => {
   const stepsTitles = ["Местоположение", "Модель", "Дополнительно", "Итого"];
   const stepTitleClass = (index) =>
     classNames("steps__item-title", {
@@ -126,7 +133,7 @@ const Steps = ({ isFinished, step, setStep, isStepsDisabled }) => {
     <section className="steps">
       <div className="steps__items">
         {isFinished ? (
-          <span className="steps__finished">Заказ номер RU58491823</span>
+          <span className="steps__finished">Заказ номер {orderId}</span>
         ) : (
           stepsTitles.map((title, index) => (
             <div className="steps__item" key={title}>
@@ -152,6 +159,7 @@ const Steps = ({ isFinished, step, setStep, isStepsDisabled }) => {
 const mapStateToProps = (state) => ({
   currentModel: getCurrentModel(state),
   finishedOrderData: getFinishedOrderData(state),
+  orderId: getOrderId(state),
 });
 
 export default connect(mapStateToProps, {})(OrderPage);
