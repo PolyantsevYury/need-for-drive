@@ -13,7 +13,7 @@ const Burger = ({ setIsMenuOpen, isMenuOpen }) => {
       className={burgerClass}
       onClick={() => setIsMenuOpen(!isMenuOpen)}
     >
-      <span className="burger__line"> </span>
+      <span className="burger__line" />
     </div>
   );
 };

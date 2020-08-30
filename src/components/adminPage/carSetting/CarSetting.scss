@@ -134,10 +134,9 @@
     height: 100%;
   }
 
-  &__form-items {
+  &__model-inputs {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
   }
 
   &__form-item {
@@ -165,6 +164,12 @@
     margin-top: 14px;
     display: flex;
     justify-content: space-between;
+
+    @media (max-width: $max-mobile) {
+      button {
+        width: 90px;
+      }
+    }
   }
 
   &__checkbox {

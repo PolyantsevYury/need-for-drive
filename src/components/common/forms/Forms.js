@@ -182,7 +182,8 @@ export const SearchPoints = ({ formik, points }) => {
   );
 };
 
-export const Date = ({ items, formik }) => {
+export const DateForm = ({ items, formik }) => {
+  const now = new Date();
   return (
     <div className="input-text">
       <div className="input-text__item" key={items[0].label}>
@@ -200,6 +201,7 @@ export const Date = ({ items, formik }) => {
           timeIntervals={60}
           dateFormat="dd.MM.yyyy HH:mm"
           endDate={formik.values.dateTo}
+          minDate={now}
           maxDate={formik.values.dateTo}
         />
         <button

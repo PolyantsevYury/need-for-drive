@@ -8,8 +8,12 @@ const ADD_CARS = "ADD_CARS";
 const SET_CURRENT_CAR = "SET_CURRENT_CAR";
 const TOGGLE_IS_CARS_FETCHING = "TOGGLE_IS_CARS_FETCHING";
 const TOGGLE_IS_ORDER_SUBMITTING = "TOGGLE_IS_ORDER_SUBMITTING";
+const TOGGLE_IS_ORDER_FETCHING = "TOGGLE_IS_ORDER_FETCHING";
+const TOGGLE_IS_ORDER_CANCELLING = "TOGGLE_IS_ORDER_CANCELLING";
 const ADD_ORDER_ID = "ADD_ORDER_ID";
 const ADD_FINISHED_ORDER_DATA = "ADD_FINISHED_ORDER_DATA";
+const ADD_RATE = "ADD_RATE";
+const CHANGE_ORDER_STATUS = "CHANGE_ORDER_STATUS";
 
 Geocode.setApiKey("AIzaSyDy6vONFHc9t69wZ0rx5FgoXbCGiH7S74w");
 
@@ -18,9 +22,12 @@ const initialState = {
   points: [],
   isPointsFetching: true,
   cars: [],
+  rate: [],
   isCarsFetching: true,
   currentModel: null,
   isOrderSubmitting: false,
+  isOrderFetching: false,
+  isOrderCancelling: false,
   orderId: null,
   finishedOrderData: null,
 };
@@ -36,6 +43,11 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         points: action.points,
+      };
+    case ADD_RATE:
+      return {
+        ...state,
+        rate: action.rate,
       };
     case TOGGLE_IS_POINTS_FETCHING:
       return {
@@ -62,6 +74,16 @@ const orderReducer = (state = initialState, action) => {
         ...state,
         isOrderSubmitting: action.isOrderSubmitting,
       };
+    case TOGGLE_IS_ORDER_FETCHING:
+      return {
+        ...state,
+        isOrderFetching: action.isOrderFetching,
+      };
+    case TOGGLE_IS_ORDER_CANCELLING:
+      return {
+        ...state,
+        isOrderCancelling: action.isOrderCancelling,
+      };
     case ADD_ORDER_ID:
       return {
         ...state,
@@ -72,6 +94,17 @@ const orderReducer = (state = initialState, action) => {
         ...state,
         finishedOrderData: action.orderData,
       };
+    case CHANGE_ORDER_STATUS:
+      return {
+        ...state,
+        finishedOrderData: {
+          ...state.finishedOrderData,
+          orderStatusId: {
+            ...state.finishedOrderData.orderStatusId,
+            name: action.orderStatus,
+          },
+        },
+      };
     default:
       return state;
   }
@@ -80,6 +113,7 @@ const orderReducer = (state = initialState, action) => {
 export const addCities = (cities) => ({ type: ADD_CITIES, cities });
 export const addPoints = (points) => ({ type: ADD_POINTS, points });
 export const addCars = (cars) => ({ type: ADD_CARS, cars });
+export const addRate = (rate) => ({ type: ADD_RATE, rate });
 export const setCurrentCar = (car) => ({ type: SET_CURRENT_CAR, car });
 export const addFinishedOrderData = (orderData) => ({
   type: ADD_FINISHED_ORDER_DATA,
@@ -97,7 +131,19 @@ export const toggleIsOrderSubmitting = (isOrderSubmitting) => ({
   type: TOGGLE_IS_ORDER_SUBMITTING,
   isOrderSubmitting,
 });
+export const toggleIsOrderFetching = (isOrderFetching) => ({
+  type: TOGGLE_IS_ORDER_FETCHING,
+  isOrderFetching,
+});
+export const toggleIsOrderCancelling = (isOrderCancelling) => ({
+  type: TOGGLE_IS_ORDER_CANCELLING,
+  isOrderCancelling,
+});
 export const addOrderId = (orderId) => ({ type: ADD_ORDER_ID, orderId });
+export const changeOrderStatus = (orderStatus) => ({
+  type: CHANGE_ORDER_STATUS,
+  orderStatus,
+});
 
 export const requestCities = () => async (dispatch) => {
   try {
@@ -167,6 +213,16 @@ export const requestCars = () => async (dispatch) => {
   }
 };
 
+export const requestRate = () => async (dispatch) => {
+  try {
+    const result = await orderAPI.getRate();
+    dispatch(addRate(result.data.data));
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+  }
+};
+
 export const submitOrder = (
   cityId,
   pointId,
@@ -183,10 +239,14 @@ export const submitOrder = (
 ) => async (dispatch) => {
   try {
     dispatch(toggleIsOrderSubmitting(true));
+    const statusId = await orderAPI.getStatusId();
+    const newStatusId = statusId.data.data.find(
+      (status) => status.name === "new"
+    ).id;
     const orderBody = {
       orderStatusId: {
         name: "new",
-        id: "5e26a191099b810b946c5d89",
+        id: newStatusId,
       },
       cityId: {
         id: cityId,
@@ -220,8 +280,33 @@ export const submitOrder = (
 
 export const requestOrder = (orderId) => async (dispatch) => {
   try {
+    dispatch(toggleIsOrderFetching(true));
     const result = await orderAPI.getOrder(orderId);
     dispatch(addFinishedOrderData(result.data.data));
+    dispatch(toggleIsOrderFetching(false));
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+  }
+};
+
+export const cancelOrder = (orderId, setIsModal) => async (dispatch) => {
+  try {
+    dispatch(toggleIsOrderCancelling(true));
+    const statusId = await orderAPI.getStatusId();
+    const cancelledStatusId = statusId.data.data.find(
+      (status) => status.name === "cancelled"
+    ).id;
+    const orderBody = {
+      orderStatusId: {
+        name: "cancelled",
+        id: cancelledStatusId,
+      },
+    };
+    await orderAPI.cancelOrder(orderBody, orderId);
+    dispatch(changeOrderStatus("cancelled"));
+    dispatch(toggleIsOrderCancelling(false));
+    setIsModal(false);
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);

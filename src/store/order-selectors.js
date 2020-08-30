@@ -6,6 +6,10 @@ export const getCities = (state) => {
   return state.order.cities;
 };
 
+export const getRate = (state) => {
+  return state.order.rate;
+};
+
 export const getCars = (state) => {
   return state.order.cars;
 };
@@ -20,8 +24,23 @@ export const getOrderId = (state) => {
 
 export const getFinishedOrderData = (state) => {
   const { finishedOrderData } = state.order;
+  const getCorrectStatusName = (name) => {
+    switch (name) {
+      case "new":
+        return "создан и ждет обработки";
+      case "issued":
+        return "обрабатывается";
+      case "confirmed":
+        return "подтвержден";
+      case "cancelled":
+        return "отменен";
+      default:
+        return "создан и ждет обработки";
+    }
+  };
 
   return {
+    status: getCorrectStatusName(finishedOrderData?.orderStatusId?.name),
     locationCity: finishedOrderData?.cityId?.name,
     locationPoint: finishedOrderData?.pointId?.address,
     price: finishedOrderData?.price,

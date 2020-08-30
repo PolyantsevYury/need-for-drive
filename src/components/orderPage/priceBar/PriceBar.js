@@ -3,13 +3,18 @@ import { withRouter } from "react-router-dom";
 import "./PriceBar.scss";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { Button, LinkButton } from "../../common/buttons/Buttons";
+import { Button } from "../../common/buttons/Buttons";
 import {
   getCities,
   getOrderId,
   getPoints,
+  getRate,
 } from "../../../store/order-selectors";
-import { submitOrder } from "../../../store/order-reducer";
+import {
+  cancelOrder,
+  requestRate,
+  submitOrder,
+} from "../../../store/order-reducer";
 
 const PriceBar = ({
   step,
@@ -18,10 +23,15 @@ const PriceBar = ({
   setIsStepsDisabled,
   isFinished,
   orderData,
+  requestRate,
+  rate,
   cities,
   points,
   submitOrder,
+  cancelOrder,
   isOrderSubmitting,
+  isOrderFetching,
+  isOrderCancelling,
   orderId,
   history,
 }) => {
@@ -30,6 +40,9 @@ const PriceBar = ({
       history.push(`/order/finished/${orderId}`);
     }
   }, [history, orderId]);
+  useEffect(() => {
+    requestRate();
+  }, [requestRate]);
 
   const diffTime = Math.abs(orderData?.dateTo - orderData?.dateFrom);
   const diffMinutes =
@@ -95,8 +108,8 @@ const PriceBar = ({
     const dateTo = orderData.dateTo.getTime();
     const rateId =
       orderData.rate === "На сутки"
-        ? "5e26a0e2099b810b946c5d86"
-        : "5e26a0d2099b810b946c5d85";
+        ? rate.find((rate) => rate.rateTypeId.name === "На сутки").id
+        : rate.find((rate) => rate.rateTypeId.name === "Поминутно").id;
     const price = calculatePrice();
     const isFullTank = orderData.fullFuel;
     const isNeedChildChair = orderData.childSeat;
@@ -118,15 +131,16 @@ const PriceBar = ({
   };
   const onModalConfirm = () => {
     if (isFinished) {
-      setStep(1);
-      setIsModal(false);
+      cancelOrder(orderId, setIsModal);
     } else {
       submitForm();
     }
   };
   const buttonText = () => {
     if (isFinished) {
-      return "Отменить";
+      return orderData?.status === "отменен"
+        ? "Оформить новый заказ"
+        : "Отменить";
     }
     switch (step) {
       case 1:
@@ -169,6 +183,8 @@ const PriceBar = ({
     return step > 2 && diffDays === 0;
   };
 
+  if (isOrderFetching) return "";
+
   return (
     <section className="price-bar">
       {isModal && (
@@ -179,13 +195,12 @@ const PriceBar = ({
               {isFinished ? "Отменить заказ" : "Подтвердить заказ"}
             </div>
             <div className="modal__buttons">
-              <LinkButton
-                to={isFinished ? "/order" : false}
+              <Button
                 onClick={() => onModalConfirm()}
-                isLoading={isOrderSubmitting}
+                isLoading={isFinished ? isOrderCancelling : isOrderSubmitting}
               >
                 Подтвердить
-              </LinkButton>
+              </Button>
               <div className="modal__buttons-space" />
               <Button
                 additionalStyles="button__cancel"
@@ -202,7 +217,7 @@ const PriceBar = ({
         {orderData?.locationPoint && (
           <div className="price-bar__info-item">
             <div className="price-bar__info-name">Пункт выдачи</div>
-            <div className="price-bar__info-filler"> </div>
+            <div className="price-bar__info-filler" />
             <div className="price-bar__info-value">
               <p>{orderData?.locationCity},</p>
               {orderData?.locationPoint}
@@ -215,7 +230,7 @@ const PriceBar = ({
             {orderData?.modelName && (
               <div className="price-bar__info-item">
                 <div className="price-bar__info-name">Модель</div>
-                <div className="price-bar__info-filler"> </div>
+                <div className="price-bar__info-filler" />
                 <div className="price-bar__info-value">
                   {orderData?.modelName}
                 </div>
@@ -225,7 +240,7 @@ const PriceBar = ({
               <>
                 <div className="price-bar__info-item">
                   <div className="price-bar__info-name">Цвет</div>
-                  <div className="price-bar__info-filler"> </div>
+                  <div className="price-bar__info-filler" />
                   <div className="price-bar__info-value">
                     {orderData?.color?.charAt(0).toUpperCase() +
                       orderData?.color?.slice(1)}
@@ -233,34 +248,34 @@ const PriceBar = ({
                 </div>
                 <div className="price-bar__info-item">
                   <div className="price-bar__info-name">Длительност аренды</div>
-                  <div className="price-bar__info-filler"> </div>
+                  <div className="price-bar__info-filler" />
                   <div className="price-bar__info-value">{`${Math.floor(
                     diffHours / 24
                   )}д ${diffHours % 24}ч`}</div>
                 </div>
                 <div className="price-bar__info-item">
                   <div className="price-bar__info-name">Тариф</div>
-                  <div className="price-bar__info-filler"> </div>
+                  <div className="price-bar__info-filler" />
                   <div className="price-bar__info-value">{orderData?.rate}</div>
                 </div>
                 {orderData?.fullFuel && (
                   <div className="price-bar__info-item">
                     <div className="price-bar__info-name">Полный бак</div>
-                    <div className="price-bar__info-filler"> </div>
+                    <div className="price-bar__info-filler" />
                     <div className="price-bar__info-value">Да</div>
                   </div>
                 )}
                 {orderData?.childSeat && (
                   <div className="price-bar__info-item">
                     <div className="price-bar__info-name">Детское кресло</div>
-                    <div className="price-bar__info-filler"> </div>
+                    <div className="price-bar__info-filler" />
                     <div className="price-bar__info-value">Да</div>
                   </div>
                 )}
                 {orderData?.rightHand && (
                   <div className="price-bar__info-item">
                     <div className="price-bar__info-name">Правый руль</div>
-                    <div className="price-bar__info-filler"> </div>
+                    <div className="price-bar__info-filler" />
                     <div className="price-bar__info-value">Да</div>
                   </div>
                 )}
@@ -275,8 +290,14 @@ const PriceBar = ({
         <span>{orderData?.price || calculatePrice()}</span>
       </div>
       <Button
-        additionalStyles={isFinished ? "button__cancel" : ""}
-        onClick={() => onButtonClick()}
+        additionalStyles={
+          isFinished && orderData?.status !== "отменен" ? "button__cancel" : ""
+        }
+        onClick={() =>
+          orderData?.status === "отменен"
+            ? history.push("/order/")
+            : onButtonClick()
+        }
         isDisabled={isButtonDisabled()}
       >
         {buttonText()}
@@ -289,10 +310,13 @@ const mapStateToProps = (state) => ({
   points: getPoints(state),
   cities: getCities(state),
   orderId: getOrderId(state),
+  rate: getRate(state),
   isOrderSubmitting: state.order.isOrderSubmitting,
+  isOrderCancelling: state.order.isOrderCancelling,
+  isOrderFetching: state.order.isOrderFetching,
 });
 
 export default compose(
-  connect(mapStateToProps, { submitOrder }),
+  connect(mapStateToProps, { requestRate, submitOrder, cancelOrder }),
   withRouter
 )(PriceBar);
