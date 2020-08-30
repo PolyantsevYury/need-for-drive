@@ -8,6 +8,7 @@ import Header from "./Header";
 import NavBarMobile from "./NavBarMobile";
 import Error from "./error/Error";
 import CarSetting from "./carSetting/CarSetting";
+import CarsTable from "./carsTable/CarsTable";
 
 const AdminPage = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -19,9 +20,10 @@ const AdminPage = () => {
         <div className="admin__header">
           <Header />
         </div>
-        <div className="admin__content content">
+        <div className="admin__content">
           <Switch>
             <Route exact path="/admin/orders" render={() => <Orders />} />
+            <Route exact path="/admin/table" render={() => <CarsTable />} />
             <Route
               exact
               path="/admin/car-setting"

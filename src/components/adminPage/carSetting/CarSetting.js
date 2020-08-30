@@ -25,9 +25,9 @@ const CarSetting = () => {
 
   return (
     <div className="car-setting">
-      <h2 className="content__title">Карточка автомобиля</h2>
+      <h2 className="admin__title">Карточка автомобиля</h2>
       <div className="car-setting__content">
-        <div className="content__card car-setting__info-card info-card">
+        <div className="admin__card car-setting__info-card info-card">
           <div className="info-card__model">
             <img className="info-card__model-img" src={modelExample} alt="" />
             <h2 className="info-card__model-title">Hyndai, i30 N</h2>
@@ -60,7 +60,7 @@ const CarSetting = () => {
             </article>
           </div>
         </div>
-        <div className="content__card car-setting__form-card form-card">
+        <div className="admin__card car-setting__form-card form-card">
           <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
             <Form className="form-card__form">
               <h4 className="form-card__title">Настройки автомобиля</h4>

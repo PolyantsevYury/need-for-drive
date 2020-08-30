@@ -18,7 +18,7 @@ const NavBarMobile = () => {
         </div>
       </NavLink>
       <NavLink
-        to="/admin/cars-list"
+        to="/admin/table"
         className="nav-bar-mobile__item"
         activeClassName="nav-bar-mobile__item--active"
       >

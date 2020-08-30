@@ -45,9 +45,9 @@ const Orders = () => {
   const onCheck = () => console.log("Check");
 
   return (
-    <div className="orders">
-      <h2 className="content__title">Заказы</h2>
-      <div className="content__card orders__card">
+    <>
+      <h2 className="admin__title">Заказы</h2>
+      <div className="admin__card orders">
         <div className="orders__header">
           <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
             <Form className="orders__filter">
@@ -133,7 +133,7 @@ const Orders = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
