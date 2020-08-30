@@ -8,6 +8,7 @@ const ADD_CARS = "ADD_CARS";
 const SET_CURRENT_CAR = "SET_CURRENT_CAR";
 const TOGGLE_IS_CARS_FETCHING = "TOGGLE_IS_CARS_FETCHING";
 const TOGGLE_IS_ORDER_SUBMITTING = "TOGGLE_IS_ORDER_SUBMITTING";
+const TOGGLE_IS_ORDER_FETCHING = "TOGGLE_IS_ORDER_FETCHING";
 const TOGGLE_IS_ORDER_CANCELLING = "TOGGLE_IS_ORDER_CANCELLING";
 const ADD_ORDER_ID = "ADD_ORDER_ID";
 const ADD_FINISHED_ORDER_DATA = "ADD_FINISHED_ORDER_DATA";
@@ -25,6 +26,7 @@ const initialState = {
   isCarsFetching: true,
   currentModel: null,
   isOrderSubmitting: false,
+  isOrderFetching: false,
   isOrderCancelling: false,
   orderId: null,
   finishedOrderData: null,
@@ -71,6 +73,11 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         isOrderSubmitting: action.isOrderSubmitting,
+      };
+    case TOGGLE_IS_ORDER_FETCHING:
+      return {
+        ...state,
+        isOrderFetching: action.isOrderFetching,
       };
     case TOGGLE_IS_ORDER_CANCELLING:
       return {
@@ -123,6 +130,10 @@ export const toggleIsPointsFetching = (isPointsFetching) => ({
 export const toggleIsOrderSubmitting = (isOrderSubmitting) => ({
   type: TOGGLE_IS_ORDER_SUBMITTING,
   isOrderSubmitting,
+});
+export const toggleIsOrderFetching = (isOrderFetching) => ({
+  type: TOGGLE_IS_ORDER_FETCHING,
+  isOrderFetching,
 });
 export const toggleIsOrderCancelling = (isOrderCancelling) => ({
   type: TOGGLE_IS_ORDER_CANCELLING,
@@ -269,8 +280,10 @@ export const submitOrder = (
 
 export const requestOrder = (orderId) => async (dispatch) => {
   try {
+    dispatch(toggleIsOrderFetching(true));
     const result = await orderAPI.getOrder(orderId);
     dispatch(addFinishedOrderData(result.data.data));
+    dispatch(toggleIsOrderFetching(false));
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);

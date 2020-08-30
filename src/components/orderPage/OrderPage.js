@@ -22,6 +22,7 @@ const OrderPage = ({
   isFinished,
   finishedOrderData,
   currentModel,
+  isOrderFetching,
   orderId,
 }) => {
   const [step, setStep] = useState(1);
@@ -89,13 +90,17 @@ const OrderPage = ({
         </div>
         <div className="order-page__steps-border">
           <div className="order-page__steps">
-            <Steps
-              isStepsDisabled={isStepsDisabled}
-              isFinished={isFinished}
-              orderId={orderId}
-              step={step}
-              setStep={setStep}
-            />
+            {isOrderFetching ? (
+              ""
+            ) : (
+              <Steps
+                isStepsDisabled={isStepsDisabled}
+                isFinished={isFinished}
+                orderId={orderId}
+                step={step}
+                setStep={setStep}
+              />
+            )}
           </div>
         </div>
         <div className="order">
@@ -160,6 +165,7 @@ const mapStateToProps = (state) => ({
   currentModel: getCurrentModel(state),
   finishedOrderData: getFinishedOrderData(state),
   orderId: getOrderId(state),
+  isOrderFetching: state.order.isOrderFetching,
 });
 
 export default connect(mapStateToProps, {})(OrderPage);

@@ -6,8 +6,14 @@ import { withRouter, useParams } from "react-router-dom";
 import Status from "../status/Status";
 import { getFinishedOrderData } from "../../../store/order-selectors";
 import { addOrderId, requestOrder } from "../../../store/order-reducer";
+import Preloader from "../../common/preloader/Preloader";
 
-const Finished = ({ finishedOrderData, requestOrder, addOrderId }) => {
+const Finished = ({
+  finishedOrderData,
+  requestOrder,
+  isOrderFetching,
+  addOrderId,
+}) => {
   const params = useParams();
   const { orderId } = params;
   useEffect(() => {
@@ -17,6 +23,8 @@ const Finished = ({ finishedOrderData, requestOrder, addOrderId }) => {
   useEffect(() => {
     addOrderId(orderId);
   }, [orderId, addOrderId]);
+
+  if (isOrderFetching) return <Preloader />;
 
   return (
     <section className="finished">
@@ -29,6 +37,7 @@ const Finished = ({ finishedOrderData, requestOrder, addOrderId }) => {
 const mapStateToProps = (state) => {
   return {
     finishedOrderData: getFinishedOrderData(state),
+    isOrderFetching: state.order.isOrderFetching,
   };
 };
 

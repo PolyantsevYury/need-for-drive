@@ -30,6 +30,7 @@ const PriceBar = ({
   submitOrder,
   cancelOrder,
   isOrderSubmitting,
+  isOrderFetching,
   isOrderCancelling,
   orderId,
   history,
@@ -182,6 +183,8 @@ const PriceBar = ({
     return step > 2 && diffDays === 0;
   };
 
+  if (isOrderFetching) return "";
+
   return (
     <section className="price-bar">
       {isModal && (
@@ -310,6 +313,7 @@ const mapStateToProps = (state) => ({
   rate: getRate(state),
   isOrderSubmitting: state.order.isOrderSubmitting,
   isOrderCancelling: state.order.isOrderCancelling,
+  isOrderFetching: state.order.isOrderFetching,
 });
 
 export default compose(
