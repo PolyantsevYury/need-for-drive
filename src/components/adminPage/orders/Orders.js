@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Orders.scss";
 import { Form, Formik } from "formik";
 import { Button } from "../../common/buttons/Buttons";
@@ -7,38 +7,39 @@ import modelExample from "../../../assets/images/adminModel.png";
 import approveIcon from "../../../assets/images/icons/approve_icon.svg";
 import rejectIcon from "../../../assets/images/icons/reject_icon.svg";
 import editIcon from "../../../assets/images/icons/edit_icon.svg";
-import nextPage from "../../../assets/images/icons/next_page_icon.svg";
-import prevPage from "../../../assets/images/icons/prev_page_icon.svg";
+import Paginator from "../../common/paginator/Paginator";
+
+const periodOptions = [
+  { key: "За год", value: "year" },
+  { key: "За месяц", value: "month" },
+  { key: "За неделю", value: "week" },
+  { key: "За день", value: "day" },
+];
+const modelOptions = [
+  { key: "Все модели", value: "all" },
+  { key: "Elantra", value: "Elantra" },
+  { key: "Tucson", value: "Tucson" },
+  { key: "Solaris", value: "Solaris" },
+];
+const cityOptions = [
+  { key: "Ульяновск", value: "Ульяновск" },
+  { key: "Саранск", value: "Саранск" },
+  { key: "Самара", value: "Самара" },
+  { key: "Краснодар", value: "Краснодар" },
+];
+const statusOptions = [
+  { key: "В процессе", value: "process" },
+  { key: "Завершенные", value: "finished" },
+];
+const initialValues = {
+  period: "week",
+  model: "all",
+  city: "Ульяновск",
+  status: "process",
+};
 
 const Orders = () => {
-  const periodOptions = [
-    { key: "За год", value: "year" },
-    { key: "За месяц", value: "month" },
-    { key: "За неделю", value: "week" },
-    { key: "За день", value: "day" },
-  ];
-  const modelOptions = [
-    { key: "Все модели", value: "all" },
-    { key: "Elantra", value: "Elantra" },
-    { key: "Tucson", value: "Tucson" },
-    { key: "Solaris", value: "Solaris" },
-  ];
-  const cityOptions = [
-    { key: "Ульяновск", value: "Ульяновск" },
-    { key: "Саранск", value: "Саранск" },
-    { key: "Самара", value: "Самара" },
-    { key: "Краснодар", value: "Краснодар" },
-  ];
-  const statusOptions = [
-    { key: "В процессе", value: "process" },
-    { key: "Завершенные", value: "finished" },
-  ];
-  const initialValues = {
-    period: "week",
-    model: "all",
-    city: "Ульяновск",
-    status: "process",
-  };
+  const [currentPage, setCurrentPage] = useState(1);
   // eslint-disable-next-line no-console
   const onFilterSubmit = (value) => console.log(value);
   // eslint-disable-next-line no-console
@@ -52,11 +53,11 @@ const Orders = () => {
           <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
             <Form className="orders__filter">
               <div className="orders__filter-items">
-                <div className="container">
+                <div className="orders__container">
                   <Filter name="period" options={periodOptions} />
                   <Filter name="model" options={modelOptions} />
                 </div>
-                <div className="container">
+                <div className="orders__container">
                   <Filter name="city" options={cityOptions} />
                   <Filter name="status" options={statusOptions} />
                 </div>
@@ -124,13 +125,12 @@ const Orders = () => {
           </div>
         </div>
         <div className="orders__footer">
-          <div className="pages">
-            <img src={prevPage} alt="" />
-            <span className="pages__item">1</span>
-            <span className="pages__item pages__item--active">2</span>
-            <span className="pages__item">3</span>
-            <img src={nextPage} alt="" />
-          </div>
+          <Paginator
+            currentPage={currentPage}
+            onPageChanged={(p) => setCurrentPage(p)}
+            totalItemsCount={140}
+            pageSize={7}
+          />
         </div>
       </div>
     </>

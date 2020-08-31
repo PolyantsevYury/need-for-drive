@@ -1,0 +1,32 @@
+@import "../../../assets/variables";
+
+.paginator {
+  text-align: center;
+
+  button {
+    color: $clr-main-blue;
+    border: none;
+    background-color: #fff;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 1px;
+  }
+}
+
+.arrow {
+  width: 8px;
+  margin: 0 1px;
+}
+
+.pageNumber {
+  font-size: 12px;
+  width: 16px;
+  height: 16px;
+}
+
+.pageNumber.selectedPage {
+  color: #fff;
+  background-color: $clr-main-blue;
+  border-radius: 100%;
+}

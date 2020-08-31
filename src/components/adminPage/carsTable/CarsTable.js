@@ -1,30 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CarsTable.scss";
 import { Form, Formik } from "formik";
 import { Filter } from "../../common/forms/Forms";
 import { Button } from "../../common/buttons/Buttons";
+import Paginator from "../../common/paginator/Paginator";
 // import { Button } from "../../common/buttons/Buttons";
 // import { Checkbox, Text } from "../../common/forms/Forms";
 
-const CarsTable = () => {
-  const firstOptions = [
-    { key: "1", value: "1" },
-    { key: "2", value: "2" },
-  ];
-  const secondOptions = [
-    { key: "1", value: "1" },
-    { key: "2", value: "2" },
-  ];
-  const thirdOptions = [
-    { key: "1", value: "1" },
-    { key: "2", value: "2" },
-  ];
+const firstOptions = [
+  { key: "1", value: "1" },
+  { key: "2", value: "2" },
+];
+const secondOptions = [
+  { key: "1", value: "1" },
+  { key: "2", value: "2" },
+];
+const thirdOptions = [
+  { key: "1", value: "1" },
+  { key: "2", value: "2" },
+];
 
-  const initialValues = {
-    name1: "1",
-    name2: "1",
-    name3: "2",
-  };
+const initialValues = {
+  name1: "1",
+  name2: "1",
+  name3: "2",
+};
+
+const CarsTable = () => {
+  const [currentPage, setCurrentPage] = useState(1);
 
   // eslint-disable-next-line no-console
   const onFilterSubmit = (value) => console.log(value);
@@ -55,7 +58,14 @@ const CarsTable = () => {
           </Formik>
         </div>
         <div className="cars-table__content">Table</div>
-        <div className="cars-table__footer">footer</div>
+        <div className="cars-table__footer">
+          <Paginator
+            currentPage={currentPage}
+            onPageChanged={(p) => setCurrentPage(p)}
+            totalItemsCount={140}
+            pageSize={7}
+          />
+        </div>
       </div>
     </>
   );

@@ -29,19 +29,19 @@
     }
   }
 
+  &__container {
+    display: flex;
+    margin-top: 16px;
+
+    @media (max-width: $max-mobile) {
+      margin-top: 8px;
+    }
+  }
+
   &__filter-items {
     flex-grow: 1;
     display: flex;
     flex-wrap: wrap;
-
-    .container {
-      display: flex;
-      margin-top: 16px;
-
-      @media (max-width: $max-mobile) {
-        margin-top: 8px;
-      }
-    }
   }
 
   &__filter-btn {
