@@ -16,12 +16,16 @@
   }
 
   &__header {
-    z-index: 4;
+    width: 100%;
+    z-index: 7;
     box-shadow: 10px 2.5px 9.5px rgba(90, 97, 105, 0.12);
     height: 64px;
 
     @media (max-width: $max-mobile) {
       height: 54px;
+      position: fixed;
+      top: 0;
+      background-color: #fff;
     }
   }
 
@@ -32,6 +36,7 @@
 
     @media (max-width: $max-mobile) {
       padding: 8px;
+      margin-top: 54px;
     }
   }
 
