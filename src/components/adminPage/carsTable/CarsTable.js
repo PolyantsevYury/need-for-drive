@@ -57,7 +57,44 @@ const CarsTable = () => {
             </Form>
           </Formik>
         </div>
-        <div className="cars-table__content">Table</div>
+        <div className="cars-table__content">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Модель</th>
+                <th scope="col">Тип</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Цвета</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Модель">Hyndai, i30 N</td>
+                <td data-label="Тип">Компакт-кар</td>
+                <td data-label="Цена">10000 - 25000 ₽</td>
+                <td data-label="Цвета">синий, красный</td>
+              </tr>
+              <tr>
+                <td data-label="Модель">Hyndai, i30 N</td>
+                <td data-label="Тип">Компакт-кар</td>
+                <td data-label="Цена">12000 - 32000 ₽</td>
+                <td data-label="Цвета">белый, черный</td>
+              </tr>
+              <tr>
+                <td data-label="Модель">Hyndai, i30 N</td>
+                <td data-label="Тип">Компакт-кар</td>
+                <td data-label="Цена">12000 - 32000 ₽</td>
+                <td data-label="Цвета">белый, черный</td>
+              </tr>
+              <tr>
+                <td data-label="Модель">Hyndai, i30 N</td>
+                <td data-label="Тип">Компакт-кар</td>
+                <td data-label="Цена">12000 - 32000 ₽</td>
+                <td data-label="Цвета">белый, черный</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div className="cars-table__footer">
           <Paginator
             currentPage={currentPage}
