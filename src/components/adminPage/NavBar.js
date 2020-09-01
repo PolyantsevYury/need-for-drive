@@ -25,7 +25,7 @@ const NavBar = () => {
           <span className="menu__item-title">Карточка автомобиля</span>
         </NavLink>
         <NavLink
-          to="/admin/cars-list"
+          to="/admin/table"
           className="menu__item"
           activeClassName="menu__item--active"
         >
