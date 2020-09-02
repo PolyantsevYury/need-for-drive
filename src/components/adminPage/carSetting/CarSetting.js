@@ -67,6 +67,7 @@ const CarSetting = () => {
               <div className="form-card__model-inputs">
                 <div className="form-card__form-item">
                   <Text
+                    name="model"
                     title="Модель автомобиля"
                     placeholder="Hyndai, i30 N"
                     type="text"
@@ -74,6 +75,7 @@ const CarSetting = () => {
                 </div>
                 <div className="form-card__form-item">
                   <Text
+                    name="modelType"
                     title="Тип автомобиля"
                     placeholder="Компакт-кар"
                     type="text"
@@ -81,7 +83,12 @@ const CarSetting = () => {
                 </div>
               </div>
               <div className="form-card__form-item">
-                <Text title="Доступные цвета" placeholder="Синий" type="text" />
+                <Text
+                  name="colors"
+                  title="Доступные цвета"
+                  placeholder="Синий"
+                  type="text"
+                />
                 <button className="form-card__clr-btn" type="button">
                   <img src={plusIcon} alt=" " />
                 </button>

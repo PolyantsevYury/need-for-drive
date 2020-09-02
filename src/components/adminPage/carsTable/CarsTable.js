@@ -4,8 +4,6 @@ import { Form, Formik } from "formik";
 import { Filter } from "../../common/forms/Forms";
 import { Button } from "../../common/buttons/Buttons";
 import Paginator from "../../common/paginator/Paginator";
-// import { Button } from "../../common/buttons/Buttons";
-// import { Checkbox, Text } from "../../common/forms/Forms";
 
 const firstOptions = [
   { key: "1", value: "1" },

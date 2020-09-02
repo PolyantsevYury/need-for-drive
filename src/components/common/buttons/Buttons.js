@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import preloader from "../../../assets/buttonPreloader.svg";
 
 export const Button = ({
+  type = "button",
   additionalStyles,
   children,
   history,
@@ -13,8 +14,9 @@ export const Button = ({
   isLoading,
 }) => {
   return (
+    // eslint-disable-next-line react/button-has-type
     <button
-      type="button"
+      type={type}
       className={`button ${additionalStyles}`}
       disabled={isDisabled}
       onClick={(event) => {

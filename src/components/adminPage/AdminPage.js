@@ -1,7 +1,8 @@
 import React from "react";
 import "./AdminPage.scss";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+import { connect } from "react-redux";
 import Orders from "./orders/Orders";
 import NavBar from "./NavBar";
 import Header from "./Header";
@@ -10,8 +11,10 @@ import Error from "./error/Error";
 import CarSetting from "./carSetting/CarSetting";
 import CarsTable from "./carsTable/CarsTable";
 
-const AdminPage = () => {
+const AdminPage = ({ isAuth }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  if (!isAuth) return <Redirect to="/login" />;
 
   return (
     <div className="admin">
@@ -45,4 +48,8 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+const mapStateToProps = (state) => ({
+  isAuth: state.order.isAuth,
+});
+
+export default connect(mapStateToProps, {})(AdminPage);
