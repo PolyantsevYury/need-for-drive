@@ -6,10 +6,12 @@ const ADD_POINTS = "ADD_POINTS";
 const TOGGLE_IS_POINTS_FETCHING = "TOGGLE_IS_POINTS_FETCHING";
 const ADD_CARS = "ADD_CARS";
 const SET_CURRENT_CAR = "SET_CURRENT_CAR";
+const SET_IS_AUTH = "SET_IS_AUTH";
 const TOGGLE_IS_CARS_FETCHING = "TOGGLE_IS_CARS_FETCHING";
 const TOGGLE_IS_ORDER_SUBMITTING = "TOGGLE_IS_ORDER_SUBMITTING";
 const TOGGLE_IS_ORDER_FETCHING = "TOGGLE_IS_ORDER_FETCHING";
 const TOGGLE_IS_ORDER_CANCELLING = "TOGGLE_IS_ORDER_CANCELLING";
+const TOGGLE_IS_AUTH_IN_PROGRESS = "TOGGLE_IS_AUTH_IN_PROGRESS";
 const ADD_ORDER_ID = "ADD_ORDER_ID";
 const ADD_FINISHED_ORDER_DATA = "ADD_FINISHED_ORDER_DATA";
 const ADD_RATE = "ADD_RATE";
@@ -28,8 +30,10 @@ const initialState = {
   isOrderSubmitting: false,
   isOrderFetching: false,
   isOrderCancelling: false,
+  isAuthInProgress: false,
   orderId: null,
   finishedOrderData: null,
+  isAuth: false,
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -64,6 +68,11 @@ const orderReducer = (state = initialState, action) => {
         ...state,
         currentModel: action.car,
       };
+    case SET_IS_AUTH:
+      return {
+        ...state,
+        isAuth: action.isAuth,
+      };
     case TOGGLE_IS_CARS_FETCHING:
       return {
         ...state,
@@ -83,6 +92,11 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         isOrderCancelling: action.isOrderCancelling,
+      };
+    case TOGGLE_IS_AUTH_IN_PROGRESS:
+      return {
+        ...state,
+        isAuthInProgress: action.isAuthInProgress,
       };
     case ADD_ORDER_ID:
       return {
@@ -115,6 +129,7 @@ export const addPoints = (points) => ({ type: ADD_POINTS, points });
 export const addCars = (cars) => ({ type: ADD_CARS, cars });
 export const addRate = (rate) => ({ type: ADD_RATE, rate });
 export const setCurrentCar = (car) => ({ type: SET_CURRENT_CAR, car });
+export const setIsAuth = (isAuth) => ({ type: SET_IS_AUTH, isAuth });
 export const addFinishedOrderData = (orderData) => ({
   type: ADD_FINISHED_ORDER_DATA,
   orderData,
@@ -138,6 +153,10 @@ export const toggleIsOrderFetching = (isOrderFetching) => ({
 export const toggleIsOrderCancelling = (isOrderCancelling) => ({
   type: TOGGLE_IS_ORDER_CANCELLING,
   isOrderCancelling,
+});
+export const toggleIsAuthInProgress = (isAuthInProgress) => ({
+  type: TOGGLE_IS_AUTH_IN_PROGRESS,
+  isAuthInProgress,
 });
 export const addOrderId = (orderId) => ({ type: ADD_ORDER_ID, orderId });
 export const changeOrderStatus = (orderStatus) => ({
@@ -307,6 +326,32 @@ export const cancelOrder = (orderId, setIsModal) => async (dispatch) => {
     dispatch(changeOrderStatus("cancelled"));
     dispatch(toggleIsOrderCancelling(false));
     setIsModal(false);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+  }
+};
+
+export const logIn = (userData) => async (dispatch) => {
+  try {
+    dispatch(toggleIsAuthInProgress(true));
+    const getRandomString = () => {
+      const symbols =
+        "0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+      let randomString = "";
+      for (let i = 0; i < 7; i += 1) {
+        const index = Math.floor(Math.random() * symbols.length);
+        randomString += symbols[index];
+      }
+      return randomString;
+    };
+    const basicToken = btoa(`${getRandomString(7)}:4cbcea96de`);
+    const orderBody = JSON.stringify(userData);
+    const response = await orderAPI.postLogIn(orderBody, basicToken);
+    if (response.statusText === "OK") {
+      dispatch(setIsAuth(true));
+    }
+    dispatch(toggleIsAuthInProgress(false));
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);

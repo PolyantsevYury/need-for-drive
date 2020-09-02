@@ -241,12 +241,15 @@ export const DateForm = ({ items, formik }) => {
   );
 };
 
-export const Text = ({ title, placeholder, type }) => {
+export const Text = ({ name, title, placeholder, type }) => {
   return (
     <div className="admin-text-input">
       <span className="admin-text-input__title">{title}</span>
-      <input
+      <Field
+        as="input"
         className="admin-text-input__input"
+        id={name}
+        name={name}
         type={type}
         placeholder={placeholder}
       />
