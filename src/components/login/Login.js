@@ -13,7 +13,7 @@ const initialValues = {
   password: "",
 };
 
-const Login = ({ isAuth, logIn }) => {
+const Login = ({ isAuth, isAuthInProgress, logIn }) => {
   if (isAuth) return <Redirect to="/admin/orders" />;
   const onLoginSubmit = (userData) => {
     logIn(userData);
@@ -37,6 +37,7 @@ const Login = ({ isAuth, logIn }) => {
               <Button
                 type="submit"
                 additionalStyles="button__admin button__login"
+                isLoading={isAuthInProgress}
               >
                 Войти
               </Button>
@@ -50,6 +51,7 @@ const Login = ({ isAuth, logIn }) => {
 
 const mapStateToProps = (state) => ({
   isAuth: state.order.isAuth,
+  isAuthInProgress: state.order.isAuthInProgress,
 });
 
 export default connect(mapStateToProps, { logIn })(Login);

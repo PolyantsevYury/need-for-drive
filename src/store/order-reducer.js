@@ -11,7 +11,7 @@ const TOGGLE_IS_CARS_FETCHING = "TOGGLE_IS_CARS_FETCHING";
 const TOGGLE_IS_ORDER_SUBMITTING = "TOGGLE_IS_ORDER_SUBMITTING";
 const TOGGLE_IS_ORDER_FETCHING = "TOGGLE_IS_ORDER_FETCHING";
 const TOGGLE_IS_ORDER_CANCELLING = "TOGGLE_IS_ORDER_CANCELLING";
-const TOGGLE_IS_LOGIN_IN_PROGRESS = "TOGGLE_IS_LOGIN_IN_PROGRESS";
+const TOGGLE_IS_AUTH_IN_PROGRESS = "TOGGLE_IS_AUTH_IN_PROGRESS";
 const ADD_ORDER_ID = "ADD_ORDER_ID";
 const ADD_FINISHED_ORDER_DATA = "ADD_FINISHED_ORDER_DATA";
 const ADD_RATE = "ADD_RATE";
@@ -30,7 +30,7 @@ const initialState = {
   isOrderSubmitting: false,
   isOrderFetching: false,
   isOrderCancelling: false,
-  isLoginInProgress: false,
+  isAuthInProgress: false,
   orderId: null,
   finishedOrderData: null,
   isAuth: false,
@@ -93,10 +93,10 @@ const orderReducer = (state = initialState, action) => {
         ...state,
         isOrderCancelling: action.isOrderCancelling,
       };
-    case TOGGLE_IS_LOGIN_IN_PROGRESS:
+    case TOGGLE_IS_AUTH_IN_PROGRESS:
       return {
         ...state,
-        isLoginInProgress: action.isLoginInProgress,
+        isAuthInProgress: action.isAuthInProgress,
       };
     case ADD_ORDER_ID:
       return {
@@ -154,9 +154,9 @@ export const toggleIsOrderCancelling = (isOrderCancelling) => ({
   type: TOGGLE_IS_ORDER_CANCELLING,
   isOrderCancelling,
 });
-export const toggleIsLoginInProgress = (isLoginInProgress) => ({
-  type: TOGGLE_IS_LOGIN_IN_PROGRESS,
-  isLoginInProgress,
+export const toggleIsAuthInProgress = (isAuthInProgress) => ({
+  type: TOGGLE_IS_AUTH_IN_PROGRESS,
+  isAuthInProgress,
 });
 export const addOrderId = (orderId) => ({ type: ADD_ORDER_ID, orderId });
 export const changeOrderStatus = (orderStatus) => ({
@@ -334,7 +334,7 @@ export const cancelOrder = (orderId, setIsModal) => async (dispatch) => {
 
 export const logIn = (userData) => async (dispatch) => {
   try {
-    dispatch(toggleIsLoginInProgress(true));
+    dispatch(toggleIsAuthInProgress(true));
     const getRandomString = () => {
       const symbols =
         "0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
@@ -351,7 +351,7 @@ export const logIn = (userData) => async (dispatch) => {
     if (response.statusText === "OK") {
       dispatch(setIsAuth(true));
     }
-    dispatch(toggleIsLoginInProgress(false));
+    dispatch(toggleIsAuthInProgress(false));
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);
