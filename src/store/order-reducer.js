@@ -12,6 +12,7 @@ const TOGGLE_IS_ORDER_SUBMITTING = "TOGGLE_IS_ORDER_SUBMITTING";
 const TOGGLE_IS_ORDER_FETCHING = "TOGGLE_IS_ORDER_FETCHING";
 const TOGGLE_IS_ORDER_CANCELLING = "TOGGLE_IS_ORDER_CANCELLING";
 const TOGGLE_IS_AUTH_IN_PROGRESS = "TOGGLE_IS_AUTH_IN_PROGRESS";
+const TOGGLE_IS_AUTH_FAILED = "TOGGLE_IS_AUTH_FAILED";
 const ADD_ORDER_ID = "ADD_ORDER_ID";
 const ADD_FINISHED_ORDER_DATA = "ADD_FINISHED_ORDER_DATA";
 const ADD_RATE = "ADD_RATE";
@@ -31,6 +32,7 @@ const initialState = {
   isOrderFetching: false,
   isOrderCancelling: false,
   isAuthInProgress: false,
+  isAuthFailed: false,
   orderId: null,
   finishedOrderData: null,
   isAuth: false,
@@ -98,6 +100,11 @@ const orderReducer = (state = initialState, action) => {
         ...state,
         isAuthInProgress: action.isAuthInProgress,
       };
+    case TOGGLE_IS_AUTH_FAILED:
+      return {
+        ...state,
+        isAuthFailed: action.isAuthFailed,
+      };
     case ADD_ORDER_ID:
       return {
         ...state,
@@ -157,6 +164,10 @@ export const toggleIsOrderCancelling = (isOrderCancelling) => ({
 export const toggleIsAuthInProgress = (isAuthInProgress) => ({
   type: TOGGLE_IS_AUTH_IN_PROGRESS,
   isAuthInProgress,
+});
+export const toggleIsAuthFailed = (isAuthFailed) => ({
+  type: TOGGLE_IS_AUTH_FAILED,
+  isAuthFailed,
 });
 export const addOrderId = (orderId) => ({ type: ADD_ORDER_ID, orderId });
 export const changeOrderStatus = (orderStatus) => ({
@@ -352,9 +363,11 @@ export const logIn = (userData) => async (dispatch) => {
       dispatch(setIsAuth(true));
     }
     dispatch(toggleIsAuthInProgress(false));
-  } catch (e) {
+  } catch (error) {
+    dispatch(toggleIsAuthInProgress(false));
+    dispatch(toggleIsAuthFailed(true));
     // eslint-disable-next-line no-console
-    console.log(e);
+    console.log(error);
   }
 };
 

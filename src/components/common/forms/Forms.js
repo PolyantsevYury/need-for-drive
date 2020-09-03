@@ -11,7 +11,7 @@ import {
   ComboboxOption,
   ComboboxPopover,
 } from "@reach/combobox";
-import { Field } from "formik";
+import { ErrorMessage, Field } from "formik";
 import Clean from "../../../assets/images/icons/clean_icon.svg";
 import dropDown from "../../../assets/images/icons/arrow_drop_down.svg";
 import dropUp from "../../../assets/images/icons/arrow_drop_up.svg";
@@ -253,6 +253,9 @@ export const Text = ({ name, title, placeholder, type }) => {
         type={type}
         placeholder={placeholder}
       />
+      <div className="error-message">
+        <ErrorMessage name={name} />
+      </div>
     </div>
   );
 };
