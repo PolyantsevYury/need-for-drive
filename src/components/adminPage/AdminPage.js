@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AdminPage.scss";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import { connect } from "react-redux";
+import Cookies from "js-cookie";
 import Orders from "./orders/Orders";
 import NavBar from "./NavBar";
 import Header from "./Header";
@@ -11,17 +11,17 @@ import Error from "./error/Error";
 import CarSetting from "./carSetting/CarSetting";
 import CarsTable from "./carsTable/CarsTable";
 
-const AdminPage = ({ isAuth }) => {
+const AdminPage = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
-
-  if (!isAuth) return <Redirect to="/login" />;
+  const [isTokenValid, setIsTokenValid] = useState(Cookies.get("access_token"));
+  if (!isTokenValid) return <Redirect to="/login" />;
 
   return (
     <div className="admin">
       {isMobile ? <NavBarMobile /> : <NavBar />}
       <div className="admin__container">
         <div className="admin__header">
-          <Header />
+          <Header setIsTokenValid={setIsTokenValid} />
         </div>
         <div className="admin__content">
           <Switch>
@@ -48,8 +48,4 @@ const AdminPage = ({ isAuth }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuth: state.order.isAuth,
-});
-
-export default connect(mapStateToProps, {})(AdminPage);
+export default AdminPage;
