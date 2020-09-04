@@ -1,4 +1,5 @@
 import Geocode from "react-geocode";
+import Cookies from "js-cookie";
 import orderAPI from "../api/api";
 
 const ADD_CITIES = "ADD_CITIES";
@@ -6,7 +7,6 @@ const ADD_POINTS = "ADD_POINTS";
 const TOGGLE_IS_POINTS_FETCHING = "TOGGLE_IS_POINTS_FETCHING";
 const ADD_CARS = "ADD_CARS";
 const SET_CURRENT_CAR = "SET_CURRENT_CAR";
-const SET_IS_AUTH = "SET_IS_AUTH";
 const TOGGLE_IS_CARS_FETCHING = "TOGGLE_IS_CARS_FETCHING";
 const TOGGLE_IS_ORDER_SUBMITTING = "TOGGLE_IS_ORDER_SUBMITTING";
 const TOGGLE_IS_ORDER_FETCHING = "TOGGLE_IS_ORDER_FETCHING";
@@ -35,7 +35,6 @@ const initialState = {
   isAuthFailed: false,
   orderId: null,
   finishedOrderData: null,
-  isAuth: false,
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -69,11 +68,6 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         currentModel: action.car,
-      };
-    case SET_IS_AUTH:
-      return {
-        ...state,
-        isAuth: action.isAuth,
       };
     case TOGGLE_IS_CARS_FETCHING:
       return {
@@ -136,7 +130,6 @@ export const addPoints = (points) => ({ type: ADD_POINTS, points });
 export const addCars = (cars) => ({ type: ADD_CARS, cars });
 export const addRate = (rate) => ({ type: ADD_RATE, rate });
 export const setCurrentCar = (car) => ({ type: SET_CURRENT_CAR, car });
-export const setIsAuth = (isAuth) => ({ type: SET_IS_AUTH, isAuth });
 export const addFinishedOrderData = (orderData) => ({
   type: ADD_FINISHED_ORDER_DATA,
   orderData,
@@ -360,7 +353,13 @@ export const logIn = (userData) => async (dispatch) => {
     const orderBody = JSON.stringify(userData);
     const response = await orderAPI.postLogIn(orderBody, basicToken);
     if (response.statusText === "OK") {
-      dispatch(setIsAuth(true));
+      const cookiesExpiresDays = response.data.expires_in / 86400;
+      Cookies.set("access_token", response.data.access_token, {
+        expires: cookiesExpiresDays,
+      });
+      Cookies.set("refresh_token", response.data.refresh_token, {
+        expires: cookiesExpiresDays,
+      });
     }
     dispatch(toggleIsAuthInProgress(false));
   } catch (error) {
