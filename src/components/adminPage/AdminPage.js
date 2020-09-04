@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AdminPage.scss";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
@@ -13,16 +13,15 @@ import CarsTable from "./carsTable/CarsTable";
 
 const AdminPage = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
-
-  const accessToken = Cookies.get("access_token");
-  if (!accessToken) return <Redirect to="/login" />;
+  const [isTokenValid, setIsTokenValid] = useState(Cookies.get("access_token"));
+  if (!isTokenValid) return <Redirect to="/login" />;
 
   return (
     <div className="admin">
       {isMobile ? <NavBarMobile /> : <NavBar />}
       <div className="admin__container">
         <div className="admin__header">
-          <Header />
+          <Header setIsTokenValid={setIsTokenValid} />
         </div>
         <div className="admin__content">
           <Switch>
