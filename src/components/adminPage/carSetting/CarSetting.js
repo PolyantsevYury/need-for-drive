@@ -1,6 +1,6 @@
 import React from "react";
 import "./CarSetting.scss";
-import { Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import { Button } from "../../common/buttons/Buttons";
 import { Text, Checkbox } from "../../common/forms/Forms";
 import modelExample from "../../../assets/images/adminModel.png";
@@ -17,34 +17,35 @@ const CarSetting = () => {
   const initialValues = {
     model: "",
     category: "Эконом",
-    colors: "Синий",
+    colors: "",
+    description: "",
   };
   // eslint-disable-next-line no-console
-  const onFilterSubmit = (value) => console.log(value);
+  const onSubmit = (value) => console.log(value);
   // eslint-disable-next-line no-console
   const onCheck = () => console.log("Check");
 
   return (
     <div className="car-setting">
       <h2 className="admin__title">Карточка автомобиля</h2>
-      <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {(formik) => {
           return (
             <Form>
               <div className="car-setting__content">
                 <div className="admin__card car-setting__info-card info-card">
                   <div className="info-card__model">
-                    <img
-                      className="info-card__model-img"
-                      src={modelExample}
-                      alt=""
-                    />
                     <h2 className="info-card__model-title">
                       {formik.values.model || "Название модели"}
                     </h2>
                     <span className="info-card__model-subtitle">
                       {formik.values.category}
                     </span>
+                    <img
+                      className="info-card__model-img"
+                      src={modelExample}
+                      alt=""
+                    />
                     <div className="info-card__model-input">
                       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                       <label className="file">
@@ -70,11 +71,13 @@ const CarSetting = () => {
                   </div>
                   <div className="info-card__description">
                     <h4 className="info-card__description-title">Описание</h4>
-                    <article className="info-card__description-text">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Odio eaque, quidem, commodi soluta qui quae quod dolorum
-                      sint alias, possimus illum assumenda eligendi cumque?
-                    </article>
+                    <div className="info-card__description-text">
+                      <Field
+                        as="textarea"
+                        id="description"
+                        name="description"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="admin__card car-setting__form-card form-card">
@@ -113,8 +116,8 @@ const CarSetting = () => {
                       <Text
                         name="colors"
                         title="Доступные цвета"
-                        placeholder="Синий"
                         type="text"
+                        placeholder="Введите цвет"
                       />
                       <button className="form-card__clr-btn" type="button">
                         <img src={plusIcon} alt=" " />

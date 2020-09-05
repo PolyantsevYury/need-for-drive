@@ -43,7 +43,7 @@
 
   &__model-img {
     width: 200px;
-    margin-bottom: 8px;
+    margin-bottom: 20px;
   }
 
   &__model-title {
@@ -107,6 +107,18 @@
   &__description-text {
     font-size: 13px;
     color: #5A6169;
+
+    textarea {
+      color: #5A6169;
+      font-size: 13px;
+      font-family: Roboto, sans-serif;
+      width: 100%;
+      resize: none;
+      height: 80px;
+      border: 0.5px solid #BECAD6;
+      border-radius: 3px;
+      padding: 8px;
+    }
   }
 }
 
@@ -158,6 +170,7 @@
     align-items: center;
     justify-content: center;
     margin-left: 7px;
+    margin-bottom: 4px;
   }
 
   &__footer {
@@ -233,7 +246,8 @@
   user-select: none;
 }
 .file-custom:after {
-  content: "Выберите файл...";
+  color: #999999;
+  content: "Выберите фото...";
 }
 .file-custom:before {
   position: absolute;
