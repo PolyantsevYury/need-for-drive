@@ -24,16 +24,18 @@ const AdminPage = () => {
           <Header setIsTokenValid={setIsTokenValid} />
         </div>
         <div className="admin__content">
-          <Switch>
-            <Route exact path="/admin/orders" render={() => <Orders />} />
-            <Route exact path="/admin/table" render={() => <CarsTable />} />
-            <Route
-              exact
-              path="/admin/car-setting"
-              render={() => <CarSetting />}
-            />
-            <Route path="*" render={() => <Error />} />
-          </Switch>
+          <div className="admin__content-container">
+            <Switch>
+              <Route exact path="/admin/orders" render={() => <Orders />} />
+              <Route exact path="/admin/table" render={() => <CarsTable />} />
+              <Route
+                exact
+                path="/admin/car-setting"
+                render={() => <CarSetting />}
+              />
+              <Route path="*" render={() => <Error />} />
+            </Switch>
+          </div>
         </div>
         <div className="admin__footer">
           <a className="admin__footer-link" href="/">
