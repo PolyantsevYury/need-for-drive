@@ -9,21 +9,21 @@ import plusIcon from "../../../assets/images/icons/plus_icon.svg";
 import { AdminRadio } from "../adminForms/AdminForms";
 
 const CarSetting = () => {
-  const colorOptions = [
-    { label: "Красный", value: "Красный", checked: true },
-    { label: "Белый", value: "Белый", checked: true },
-    { label: "Черный", value: "Черный", checked: true },
-  ];
+  const colorOptions = [{ label: "Белый", value: "Белый", checked: true }];
   const initialValues = {
     model: "",
     category: "Эконом",
-    colors: "",
+    color: "",
+    addedColors: [],
     description: "",
   };
+  const addColor = (color) => {
+    colorOptions.push({ label: color, value: color, checked: true });
+  };
+  // eslint-disable-next-line no-console
+  const deleteColor = () => console.log("Delete");
   // eslint-disable-next-line no-console
   const onSubmit = (value) => console.log(value);
-  // eslint-disable-next-line no-console
-  const onCheck = () => console.log("Check");
 
   return (
     <div className="car-setting">
@@ -112,23 +112,32 @@ const CarSetting = () => {
                         />
                       </div>
                     </div>
-                    <div className="form-card__form-item">
-                      <Text
-                        name="colors"
-                        title="Доступные цвета"
-                        type="text"
-                        placeholder="Введите цвет"
-                      />
-                      <button className="form-card__clr-btn" type="button">
-                        <img src={plusIcon} alt=" " />
-                      </button>
-                    </div>
-                    <div className="form-card__checkbox">
-                      <Checkbox
-                        direction="column"
-                        items={colorOptions}
-                        onChange={onCheck}
-                      />
+                    <div>
+                      <div className="form-card__form-item">
+                        <Text
+                          name="color"
+                          title="Доступные цвета"
+                          type="text"
+                          placeholder="Введите цвет"
+                        />
+                        <button
+                          className="form-card__clr-btn"
+                          type="button"
+                          onClick={() => {
+                            addColor(formik.values.color);
+                            formik.setValues({ ...formik.values, color: "" });
+                          }}
+                        >
+                          <img src={plusIcon} alt=" " />
+                        </button>
+                      </div>
+                      <div className="form-card__checkbox">
+                        <Checkbox
+                          direction="column"
+                          items={colorOptions}
+                          onChange={deleteColor}
+                        />
+                      </div>
                     </div>
                     <div className="form-card__footer">
                       <div className="form-card__container">
