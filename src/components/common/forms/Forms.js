@@ -53,7 +53,7 @@ export const Checkbox = ({ items, direction, onChange }) => {
             value={item.value}
             id={item.value}
             checked={item.checked}
-            onChange={() => onChange(item.value)}
+            onChange={onChange}
           />
           <label htmlFor={item.value}>{item.label}</label>
         </div>

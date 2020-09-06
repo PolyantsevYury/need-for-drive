@@ -187,28 +187,6 @@
       }
     }
   }
-
-  &__checkbox {
-    input {
-      &:checked + label {
-        color: #495057 !important;
-        font-size: 11px;
-        &::before {
-          background-color: $clr-main-blue;
-          border: none !important;
-          border-radius: 2px;
-        }
-        &::after {
-          width: 7px !important;
-          height: 4px !important;
-          left: 5px;
-          bottom: 3px;
-          border-color: #fff;
-          border-width: 1px;
-        }
-     }
-    }
-  }
 }
 
 /*

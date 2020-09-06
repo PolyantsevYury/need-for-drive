@@ -61,7 +61,7 @@ const CarsTable = () => {
               <tr>
                 <th scope="col">Модель</th>
                 <th scope="col">Категория</th>
-                <th scope="col">Цвета</th>
+                <th scope="col">Цвет</th>
                 <th scope="col">Цена</th>
               </tr>
             </thead>
@@ -69,25 +69,25 @@ const CarsTable = () => {
               <tr>
                 <td data-label="Модель">Hyndai, i30 N</td>
                 <td data-label="Категория">Эконом</td>
-                <td data-label="Цвета">синий, красный</td>
+                <td data-label="Цвет">синий, красный</td>
                 <td data-label="Цена">10000 - 25000 ₽</td>
               </tr>
               <tr>
                 <td data-label="Модель">Hyndai, i30 N</td>
                 <td data-label="Категория">Эконом</td>
-                <td data-label="Цвета">белый, черный</td>
+                <td data-label="Цвет">белый, черный</td>
                 <td data-label="Цена">12000 - 32000 ₽</td>
               </tr>
               <tr>
                 <td data-label="Модель">Hyndai, i30 N</td>
                 <td data-label="Категория">Премиум</td>
-                <td data-label="Цвета">белый, черный</td>
+                <td data-label="Цвет">белый, черный</td>
                 <td data-label="Цена">12000 - 32000 ₽</td>
               </tr>
               <tr>
                 <td data-label="Модель">Hyndai, i30 N</td>
                 <td data-label="Категория">Премиум</td>
-                <td data-label="Цвета">белый, черный</td>
+                <td data-label="Цвет">белый, черный</td>
                 <td data-label="Цена">12000 - 32000 ₽</td>
               </tr>
             </tbody>

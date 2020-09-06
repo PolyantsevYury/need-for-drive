@@ -1,7 +1,7 @@
 import React from "react";
+import classNames from "classnames";
 import s from "./AdminForms.module.scss";
 
-// eslint-disable-next-line import/prefer-default-export
 export const AdminRadio = ({ title, name, items, onChange }) => {
   return (
     <div className={s.radio}>
@@ -21,6 +21,29 @@ export const AdminRadio = ({ title, name, items, onChange }) => {
           </div>
         ))}
       </div>
+    </div>
+  );
+};
+
+export const Checkbox = ({ items, direction, onChange }) => {
+  const inputClass = classNames(s.checkbox, {
+    [s.checkbox__column]: direction === "column",
+  });
+  return (
+    <div className={inputClass}>
+      {items.map((item) => (
+        <div className={s.checkbox__item} key={item.value}>
+          <input
+            type="checkbox"
+            name={item.value}
+            value={item.value}
+            id={item.value}
+            checked={item.checked}
+            onChange={() => onChange(item.value)}
+          />
+          <label htmlFor={item.value}>{item.label}</label>
+        </div>
+      ))}
     </div>
   );
 };

@@ -2,11 +2,11 @@ import React from "react";
 import "./CarSetting.scss";
 import { Field, Form, Formik } from "formik";
 import { Button } from "../../common/buttons/Buttons";
-import { Text, Checkbox } from "../../common/forms/Forms";
+import { Text } from "../../common/forms/Forms";
 import modelExample from "../../../assets/images/car-placeholder.png";
 import progressBar from "../../../assets/images/progressBar.png";
 import plusIcon from "../../../assets/images/icons/plus_icon.svg";
-import { AdminRadio } from "../adminForms/AdminForms";
+import { AdminRadio, Checkbox } from "../adminForms/AdminForms";
 
 const CarSetting = () => {
   const initialValues = {
