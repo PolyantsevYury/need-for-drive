@@ -43,7 +43,7 @@
 
   &__model-img {
     width: 200px;
-    margin-bottom: 8px;
+    margin-bottom: 20px;
   }
 
   &__model-title {
@@ -107,6 +107,18 @@
   &__description-text {
     font-size: 13px;
     color: #5A6169;
+
+    textarea {
+      color: #5A6169;
+      font-size: 13px;
+      font-family: Roboto, sans-serif;
+      width: 100%;
+      resize: none;
+      height: 80px;
+      border: 0.5px solid #BECAD6;
+      border-radius: 3px;
+      padding: 8px;
+    }
   }
 }
 
@@ -127,10 +139,13 @@
     margin-bottom: 24px;
   }
 
+  &__content {
+    flex-grow: 1;
+  }
+
   &__form {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 100%;
   }
 
@@ -140,7 +155,7 @@
   }
 
   &__form-item {
-    margin-right: 14px;
+    margin-right: 24px;
     max-width: 280px;
     width: 100%;
     display: flex;
@@ -158,6 +173,22 @@
     align-items: center;
     justify-content: center;
     margin-left: 7px;
+    margin-bottom: 4px;
+
+    svg {
+      fill: #BECAD6;
+      transition: fill 500ms ease-out;
+    }
+
+    &--active {
+      svg {
+        fill: #4690DE;
+      }
+      &:hover {
+        transition: none;
+        background-color: #F5FAFF;
+      }
+    }
   }
 
   &__footer {
@@ -169,28 +200,6 @@
       button {
         width: 90px;
       }
-    }
-  }
-
-  &__checkbox {
-    input {
-      &:checked + label {
-        color: #495057 !important;
-        font-size: 11px;
-        &::before {
-          background-color: $clr-main-blue;
-          border: none !important;
-          border-radius: 2px;
-        }
-        &::after {
-          width: 7px !important;
-          height: 4px !important;
-          left: 5px;
-          bottom: 3px;
-          border-color: #fff;
-          border-width: 1px;
-        }
-     }
     }
   }
 }
@@ -233,7 +242,8 @@
   user-select: none;
 }
 .file-custom:after {
-  content: "Выберите файл...";
+  color: #999999;
+  content: "Выберите фото...";
 }
 .file-custom:before {
   position: absolute;

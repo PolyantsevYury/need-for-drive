@@ -33,11 +33,18 @@
     padding: 20px;
     flex-grow: 1;
     background-color: #F5F6F8;
+    display: flex;
+    justify-content: center;
 
     @media (max-width: $max-mobile) {
       padding: 8px;
       margin-top: 54px;
     }
+  }
+
+  &__content-container {
+    width: 100%;
+    max-width: 1100px;
   }
 
   &__title {
@@ -220,6 +227,7 @@
   }
 
   &__logout-btn {
+    font-family: Roboto, sans-serif;
     cursor: pointer;
     background-color: #fff;
     border: none;
@@ -234,7 +242,7 @@
     }
 
     img {
-      width: 26px;
+      width: 22px;
     }
 
     span {

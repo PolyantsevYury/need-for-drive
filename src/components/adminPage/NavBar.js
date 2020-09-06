@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Logo from "../../assets/images/icons/logo_icon.svg";
+import Logo from "../../assets/images/icons/logo_blue_icon.svg";
 import CarIcon from "../common/icons/CarIcon";
 import TableIcon from "../common/icons/TableIcon";
 import OrdersIcon from "../common/icons/OrdersIcon";

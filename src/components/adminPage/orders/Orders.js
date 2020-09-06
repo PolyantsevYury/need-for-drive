@@ -70,7 +70,7 @@ const Orders = () => {
         </div>
         <div className="orders__content">
           <div className="order">
-            <div className="container">
+            <div className="order__model">
               <img className="order__img" src={modelExample} alt="" />
               <div className="order__info">
                 <p className="order__info-item">
@@ -84,7 +84,7 @@ const Orders = () => {
                 </p>
               </div>
             </div>
-            <div className="container">
+            <div className="order__options">
               <Checkbox
                 direction="column"
                 items={[
