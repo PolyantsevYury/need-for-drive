@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4a68e93be57f4ac735d8f7d013938f22",
+    "revision": "be3dc7458e07e605d263460d90b644e7",
     "url": "/need-for-drive/index.html"
   },
   {
-    "revision": "c33d12f2cfae493ea72a",
+    "revision": "0aff9debc6bf2a0a3b82",
     "url": "/need-for-drive/static/css/2.72d002db.chunk.css"
   },
   {
-    "revision": "1ff933723e89879f6550",
-    "url": "/need-for-drive/static/css/main.9d2c48dc.chunk.css"
+    "revision": "fb006b66d36e5d7fbe2f",
+    "url": "/need-for-drive/static/css/main.d72d32b1.chunk.css"
   },
   {
-    "revision": "c33d12f2cfae493ea72a",
-    "url": "/need-for-drive/static/js/2.12d0e8f4.chunk.js"
+    "revision": "0aff9debc6bf2a0a3b82",
+    "url": "/need-for-drive/static/js/2.92af178b.chunk.js"
   },
   {
     "revision": "db327e4db7edc4fb3f5371b4167e8e40",
-    "url": "/need-for-drive/static/js/2.12d0e8f4.chunk.js.LICENSE.txt"
+    "url": "/need-for-drive/static/js/2.92af178b.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "1ff933723e89879f6550",
-    "url": "/need-for-drive/static/js/main.e3e9a878.chunk.js"
+    "revision": "fb006b66d36e5d7fbe2f",
+    "url": "/need-for-drive/static/js/main.a74100f0.chunk.js"
   },
   {
     "revision": "d626b68bd1aca0cbff82",
@@ -72,6 +72,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/need-for-drive/static/media/buttonPreloader.0bb3383d.svg"
   },
   {
+    "revision": "2a7a949b945deba245484f2db86463e2",
+    "url": "/need-for-drive/static/media/car-placeholder.2a7a949b.png"
+  },
+  {
     "revision": "9f1b3b91cf6744470015a09e2dbea7e4",
     "url": "/need-for-drive/static/media/clean_icon.9f1b3b91.svg"
   },
@@ -92,8 +96,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/need-for-drive/static/media/loginLogo.6392ca75.svg"
   },
   {
-    "revision": "f7239bc23354c80b403e1b3577d2d6fb",
-    "url": "/need-for-drive/static/media/logo_icon.f7239bc2.svg"
+    "revision": "54cf08825dfc3059bf0998f03dccb131",
+    "url": "/need-for-drive/static/media/logo_blue_icon.54cf0882.svg"
   },
   {
     "revision": "675811cfcc544dda3dcef4b7a0adeda3",
@@ -114,10 +118,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "3ef3a149c519e8324a1b4db072cfd0d3",
     "url": "/need-for-drive/static/media/notifications_icon.3ef3a149.svg"
-  },
-  {
-    "revision": "0e4c647bc060fda3577faafa7b9f4692",
-    "url": "/need-for-drive/static/media/plus_icon.0e4c647b.svg"
   },
   {
     "revision": "89accffcb819f2e5667afd26ba6ad576",
