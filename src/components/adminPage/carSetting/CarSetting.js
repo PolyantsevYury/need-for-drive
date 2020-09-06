@@ -5,7 +5,7 @@ import { Button } from "../../common/buttons/Buttons";
 import { Text } from "../../common/forms/Forms";
 import modelExample from "../../../assets/images/car-placeholder.png";
 import progressBar from "../../../assets/images/progressBar.png";
-import plusIcon from "../../../assets/images/icons/plus_icon.svg";
+import PlusIcon from "../../common/icons/Plus";
 import { AdminRadio, Checkbox } from "../adminForms/AdminForms";
 
 const CarSetting = () => {
@@ -136,12 +136,15 @@ const CarSetting = () => {
                             placeholder="Введите цвет"
                           />
                           <button
-                            className="form-card__clr-btn"
+                            className={`form-card__clr-btn ${
+                              formik.values.color &&
+                              "form-card__clr-btn--active"
+                            }`}
                             type="button"
                             onClick={() => addColor(formik)}
                             disabled={formik.values.color === ""}
                           >
-                            <img src={plusIcon} alt=" " />
+                            <PlusIcon />
                           </button>
                         </div>
                         <div className="form-card__checkbox">

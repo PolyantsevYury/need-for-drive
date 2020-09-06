@@ -174,6 +174,23 @@
     justify-content: center;
     margin-left: 7px;
     margin-bottom: 4px;
+    transition: background-color 500ms ease-out;
+
+    svg {
+      fill: #BECAD6;
+      transition: fill 500ms ease-out;
+    }
+
+    &--active {
+      background-color: #F5FAFF;
+      svg {
+        fill: #4690DE;
+      }
+      &:hover {
+        transition: none;
+        background-color: #E9F5FF;
+      }
+    }
   }
 
   &__footer {
