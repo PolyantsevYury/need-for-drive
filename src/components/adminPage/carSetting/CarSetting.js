@@ -3,25 +3,39 @@ import "./CarSetting.scss";
 import { Field, Form, Formik } from "formik";
 import { Button } from "../../common/buttons/Buttons";
 import { Text, Checkbox } from "../../common/forms/Forms";
-import modelExample from "../../../assets/images/adminModel.png";
+import modelExample from "../../../assets/images/car-placeholder.png";
 import progressBar from "../../../assets/images/progressBar.png";
 import plusIcon from "../../../assets/images/icons/plus_icon.svg";
 import { AdminRadio } from "../adminForms/AdminForms";
 
 const CarSetting = () => {
-  const colorOptions = [{ label: "Белый", value: "Белый", checked: true }];
   const initialValues = {
     model: "",
     category: "Эконом",
     color: "",
-    addedColors: [],
+    addedColors: [{ label: "Белый", value: "Белый", checked: true }],
     description: "",
   };
-  const addColor = (color) => {
-    colorOptions.push({ label: color, value: color, checked: true });
+  const addColor = (formik) => {
+    formik.values.addedColors.push({
+      label: formik.values.color,
+      value: formik.values.color,
+      checked: true,
+    });
+    formik.setValues({
+      ...formik.values,
+      color: "",
+    });
   };
-  // eslint-disable-next-line no-console
-  const deleteColor = () => console.log("Delete");
+  const deleteColor = (formik, color) => {
+    const newColors = formik.values.addedColors.filter(
+      (addedColor) => addedColor.value !== color
+    );
+    formik.setValues({
+      ...formik.values,
+      addedColors: newColors,
+    });
+  };
   // eslint-disable-next-line no-console
   const onSubmit = (value) => console.log(value);
 
@@ -83,60 +97,60 @@ const CarSetting = () => {
                 <div className="admin__card car-setting__form-card form-card">
                   <div className="form-card__form">
                     <h4 className="form-card__title">Настройки автомобиля</h4>
-                    <div className="form-card__model-inputs">
-                      <div className="form-card__form-item">
-                        <Text
-                          name="model"
-                          title="Модель автомобиля"
-                          type="text"
-                        />
+                    <div className="form-card__content">
+                      <div className="form-card__model-inputs">
+                        <div className="form-card__form-item">
+                          <Text
+                            name="model"
+                            title="Модель автомобиля"
+                            type="text"
+                          />
+                        </div>
+                        <div className="form-card__form-item">
+                          <AdminRadio
+                            title="Категория автомобиля"
+                            items={[
+                              {
+                                label: "Эконом",
+                                value: "Эконом",
+                                checked: formik.values.category === "Эконом",
+                              },
+                              {
+                                label: "Премиум",
+                                value: "Премиум",
+                                checked: formik.values.category === "Премиум",
+                              },
+                            ]}
+                            name="category"
+                            option="blue"
+                            onChange={formik.handleChange}
+                          />
+                        </div>
                       </div>
-                      <div className="form-card__form-item">
-                        <AdminRadio
-                          title="Категория автомобиля"
-                          items={[
-                            {
-                              label: "Эконом",
-                              value: "Эконом",
-                              checked: formik.values.category === "Эконом",
-                            },
-                            {
-                              label: "Премиум",
-                              value: "Премиум",
-                              checked: formik.values.category === "Премиум",
-                            },
-                          ]}
-                          name="category"
-                          option="blue"
-                          onChange={formik.handleChange}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="form-card__form-item">
-                        <Text
-                          name="color"
-                          title="Доступные цвета"
-                          type="text"
-                          placeholder="Введите цвет"
-                        />
-                        <button
-                          className="form-card__clr-btn"
-                          type="button"
-                          onClick={() => {
-                            addColor(formik.values.color);
-                            formik.setValues({ ...formik.values, color: "" });
-                          }}
-                        >
-                          <img src={plusIcon} alt=" " />
-                        </button>
-                      </div>
-                      <div className="form-card__checkbox">
-                        <Checkbox
-                          direction="column"
-                          items={colorOptions}
-                          onChange={deleteColor}
-                        />
+                      <div>
+                        <div className="form-card__form-item">
+                          <Text
+                            name="color"
+                            title="Доступные цвета"
+                            type="text"
+                            placeholder="Введите цвет"
+                          />
+                          <button
+                            className="form-card__clr-btn"
+                            type="button"
+                            onClick={() => addColor(formik)}
+                            disabled={formik.values.color === ""}
+                          >
+                            <img src={plusIcon} alt=" " />
+                          </button>
+                        </div>
+                        <div className="form-card__checkbox">
+                          <Checkbox
+                            direction="column"
+                            items={formik.values.addedColors}
+                            onChange={(color) => deleteColor(formik, color)}
+                          />
+                        </div>
                       </div>
                     </div>
                     <div className="form-card__footer">

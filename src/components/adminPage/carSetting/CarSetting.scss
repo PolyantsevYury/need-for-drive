@@ -139,10 +139,13 @@
     margin-bottom: 24px;
   }
 
+  &__content {
+    flex-grow: 1;
+  }
+
   &__form {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 100%;
   }
 
