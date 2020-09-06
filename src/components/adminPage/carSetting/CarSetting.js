@@ -13,8 +13,15 @@ const CarSetting = () => {
     model: "",
     category: "Эконом",
     color: "",
-    addedColors: [{ label: "Белый", value: "Белый", checked: true }],
+    addedColors: [],
     description: "",
+    photo: "",
+  };
+  const getPreviewPhoto = (formik) => {
+    if (formik.values.photo) {
+      return URL.createObjectURL(formik.values.photo);
+    }
+    return modelExample;
   };
   const addColor = (formik) => {
     formik.values.addedColors.push({
@@ -57,7 +64,7 @@ const CarSetting = () => {
                     </span>
                     <img
                       className="info-card__model-img"
-                      src={modelExample}
+                      src={getPreviewPhoto(formik)}
                       alt=""
                     />
                     <div className="info-card__model-input">
@@ -67,6 +74,12 @@ const CarSetting = () => {
                           type="file"
                           id="file"
                           aria-label="File browser example"
+                          onChange={(e) => {
+                            formik.setValues({
+                              ...formik.values,
+                              photo: e.target.files[0],
+                            });
+                          }}
                         />
                         <span className="file-custom" />
                       </label>
