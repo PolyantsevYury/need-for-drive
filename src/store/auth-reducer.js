@@ -9,7 +9,7 @@ const initialState = {
   isAuthFailed: false,
 };
 
-const adminReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_IS_AUTH_IN_PROGRESS:
       return {
@@ -69,4 +69,4 @@ export const logIn = (userData) => async (dispatch) => {
   }
 };
 
-export default adminReducer;
+export default authReducer;

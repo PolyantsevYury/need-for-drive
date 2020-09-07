@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "./CarsTable.scss";
 import { Form, Formik } from "formik";
+import { connect } from "react-redux";
 import { Filter } from "../../common/forms/Forms";
 import { Button } from "../../common/buttons/Buttons";
 import Paginator from "../../common/paginator/Paginator";
+import {
+  requestCarsPage,
+  setCurrentPage,
+} from "../../../store/carstable-reducer";
+import Preloader from "../../common/preloader/Preloader";
 
 const firstOptions = [
   { key: "1", value: "1" },
@@ -24,8 +30,18 @@ const initialValues = {
   name3: "2",
 };
 
-const CarsTable = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+const CarsTable = ({
+  requestCarsPage,
+  isFetching,
+  cars,
+  pageSize,
+  currentPage,
+  totalCarsCount,
+  setCurrentPage,
+}) => {
+  useEffect(() => {
+    requestCarsPage(currentPage, pageSize);
+  }, [currentPage, pageSize, requestCarsPage]);
 
   // eslint-disable-next-line no-console
   const onFilterSubmit = (value) => console.log(value);
@@ -56,49 +72,37 @@ const CarsTable = () => {
           </Formik>
         </div>
         <div className="cars-table__content">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Модель</th>
-                <th scope="col">Категория</th>
-                <th scope="col">Цвет</th>
-                <th scope="col">Цена</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td data-label="Модель">Hyndai, i30 N</td>
-                <td data-label="Категория">Эконом</td>
-                <td data-label="Цвет">синий, красный</td>
-                <td data-label="Цена">10000 - 25000 ₽</td>
-              </tr>
-              <tr>
-                <td data-label="Модель">Hyndai, i30 N</td>
-                <td data-label="Категория">Эконом</td>
-                <td data-label="Цвет">белый, черный</td>
-                <td data-label="Цена">12000 - 32000 ₽</td>
-              </tr>
-              <tr>
-                <td data-label="Модель">Hyndai, i30 N</td>
-                <td data-label="Категория">Премиум</td>
-                <td data-label="Цвет">белый, черный</td>
-                <td data-label="Цена">12000 - 32000 ₽</td>
-              </tr>
-              <tr>
-                <td data-label="Модель">Hyndai, i30 N</td>
-                <td data-label="Категория">Премиум</td>
-                <td data-label="Цвет">белый, черный</td>
-                <td data-label="Цена">12000 - 32000 ₽</td>
-              </tr>
-            </tbody>
-          </table>
+          {isFetching ? (
+            <Preloader />
+          ) : (
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Модель</th>
+                  <th scope="col">Категория</th>
+                  <th scope="col">Цвет</th>
+                  <th scope="col">Цена</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cars.map((car) => (
+                  <tr key={car.id}>
+                    <td data-label="Модель">{car.name}</td>
+                    <td data-label="Категория">{car.categoryId.name}</td>
+                    <td data-label="Цвет">{car.colors}</td>
+                    <td data-label="Цена">{`${car.priceMin} - ${car.priceMax} ₽`}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
         <div className="cars-table__footer">
           <Paginator
             currentPage={currentPage}
             onPageChanged={(p) => setCurrentPage(p)}
-            totalItemsCount={140}
-            pageSize={7}
+            totalItemsCount={totalCarsCount}
+            pageSize={pageSize}
           />
         </div>
       </div>
@@ -106,4 +110,14 @@ const CarsTable = () => {
   );
 };
 
-export default CarsTable;
+const mapStateToProps = (state) => ({
+  cars: state.carsTable.cars,
+  isFetching: state.carsTable.isFetching,
+  pageSize: state.carsTable.pageSize,
+  currentPage: state.carsTable.currentPage,
+  totalCarsCount: state.carsTable.totalCarsCount,
+});
+
+export default connect(mapStateToProps, { requestCarsPage, setCurrentPage })(
+  CarsTable
+);

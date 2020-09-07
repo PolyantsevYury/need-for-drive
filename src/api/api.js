@@ -19,6 +19,9 @@ const orderAPI = {
   getCars() {
     return instance.get(`db/car/`);
   },
+  getCarsPage(currentPage = 1, pageSize = 5) {
+    return instance.get(`db/car?page=${currentPage - 1}&limit=${pageSize}`);
+  },
   postOrder(orderBody) {
     return instance.post(`db/order/`, orderBody);
   },

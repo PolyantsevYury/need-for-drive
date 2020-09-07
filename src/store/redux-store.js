@@ -1,11 +1,13 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunkMiddleware from "redux-thunk";
 import orderReducer from "./order-reducer";
-import adminReducer from "./admin-reducer";
+import authReducer from "./auth-reducer";
+import carsTableReducer from "./carstable-reducer";
 
 const reducers = combineReducers({
   order: orderReducer,
-  admin: adminReducer,
+  auth: authReducer,
+  carsTable: carsTableReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
