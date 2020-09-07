@@ -11,6 +11,7 @@ const initialState = {
   totalCarsCount: 0,
   currentPage: 1,
   isFetching: false,
+  carBrandsForFiltering: [],
 };
 
 const carsTableReducer = (state = initialState, action) => {
@@ -56,6 +57,15 @@ export const requestCarsPage = (page, pageSize) => async (dispatch) => {
   try {
     dispatch(toggleIsFetching(true));
     const result = await orderAPI.getCarsPage(page, pageSize);
+    // Find car brands for further filtering
+    //
+    // const carBrandsForFiltering = [];
+    // result.data.data.map((model) => {
+    //   const modelBrand = model.name.split(",")[0];
+    //   if (carBrandsForFiltering.includes(modelBrand)) return false;
+    //   return carBrandsForFiltering.push(modelBrand);
+    // });
+    // console.log(carBrandsForFiltering);
     dispatch(setCars(result.data.data));
     dispatch(setTotalCarsCount(result.data.count));
     dispatch(toggleIsFetching(false));

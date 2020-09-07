@@ -11,20 +11,20 @@ import {
 } from "../../../store/carstable-reducer";
 import { AdminPreloader } from "../../common/preloader/Preloader";
 
-const firstOptions = [
-  { key: "0", value: "0" },
-  { key: "1", value: "1" },
-  { key: "2", value: "2" },
+const modelOptions = [
+  { key: "Все модели", value: "Все модели" },
+  { key: "Hyundai", value: "Hyundai" },
+  { key: "Nissan", value: "Nissan" },
 ];
-const secondOptions = [
-  { key: "0", value: "0" },
-  { key: "1", value: "1" },
-  { key: "2", value: "2" },
+const categoryOptions = [
+  { key: "Все категории", value: "Все категории" },
+  { key: "Эконом", value: "Эконом" },
+  { key: "Премиум", value: "Премиум" },
 ];
 
 const initialValues = {
-  name1: "0",
-  name2: "0",
+  model: "Все модели",
+  category: "Все категории",
 };
 
 const CarsTable = ({
@@ -51,8 +51,8 @@ const CarsTable = ({
           <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
             <Form className="cars-table__filter">
               <div className="cars-table__filter-items">
-                <Filter name="name1" options={firstOptions} />
-                <Filter name="name2" options={secondOptions} />
+                <Filter name="model" options={modelOptions} />
+                <Filter name="category" options={categoryOptions} />
               </div>
               <div className="cars-table__filter-buttons">
                 <div className="cars-table__filter-button">
