@@ -19,8 +19,12 @@ const orderAPI = {
   getCars() {
     return instance.get(`db/car/`);
   },
-  getCarsPage(currentPage = 1, pageSize = 5) {
-    return instance.get(`db/car?page=${currentPage - 1}&limit=${pageSize}`);
+  getCarsPage(currentPage = 1, pageSize = 5, nameForFilter = false) {
+    let requestUrl = `db/car?page=${currentPage - 1}&limit=${pageSize}`;
+    if (nameForFilter) {
+      requestUrl += `&name[$regex]=.*${nameForFilter}.*`;
+    }
+    return instance.get(requestUrl);
   },
   postOrder(orderBody) {
     return instance.post(`db/order/`, orderBody);

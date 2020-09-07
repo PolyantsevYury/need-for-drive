@@ -12,22 +12,19 @@ import {
 import { AdminPreloader } from "../../common/preloader/Preloader";
 
 const firstOptions = [
+  { key: "0", value: "0" },
   { key: "1", value: "1" },
   { key: "2", value: "2" },
 ];
 const secondOptions = [
-  { key: "1", value: "1" },
-  { key: "2", value: "2" },
-];
-const thirdOptions = [
+  { key: "0", value: "0" },
   { key: "1", value: "1" },
   { key: "2", value: "2" },
 ];
 
 const initialValues = {
-  name1: "1",
-  name2: "1",
-  name3: "2",
+  name1: "0",
+  name2: "0",
 };
 
 const CarsTable = ({
@@ -56,7 +53,6 @@ const CarsTable = ({
               <div className="cars-table__filter-items">
                 <Filter name="name1" options={firstOptions} />
                 <Filter name="name2" options={secondOptions} />
-                <Filter name="name3" options={thirdOptions} />
               </div>
               <div className="cars-table__filter-buttons">
                 <div className="cars-table__filter-button">

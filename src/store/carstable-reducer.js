@@ -56,9 +56,9 @@ export const requestCarsPage = (page, pageSize) => async (dispatch) => {
   try {
     dispatch(toggleIsFetching(true));
     const result = await orderAPI.getCarsPage(page, pageSize);
-    dispatch(toggleIsFetching(false));
     dispatch(setCars(result.data.data));
     dispatch(setTotalCarsCount(result.data.count));
+    dispatch(toggleIsFetching(false));
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);
