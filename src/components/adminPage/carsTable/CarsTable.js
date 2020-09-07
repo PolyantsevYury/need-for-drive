@@ -9,7 +9,7 @@ import {
   requestCarsPage,
   setCurrentPage,
 } from "../../../store/carstable-reducer";
-import Preloader from "../../common/preloader/Preloader";
+import { AdminPreloader } from "../../common/preloader/Preloader";
 
 const firstOptions = [
   { key: "1", value: "1" },
@@ -73,7 +73,7 @@ const CarsTable = ({
         </div>
         <div className="cars-table__content">
           {isFetching ? (
-            <Preloader />
+            <AdminPreloader />
           ) : (
             <table>
               <thead>
@@ -89,7 +89,9 @@ const CarsTable = ({
                   <tr key={car.id}>
                     <td data-label="Модель">{car.name}</td>
                     <td data-label="Категория">{car.categoryId.name}</td>
-                    <td data-label="Цвет">{car.colors}</td>
+                    <td data-label="Цвет">
+                      <span className="colors">{car.colors.join(", ")}</span>
+                    </td>
                     <td data-label="Цена">{`${car.priceMin} - ${car.priceMax} ₽`}</td>
                   </tr>
                 ))}

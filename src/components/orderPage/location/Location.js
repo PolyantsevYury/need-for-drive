@@ -10,7 +10,7 @@ import {
 import "@reach/combobox/styles.css";
 import { requestCities, requestPoints } from "../../../store/order-reducer";
 import { getCities, getPoints } from "../../../store/order-selectors";
-import Preloader from "../../common/preloader/Preloader";
+import { Preloader } from "../../common/preloader/Preloader";
 import MarkerIcon from "../../../assets/images/marker.svg";
 import { SearchCity, SearchPoints } from "../../common/forms/Forms";
 
