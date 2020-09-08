@@ -94,7 +94,7 @@ const CarsTable = ({
                 <tr>
                   {tableHeaders.map((header) => (
                     <th key={header} scope="col">
-                      header
+                      {header}
                     </th>
                   ))}
                 </tr>

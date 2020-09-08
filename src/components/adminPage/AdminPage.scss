@@ -3,7 +3,7 @@
 .admin {
   overflow: auto;
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
   color: $clr-blue-dark;
 
@@ -30,21 +30,26 @@
   }
 
   &__content {
-    padding: 20px;
     flex-grow: 1;
     background-color: #F5F6F8;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
+    height: auto;
+    overflow-y: auto;
 
     @media (max-width: $max-mobile) {
-      padding: 8px;
       margin-top: 54px;
     }
   }
 
   &__content-container {
-    width: 100%;
     max-width: 1100px;
+    margin: 20px;
+
+    @media (max-width: $max-mobile) {
+      margin: 8px;
+    }
   }
 
   &__title {
@@ -70,12 +75,14 @@
   }
 
   &__footer {
-    height: 64px;
+    min-height: 64px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 20px 0 20px;
     font-size: 14px;
+    background-color: #fff;
 
     @media (max-width: $max-mobile) {
       margin-bottom: 50px;
