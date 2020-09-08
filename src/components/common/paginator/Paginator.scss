@@ -21,12 +21,17 @@
 }
 
 .pageNumber {
-  font-size: 12px;
-  width: 16px;
-  height: 16px;
+  font-size: 13px;
+  width: 19px;
+  height: 19px;
+
+  &:hover {
+    font-size: 14px;
+  }
 }
 
 .pageNumber.selectedPage {
+  font-size: 13px;
   color: #fff;
   background-color: $clr-main-blue;
   border-radius: 100%;

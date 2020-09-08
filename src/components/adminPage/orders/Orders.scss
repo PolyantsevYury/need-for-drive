@@ -20,11 +20,9 @@
     align-items: center;
     width: 100%;
 
-    select {
-      margin-right: 8px;
-
-      @media (max-width: $max-tablet) {
-        margin-right: 0;
+    button {
+      @media (max-width: $max-mobile) {
+        width: 80px;
       }
     }
   }
@@ -154,6 +152,14 @@
         width: 70px;
         height: 28px;
         cursor: pointer;
+
+        &:hover {
+          background-color: #F5F6F8;
+        }
+
+        &:focus {
+          outline: none;
+        }
       }
 
       img {

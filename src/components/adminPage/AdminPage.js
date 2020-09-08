@@ -36,14 +36,14 @@ const AdminPage = () => {
               <Route path="*" render={() => <Error />} />
             </Switch>
           </div>
-        </div>
-        <div className="admin__footer">
-          <a className="admin__footer-link" href="/">
-            Главная страница
-          </a>
-          <span className="admin__footer-copyright">
-            Copyright © 2020 Simbirsoft
-          </span>
+          <div className="admin__footer">
+            <a className="admin__footer-link" href="/">
+              Главная страница
+            </a>
+            <span className="admin__footer-copyright">
+              Copyright © 2020 Simbirsoft
+            </span>
+          </div>
         </div>
       </div>
     </div>

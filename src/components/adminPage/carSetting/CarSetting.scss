@@ -240,6 +240,16 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  &:hover {
+    border-color: #CACACA;
+    &:before {
+      background-color: #E3E3E3;
+      border-color: #CACACA;
+    }
+  }
+  &:focus {
+    outline: none;
+  }
 }
 .file-custom:after {
   color: #999999;
@@ -259,8 +269,4 @@
   background-color: #eee;
   border: .075rem solid #ddd;
   border-radius: 0 .25rem .25rem 0;
-}
-
-.file input:focus ~ .file-custom {
-  box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem #0074d9;
 }
