@@ -53,10 +53,20 @@ export const setCurrentPage = (currentPage) => ({
   currentPage,
 });
 
-export const requestCarsPage = (page, pageSize) => async (dispatch) => {
+export const requestCarsPage = (
+  page,
+  pageSize,
+  brandForFilter,
+  categoryForFilter
+) => async (dispatch) => {
   try {
     dispatch(toggleIsFetching(true));
-    const result = await orderAPI.getCarsPage(page, pageSize);
+    const result = await orderAPI.getCarsPage(
+      page,
+      pageSize,
+      brandForFilter,
+      categoryForFilter
+    );
     // Find car brands for further filtering
     //
     // const carBrandsForFiltering = [];

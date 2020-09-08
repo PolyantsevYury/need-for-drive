@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./CarsTable.scss";
 import { Form, Formik } from "formik";
 import { connect } from "react-redux";
@@ -11,7 +11,7 @@ import {
 } from "../../../store/carstable-reducer";
 import { AdminPreloader } from "../../common/preloader/Preloader";
 
-const modelOptions = [
+const brandOptions = [
   { key: "Все модели", value: "Все модели" },
   { key: "Hyundai", value: "Hyundai" },
   { key: "Nissan", value: "Nissan" },
@@ -23,7 +23,7 @@ const categoryOptions = [
 ];
 
 const initialValues = {
-  model: "Все модели",
+  brand: "Все модели",
   category: "Все категории",
 };
 
@@ -36,12 +36,23 @@ const CarsTable = ({
   totalCarsCount,
   setCurrentPage,
 }) => {
+  const [brandForFilter, setBrandForFilter] = useState(false);
+  const [categoryForFilter, setCategoryForFilter] = useState(false);
   useEffect(() => {
-    requestCarsPage(currentPage, pageSize);
-  }, [currentPage, pageSize, requestCarsPage]);
+    requestCarsPage(currentPage, pageSize, brandForFilter, categoryForFilter);
+  }, [
+    brandForFilter,
+    categoryForFilter,
+    currentPage,
+    pageSize,
+    requestCarsPage,
+  ]);
 
-  // eslint-disable-next-line no-console
-  const onFilterSubmit = (value) => console.log(value);
+  const onFilterSubmit = (value) => {
+    setBrandForFilter(value.brand);
+    setCategoryForFilter(value.category);
+  };
+  const onFilterReset = () => setBrandForFilter(false);
 
   return (
     <>
@@ -51,15 +62,20 @@ const CarsTable = ({
           <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
             <Form className="cars-table__filter">
               <div className="cars-table__filter-items">
-                <Filter name="model" options={modelOptions} />
+                <Filter name="brand" options={brandOptions} />
                 <Filter name="category" options={categoryOptions} />
               </div>
               <div className="cars-table__filter-buttons">
                 <div className="cars-table__filter-button">
-                  <Button additionalStyles="button__admin">Применить</Button>
+                  <Button type="submit" additionalStyles="button__admin">
+                    Применить
+                  </Button>
                 </div>
                 <div className="cars-table__filter-button">
-                  <Button additionalStyles="button__admin button__admin-delete">
+                  <Button
+                    onClick={onFilterReset}
+                    additionalStyles="button__admin button__admin-delete"
+                  >
                     Сбросить
                   </Button>
                 </div>
