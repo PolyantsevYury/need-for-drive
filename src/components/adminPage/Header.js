@@ -3,8 +3,8 @@ import Cookies from "js-cookie";
 import SearchIcon from "../../assets/images/icons/search_icon.svg";
 import NotificationsIcon from "../../assets/images/icons/notifications_icon.svg";
 import UserImg from "../../assets/images/user-img.png";
-import DropdownIcon from "../../assets/images/icons/dropdown_icon.svg";
 import LogoutIcon from "../../assets/images/icons/logout_icon.png";
+import Dropdown from "../common/icons/Dropdown";
 
 const Header = ({ setIsTokenValid }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -35,7 +35,7 @@ const Header = ({ setIsTokenValid }) => {
           className="user-info__dropdown-btn"
           type="button"
         >
-          <img src={DropdownIcon} alt="" />
+          <Dropdown />
         </button>
         {isDropdownOpen && (
           <div className="dropdown">

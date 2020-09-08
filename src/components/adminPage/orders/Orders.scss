@@ -152,6 +152,14 @@
         width: 70px;
         height: 28px;
         cursor: pointer;
+
+        &:hover {
+          background-color: #F5F6F8;
+        }
+
+        &:focus {
+          outline: none;
+        }
       }
 
       img {

@@ -50,6 +50,10 @@
       cursor: pointer;
       font-size: 15px;
 
+      &:hover {
+        background-color: #FBFBFB;
+      }
+
       &--active {
         color: $clr-main-blue;
         background-color: #FBFBFB;

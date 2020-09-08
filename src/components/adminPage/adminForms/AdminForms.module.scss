@@ -41,6 +41,10 @@
         align-items: center;
         cursor: pointer;
 
+        &:hover {
+          color: #898989;
+        }
+
         &::before {
           content: "";
           display: inline-block;
