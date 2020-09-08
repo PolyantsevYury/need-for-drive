@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Radio } from "../../common/forms/Forms";
 import { getCars } from "../../../store/order-selectors";
 import { requestCars, setCurrentCar } from "../../../store/order-reducer";
-import Preloader from "../../common/preloader/Preloader";
+import { Preloader } from "../../common/preloader/Preloader";
 
 const Model = ({
   formik,

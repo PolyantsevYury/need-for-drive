@@ -216,6 +216,7 @@
   -moz-appearance: none;
   -webkit-appearance: none;
   padding-left: 4px;
+  cursor: pointer;
 
   &:focus,
   &:hover {
@@ -228,6 +229,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    cursor: pointer;
 
     img {
       margin: 0.5px;

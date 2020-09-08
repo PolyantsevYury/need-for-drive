@@ -1,7 +1,8 @@
 import React from "react";
 import preloader from "../../../assets/preloader.svg";
+import adminPreloader from "../../../assets/adminPreloader.svg";
 
-const Preloader = () => {
+export const Preloader = () => {
   return (
     <div style={{ textAlign: "center" }}>
       <img src={preloader} alt="" />
@@ -9,4 +10,10 @@ const Preloader = () => {
   );
 };
 
-export default Preloader;
+export const AdminPreloader = () => {
+  return (
+    <div style={{ textAlign: "center" }}>
+      <img src={adminPreloader} alt="" />
+    </div>
+  );
+};

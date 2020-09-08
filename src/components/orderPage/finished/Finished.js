@@ -6,7 +6,7 @@ import { withRouter, useParams } from "react-router-dom";
 import Status from "../status/Status";
 import { getFinishedOrderData } from "../../../store/order-selectors";
 import { addOrderId, requestOrder } from "../../../store/order-reducer";
-import Preloader from "../../common/preloader/Preloader";
+import { Preloader } from "../../common/preloader/Preloader";
 
 const Finished = ({
   finishedOrderData,

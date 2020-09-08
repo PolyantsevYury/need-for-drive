@@ -1,34 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CarsTable.scss";
 import { Form, Formik } from "formik";
+import { connect } from "react-redux";
 import { Filter } from "../../common/forms/Forms";
 import { Button } from "../../common/buttons/Buttons";
 import Paginator from "../../common/paginator/Paginator";
+import {
+  requestCarsPage,
+  setCurrentPage,
+} from "../../../store/carstable-reducer";
+import { AdminPreloader } from "../../common/preloader/Preloader";
 
-const firstOptions = [
-  { key: "1", value: "1" },
-  { key: "2", value: "2" },
+const brandOptions = [
+  { key: "Все модели", value: "Все модели" },
+  { key: "Hyundai", value: "Hyundai" },
+  { key: "Nissan", value: "Nissan" },
 ];
-const secondOptions = [
-  { key: "1", value: "1" },
-  { key: "2", value: "2" },
-];
-const thirdOptions = [
-  { key: "1", value: "1" },
-  { key: "2", value: "2" },
+const categoryOptions = [
+  { key: "Все категории", value: "Все категории" },
+  { key: "Эконом", value: "Эконом" },
+  { key: "Премиум", value: "Премиум" },
 ];
 
 const initialValues = {
-  name1: "1",
-  name2: "1",
-  name3: "2",
+  brand: "Все модели",
+  category: "Все категории",
 };
 
-const CarsTable = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+const CarsTable = ({
+  requestCarsPage,
+  isFetching,
+  cars,
+  pageSize,
+  currentPage,
+  totalCarsCount,
+  setCurrentPage,
+}) => {
+  const [brandForFilter, setBrandForFilter] = useState(false);
+  const [categoryForFilter, setCategoryForFilter] = useState(false);
+  useEffect(() => {
+    requestCarsPage(currentPage, pageSize, brandForFilter, categoryForFilter);
+  }, [
+    brandForFilter,
+    categoryForFilter,
+    currentPage,
+    pageSize,
+    requestCarsPage,
+  ]);
 
-  // eslint-disable-next-line no-console
-  const onFilterSubmit = (value) => console.log(value);
+  const onFilterSubmit = (value) => {
+    setBrandForFilter(value.brand);
+    setCategoryForFilter(value.category);
+  };
+  const onFilterReset = () => setBrandForFilter(false);
 
   return (
     <>
@@ -38,16 +62,20 @@ const CarsTable = () => {
           <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
             <Form className="cars-table__filter">
               <div className="cars-table__filter-items">
-                <Filter name="name1" options={firstOptions} />
-                <Filter name="name2" options={secondOptions} />
-                <Filter name="name3" options={thirdOptions} />
+                <Filter name="brand" options={brandOptions} />
+                <Filter name="category" options={categoryOptions} />
               </div>
               <div className="cars-table__filter-buttons">
                 <div className="cars-table__filter-button">
-                  <Button additionalStyles="button__admin">Применить</Button>
+                  <Button type="submit" additionalStyles="button__admin">
+                    Применить
+                  </Button>
                 </div>
                 <div className="cars-table__filter-button">
-                  <Button additionalStyles="button__admin button__admin-delete">
+                  <Button
+                    onClick={onFilterReset}
+                    additionalStyles="button__admin button__admin-delete"
+                  >
                     Сбросить
                   </Button>
                 </div>
@@ -56,49 +84,39 @@ const CarsTable = () => {
           </Formik>
         </div>
         <div className="cars-table__content">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Модель</th>
-                <th scope="col">Категория</th>
-                <th scope="col">Цвет</th>
-                <th scope="col">Цена</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td data-label="Модель">Hyndai, i30 N</td>
-                <td data-label="Категория">Эконом</td>
-                <td data-label="Цвет">синий, красный</td>
-                <td data-label="Цена">10000 - 25000 ₽</td>
-              </tr>
-              <tr>
-                <td data-label="Модель">Hyndai, i30 N</td>
-                <td data-label="Категория">Эконом</td>
-                <td data-label="Цвет">белый, черный</td>
-                <td data-label="Цена">12000 - 32000 ₽</td>
-              </tr>
-              <tr>
-                <td data-label="Модель">Hyndai, i30 N</td>
-                <td data-label="Категория">Премиум</td>
-                <td data-label="Цвет">белый, черный</td>
-                <td data-label="Цена">12000 - 32000 ₽</td>
-              </tr>
-              <tr>
-                <td data-label="Модель">Hyndai, i30 N</td>
-                <td data-label="Категория">Премиум</td>
-                <td data-label="Цвет">белый, черный</td>
-                <td data-label="Цена">12000 - 32000 ₽</td>
-              </tr>
-            </tbody>
-          </table>
+          {isFetching ? (
+            <AdminPreloader />
+          ) : (
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Модель</th>
+                  <th scope="col">Категория</th>
+                  <th scope="col">Цвет</th>
+                  <th scope="col">Цена</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cars.map((car) => (
+                  <tr key={car.id}>
+                    <td data-label="Модель">{car.name}</td>
+                    <td data-label="Категория">{car.categoryId.name}</td>
+                    <td data-label="Цвет">
+                      <span className="colors">{car.colors.join(", ")}</span>
+                    </td>
+                    <td data-label="Цена">{`${car.priceMin} - ${car.priceMax} ₽`}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
         <div className="cars-table__footer">
           <Paginator
             currentPage={currentPage}
             onPageChanged={(p) => setCurrentPage(p)}
-            totalItemsCount={140}
-            pageSize={7}
+            totalItemsCount={totalCarsCount}
+            pageSize={pageSize}
           />
         </div>
       </div>
@@ -106,4 +124,14 @@ const CarsTable = () => {
   );
 };
 
-export default CarsTable;
+const mapStateToProps = (state) => ({
+  cars: state.carsTable.cars,
+  isFetching: state.carsTable.isFetching,
+  pageSize: state.carsTable.pageSize,
+  currentPage: state.carsTable.currentPage,
+  totalCarsCount: state.carsTable.totalCarsCount,
+});
+
+export default connect(mapStateToProps, { requestCarsPage, setCurrentPage })(
+  CarsTable
+);

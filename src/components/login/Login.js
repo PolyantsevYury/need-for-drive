@@ -8,7 +8,7 @@ import Logo from "../../assets/images/loginLogo.svg";
 import "./Login.scss";
 import { Button } from "../common/buttons/Buttons";
 import { Text } from "../common/forms/Forms";
-import { logIn } from "../../store/admin-reducer";
+import { logIn } from "../../store/auth-reducer";
 
 const initialValues = {
   username: "",
@@ -73,8 +73,8 @@ const Login = ({ isAuthInProgress, isAuthFailed, logIn }) => {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthInProgress: state.admin.isAuthInProgress,
-  isAuthFailed: state.admin.isAuthFailed,
+  isAuthInProgress: state.auth.isAuthInProgress,
+  isAuthFailed: state.auth.isAuthFailed,
 });
 
 export default connect(mapStateToProps, { logIn })(Login);
