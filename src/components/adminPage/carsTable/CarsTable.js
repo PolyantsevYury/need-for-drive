@@ -27,6 +27,8 @@ const initialValues = {
   category: "Все категории",
 };
 
+const tableHeaders = ["Модель", "Категория", "Цвет", "Цена"];
+
 const CarsTable = ({
   requestCarsPage,
   isFetching,
@@ -90,10 +92,11 @@ const CarsTable = ({
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Модель</th>
-                  <th scope="col">Категория</th>
-                  <th scope="col">Цвет</th>
-                  <th scope="col">Цена</th>
+                  {tableHeaders.map((header) => (
+                    <th key={header} scope="col">
+                      header
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
