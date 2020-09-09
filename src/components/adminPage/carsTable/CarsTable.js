@@ -3,6 +3,7 @@ import "./CarsTable.scss";
 import { Form, Formik } from "formik";
 import { connect } from "react-redux";
 import { Filter } from "../../common/forms/Forms";
+import FilterIcon from "../../common/icons/FilterIcon";
 import { Button } from "../../common/buttons/Buttons";
 import Paginator from "../../common/paginator/Paginator";
 import {
@@ -10,6 +11,7 @@ import {
   setCurrentPage,
 } from "../../../store/carstable-reducer";
 import { AdminPreloader } from "../../common/preloader/Preloader";
+import { Checkbox } from "../adminForms/AdminForms";
 
 const brandOptions = [
   { key: "Все модели", value: "Все модели" },
@@ -27,8 +29,6 @@ const initialValues = {
   category: "Все категории",
 };
 
-const tableHeaders = ["Модель", "Категория", "Цвет", "Цена"];
-
 const CarsTable = ({
   requestCarsPage,
   isFetching,
@@ -38,12 +38,12 @@ const CarsTable = ({
   totalCarsCount,
   setCurrentPage,
 }) => {
-  const [brandForFilter, setBrandForFilter] = useState(false);
+  const [brandsForFilter, setBrandsForFilter] = useState([]);
   const [categoryForFilter, setCategoryForFilter] = useState(false);
   useEffect(() => {
-    requestCarsPage(currentPage, pageSize, brandForFilter, categoryForFilter);
+    requestCarsPage(currentPage, pageSize, brandsForFilter, categoryForFilter);
   }, [
-    brandForFilter,
+    brandsForFilter,
     categoryForFilter,
     currentPage,
     pageSize,
@@ -51,10 +51,14 @@ const CarsTable = ({
   ]);
 
   const onFilterSubmit = (value) => {
-    setBrandForFilter(value.brand);
+    setBrandsForFilter(value.brand !== "Все модели" ? [value.brand] : []);
     setCategoryForFilter(value.category);
   };
-  const onFilterReset = () => setBrandForFilter(false);
+  const onFilterReset = (resetForm) => {
+    setBrandsForFilter([]);
+    setCategoryForFilter(false);
+    resetForm();
+  };
 
   return (
     <>
@@ -62,27 +66,31 @@ const CarsTable = ({
       <div className="admin__card cars-table">
         <div className="cars-table__header">
           <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
-            <Form className="cars-table__filter">
-              <div className="cars-table__filter-items">
-                <Filter name="brand" options={brandOptions} />
-                <Filter name="category" options={categoryOptions} />
-              </div>
-              <div className="cars-table__filter-buttons">
-                <div className="cars-table__filter-button">
-                  <Button type="submit" additionalStyles="button__admin">
-                    Применить
-                  </Button>
-                </div>
-                <div className="cars-table__filter-button">
-                  <Button
-                    onClick={onFilterReset}
-                    additionalStyles="button__admin button__admin-delete"
-                  >
-                    Сбросить
-                  </Button>
-                </div>
-              </div>
-            </Form>
+            {(formik) => {
+              return (
+                <Form className="cars-table__filter">
+                  <div className="cars-table__filter-items">
+                    <Filter name="brand" options={brandOptions} />
+                    <Filter name="category" options={categoryOptions} />
+                  </div>
+                  <div className="cars-table__filter-buttons">
+                    <div className="cars-table__filter-button">
+                      <Button type="submit" additionalStyles="button__admin">
+                        Применить
+                      </Button>
+                    </div>
+                    <div className="cars-table__filter-button">
+                      <Button
+                        onClick={() => onFilterReset(formik.resetForm)}
+                        additionalStyles="button__admin button__admin-delete"
+                      >
+                        Сбросить
+                      </Button>
+                    </div>
+                  </div>
+                </Form>
+              );
+            }}
           </Formik>
         </div>
         <div className="cars-table__content">
@@ -92,11 +100,13 @@ const CarsTable = ({
             <table>
               <thead>
                 <tr>
-                  {tableHeaders.map((header) => (
-                    <th key={header} scope="col">
-                      {header}
-                    </th>
-                  ))}
+                  <th scope="col">
+                    Модель
+                    <DropdownFilter setBrandsForFilter={setBrandsForFilter} />
+                  </th>
+                  <th scope="col">Категория</th>
+                  <th scope="col">Цвет</th>
+                  <th scope="col">Цена</th>
                 </tr>
               </thead>
               <tbody>
@@ -123,6 +133,72 @@ const CarsTable = ({
           />
         </div>
       </div>
+    </>
+  );
+};
+
+const DropdownFilter = ({ setBrandsForFilter }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const initialValues = {
+    Hyundai: false,
+    Nissan: false,
+  };
+
+  const onDropdownFilterSubmit = (value) => {
+    const arrayForFilter = [];
+    if (value.Hyundai) arrayForFilter.push("Hyundai");
+    if (value.Nissan) arrayForFilter.push("Nissan");
+    setBrandsForFilter(arrayForFilter);
+  };
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+        className="dropdown-icon"
+      >
+        <FilterIcon />
+      </button>
+      <Formik initialValues={initialValues} onSubmit={onDropdownFilterSubmit}>
+        {(formik) => {
+          return (
+            isDropdownOpen && (
+              <Form className="table-dropdown">
+                <div className="table-dropdown__content">
+                  <Checkbox
+                    items={[
+                      {
+                        label: "Hyundai",
+                        value: "Hyundai",
+                        checked: formik.values.Hyundai === true,
+                      },
+                      {
+                        label: "Nissan",
+                        value: "Nissan",
+                        checked: formik.values.Nissan === true,
+                      },
+                    ]}
+                    direction="column"
+                    onChange={formik.handleChange}
+                  />
+                </div>
+                <div className="table-dropdown__footer">
+                  <button
+                    className="table-dropdown__reset-btn"
+                    type="button"
+                    disabled={!formik.values.Hyundai && !formik.values.Nissan}
+                  >
+                    Сбросить
+                  </button>
+                  <button className="table-dropdown__submit-btn" type="submit">
+                    ОК
+                  </button>
+                </div>
+              </Form>
+            )
+          );
+        }}
+      </Formik>
     </>
   );
 };

@@ -25,8 +25,8 @@ const CarSetting = () => {
   };
   const addColor = (formik) => {
     formik.values.addedColors.push({
-      label: formik.values.color,
-      value: formik.values.color,
+      label: formik.values.color.toLowerCase(),
+      value: formik.values.color.toLowerCase(),
       checked: true,
     });
     formik.setValues({

@@ -22,15 +22,18 @@ const orderAPI = {
   getCarsPage(
     currentPage = 1,
     pageSize = 5,
-    brandForFilter,
+    brandsForFilter,
     categoryForFilter
   ) {
     let requestUrl = `db/car?page=${currentPage - 1}&limit=${pageSize}`;
-    if (brandForFilter && brandForFilter !== "Все модели") {
-      requestUrl += `&name[$regex]=.*${brandForFilter}.*`;
+    if (brandsForFilter !== []) {
+      brandsForFilter.map((brand) => {
+        requestUrl += `&name[$regex]=.*${brand}.*`;
+        return false;
+      });
     }
     if (categoryForFilter && categoryForFilter !== "Все категории") {
-      // requestUrl += `&categoryId=${categoryForFilter}`;
+      // requestUrl += `&categoryId.name=${categoryForFilter}`;
     }
     return instance.get(requestUrl);
   },

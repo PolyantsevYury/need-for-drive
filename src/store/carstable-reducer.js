@@ -56,7 +56,7 @@ export const setCurrentPage = (currentPage) => ({
 export const requestCarsPage = (
   page,
   pageSize,
-  brandForFilter,
+  brandsForFilter,
   categoryForFilter
 ) => async (dispatch) => {
   try {
@@ -64,7 +64,7 @@ export const requestCarsPage = (
     const result = await orderAPI.getCarsPage(
       page,
       pageSize,
-      brandForFilter,
+      brandsForFilter,
       categoryForFilter
     );
     // Find car brands for further filtering
