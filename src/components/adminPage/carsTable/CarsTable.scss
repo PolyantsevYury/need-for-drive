@@ -1,15 +1,19 @@
 @import "../../../assets/variables";
 
 .cars-table {
-  padding: 14px;
+  padding: 7px 14px 14px 14px;
 
   @media (max-width: $max-mobile) {
     padding: 7px;
   }
 
   &__filter {
-    display: flex;
     justify-content: space-between;
+    display: none;
+
+    @media (max-width: $max-mobile) {
+      display: flex;
+    }
 
     @media (max-width: 600px) {
       flex-direction: column;
