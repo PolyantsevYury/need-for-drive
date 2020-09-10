@@ -46,6 +46,9 @@ const orderAPI = {
   getOrder(orderId) {
     return instance.get(`db/order/${orderId}`);
   },
+  getOrders() {
+    return instance.get(`db/order`);
+  },
   getRate() {
     return instance.get(`db/rate/`);
   },

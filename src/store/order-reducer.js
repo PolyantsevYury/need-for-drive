@@ -1,4 +1,5 @@
 import Geocode from "react-geocode";
+import Cookies from "js-cookie";
 import orderAPI from "../api/api";
 
 const ADD_CITIES = "ADD_CITIES";
@@ -12,6 +13,7 @@ const TOGGLE_IS_ORDER_FETCHING = "TOGGLE_IS_ORDER_FETCHING";
 const TOGGLE_IS_ORDER_CANCELLING = "TOGGLE_IS_ORDER_CANCELLING";
 const ADD_ORDER_ID = "ADD_ORDER_ID";
 const ADD_FINISHED_ORDER_DATA = "ADD_FINISHED_ORDER_DATA";
+const ADD_FINISHED_ORDERS_DATA = "ADD_FINISHED_ORDERS_DATA";
 const ADD_RATE = "ADD_RATE";
 const CHANGE_ORDER_STATUS = "CHANGE_ORDER_STATUS";
 
@@ -30,6 +32,7 @@ const initialState = {
   isOrderCancelling: false,
   orderId: null,
   finishedOrderData: null,
+  finishedOrdersData: null,
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -94,6 +97,11 @@ const orderReducer = (state = initialState, action) => {
         ...state,
         finishedOrderData: action.orderData,
       };
+    case ADD_FINISHED_ORDERS_DATA:
+      return {
+        ...state,
+        finishedOrdersData: action.ordersData,
+      };
     case CHANGE_ORDER_STATUS:
       return {
         ...state,
@@ -118,6 +126,10 @@ export const setCurrentCar = (car) => ({ type: SET_CURRENT_CAR, car });
 export const addFinishedOrderData = (orderData) => ({
   type: ADD_FINISHED_ORDER_DATA,
   orderData,
+});
+export const addFinishedOrdersData = (ordersData) => ({
+  type: ADD_FINISHED_ORDER_DATA,
+  ordersData,
 });
 export const toggleIsCarsFetching = (isCarsFetching) => ({
   type: TOGGLE_IS_CARS_FETCHING,
@@ -283,6 +295,19 @@ export const requestOrder = (orderId) => async (dispatch) => {
     dispatch(toggleIsOrderFetching(true));
     const result = await orderAPI.getOrder(orderId);
     dispatch(addFinishedOrderData(result.data.data));
+    dispatch(toggleIsOrderFetching(false));
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+  }
+};
+
+export const requestOrders = () => async (dispatch) => {
+  try {
+    const basicToken = `${Cookies.get("access_token")}:4cbcea96de`;
+    dispatch(toggleIsOrderFetching(true));
+    const result = await orderAPI.getOrders(basicToken);
+    dispatch(addFinishedOrdersData(result.data.data));
     dispatch(toggleIsOrderFetching(false));
   } catch (e) {
     // eslint-disable-next-line no-console

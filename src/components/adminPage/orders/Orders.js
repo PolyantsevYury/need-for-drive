@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Orders.scss";
 import { Form, Formik } from "formik";
+import { connect } from "react-redux";
 import { Button } from "../../common/buttons/Buttons";
 import { Checkbox, Filter } from "../../common/forms/Forms";
 import modelExample from "../../../assets/images/adminModel.png";
@@ -137,4 +138,8 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+const mapStateToProps = (state) => ({
+  orders: state.carsTable.finishedOrdersData,
+});
+
+export default connect(mapStateToProps, {})(Orders);

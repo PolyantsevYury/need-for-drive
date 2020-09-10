@@ -102,7 +102,10 @@ const CarsTable = ({
                 <tr>
                   <th scope="col">
                     Модель
-                    <DropdownFilter setBrandsForFilter={setBrandsForFilter} />
+                    <DropdownFilter
+                      brandsForFilter={brandsForFilter}
+                      setBrandsForFilter={setBrandsForFilter}
+                    />
                   </th>
                   <th scope="col">Категория</th>
                   <th scope="col">Цвет</th>
@@ -137,19 +140,23 @@ const CarsTable = ({
   );
 };
 
-const DropdownFilter = ({ setBrandsForFilter }) => {
+const DropdownFilter = ({ brandsForFilter, setBrandsForFilter }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const initialValues = {
-    Hyundai: false,
-    Nissan: false,
+    Hyundai: brandsForFilter.includes("Hyundai"),
+    Nissan: brandsForFilter.includes("Nissan"),
   };
-
-  const onDropdownFilterSubmit = (value) => {
+  const onFilterSubmit = (value) => {
     const arrayForFilter = [];
     if (value.Hyundai) arrayForFilter.push("Hyundai");
     if (value.Nissan) arrayForFilter.push("Nissan");
     setBrandsForFilter(arrayForFilter);
   };
+  const onFilterReset = (resetForm) => {
+    setBrandsForFilter([]);
+    resetForm();
+  };
+
   return (
     <>
       <button
@@ -159,7 +166,7 @@ const DropdownFilter = ({ setBrandsForFilter }) => {
       >
         <FilterIcon />
       </button>
-      <Formik initialValues={initialValues} onSubmit={onDropdownFilterSubmit}>
+      <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
         {(formik) => {
           return (
             isDropdownOpen && (
@@ -187,6 +194,7 @@ const DropdownFilter = ({ setBrandsForFilter }) => {
                     className="table-dropdown__reset-btn"
                     type="button"
                     disabled={!formik.values.Hyundai && !formik.values.Nissan}
+                    onClick={() => onFilterReset(formik.resetForm)}
                   >
                     Сбросить
                   </button>
