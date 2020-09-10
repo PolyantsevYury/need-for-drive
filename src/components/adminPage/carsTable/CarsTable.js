@@ -162,7 +162,9 @@ const DropdownFilter = ({ brandsForFilter, setBrandsForFilter }) => {
       <button
         type="button"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        className="dropdown-icon"
+        className={`dropdown-icon ${
+          brandsForFilter.length !== 0 ? "dropdown-icon--active" : ""
+        }`}
       >
         <FilterIcon />
       </button>

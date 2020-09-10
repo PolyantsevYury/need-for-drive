@@ -101,6 +101,16 @@
           fill: rgba(0,0,0,.4);
         }
       }
+
+      &--active {
+        svg {
+          fill: $clr-main-blue;
+
+          &:hover {
+            fill: #006DE3;
+          }
+        }
+      }
     }
   }
 
