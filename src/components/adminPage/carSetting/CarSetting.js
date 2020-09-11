@@ -164,7 +164,9 @@ const CarSetting = () => {
                           <Checkbox
                             direction="column"
                             items={formik.values.addedColors}
-                            onChange={(color) => deleteColor(formik, color)}
+                            onColorChange={(color) =>
+                              deleteColor(formik, color)
+                            }
                           />
                         </div>
                       </div>
