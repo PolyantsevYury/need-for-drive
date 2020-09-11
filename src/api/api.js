@@ -19,21 +19,18 @@ const orderAPI = {
   getCars() {
     return instance.get(`db/car/`);
   },
-  getCarsPage(
-    currentPage = 1,
-    pageSize = 5,
-    brandsForFilter,
-    categoryForFilter
-  ) {
-    let requestUrl = `db/car?page=${currentPage - 1}&limit=${pageSize}`;
-    if (brandsForFilter !== []) {
-      brandsForFilter.map((brand) => {
-        requestUrl += `&name[$regex]=.*${brand}.*`;
-        return false;
-      });
-    }
-    if (categoryForFilter && categoryForFilter !== "Все категории") {
-      // requestUrl += `&categoryId.name=${categoryForFilter}`;
+  getCarsPage(currentPage = 1, pageSize = 5, categoriesForFilter) {
+    const requestUrl = `db/car?page=${currentPage - 1}&limit=${pageSize}`;
+    // if (brandsForFilter !== []) {
+    //   brandsForFilter.map((brand) => {
+    //     requestUrl += `&name[$regex]=.*${brand}.*`;
+    //     return false;
+    //   });
+    // }
+    if (categoriesForFilter !== []) {
+      // eslint-disable-next-line no-console
+      console.log("Фильтрация по категории временно недоступна");
+      // categoriesForFilter.forEach((category) => {requestUrl += `&categoryId.name=${category}`});
     }
     return instance.get(requestUrl);
   },

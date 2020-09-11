@@ -13,11 +13,6 @@ import {
 import { AdminPreloader } from "../../common/preloader/Preloader";
 import { Checkbox } from "../adminForms/AdminForms";
 
-const brandOptions = [
-  { key: "Все модели", value: "Все модели" },
-  { key: "Hyundai", value: "Hyundai" },
-  { key: "Nissan", value: "Nissan" },
-];
 const categoryOptions = [
   { key: "Все категории", value: "Все категории" },
   { key: "Эконом", value: "Эконом" },
@@ -25,7 +20,6 @@ const categoryOptions = [
 ];
 
 const initialValues = {
-  brand: "Все модели",
   category: "Все категории",
 };
 
@@ -38,25 +32,18 @@ const CarsTable = ({
   totalCarsCount,
   setCurrentPage,
 }) => {
-  const [brandsForFilter, setBrandsForFilter] = useState([]);
-  const [categoryForFilter, setCategoryForFilter] = useState(false);
+  const [categoriesForFilter, setCategoriesForFilter] = useState([]);
   useEffect(() => {
-    requestCarsPage(currentPage, pageSize, brandsForFilter, categoryForFilter);
-  }, [
-    brandsForFilter,
-    categoryForFilter,
-    currentPage,
-    pageSize,
-    requestCarsPage,
-  ]);
+    requestCarsPage(currentPage, pageSize, categoriesForFilter);
+  }, [categoriesForFilter, currentPage, pageSize, requestCarsPage]);
 
   const onFilterSubmit = (value) => {
-    setBrandsForFilter(value.brand !== "Все модели" ? [value.brand] : []);
-    setCategoryForFilter(value.category);
+    setCategoriesForFilter(
+      value.brand !== "Все категории" ? [value.brand] : []
+    );
   };
   const onFilterReset = (resetForm) => {
-    setBrandsForFilter([]);
-    setCategoryForFilter(false);
+    setCategoriesForFilter([]);
     resetForm();
   };
 
@@ -70,7 +57,6 @@ const CarsTable = ({
               return (
                 <Form className="cars-table__filter">
                   <div className="cars-table__filter-items">
-                    <Filter name="brand" options={brandOptions} />
                     <Filter name="category" options={categoryOptions} />
                   </div>
                   <div className="cars-table__filter-buttons">
@@ -100,14 +86,14 @@ const CarsTable = ({
             <table>
               <thead>
                 <tr>
+                  <th scope="col">Модель</th>
                   <th scope="col">
-                    Модель
+                    Категория
                     <DropdownFilter
-                      brandsForFilter={brandsForFilter}
-                      setBrandsForFilter={setBrandsForFilter}
+                      categoriesForFilter={categoriesForFilter}
+                      setCategoriesForFilter={setCategoriesForFilter}
                     />
                   </th>
-                  <th scope="col">Категория</th>
                   <th scope="col">Цвет</th>
                   <th scope="col">Цена</th>
                 </tr>
@@ -140,20 +126,20 @@ const CarsTable = ({
   );
 };
 
-const DropdownFilter = ({ brandsForFilter, setBrandsForFilter }) => {
+const DropdownFilter = ({ categoriesForFilter, setCategoriesForFilter }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const initialValues = {
-    Hyundai: brandsForFilter.includes("Hyundai"),
-    Nissan: brandsForFilter.includes("Nissan"),
+    economic: categoriesForFilter.includes("Эконом"),
+    premium: categoriesForFilter.includes("Премиум"),
   };
   const onFilterSubmit = (value) => {
     const arrayForFilter = [];
-    if (value.Hyundai) arrayForFilter.push("Hyundai");
-    if (value.Nissan) arrayForFilter.push("Nissan");
-    setBrandsForFilter(arrayForFilter);
+    if (value.economic) arrayForFilter.push("Эконом");
+    if (value.premium) arrayForFilter.push("Премиум");
+    setCategoriesForFilter(arrayForFilter);
   };
   const onFilterReset = (resetForm) => {
-    setBrandsForFilter([]);
+    setCategoriesForFilter([]);
     resetForm();
   };
 
@@ -163,7 +149,7 @@ const DropdownFilter = ({ brandsForFilter, setBrandsForFilter }) => {
         type="button"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         className={`dropdown-icon ${
-          brandsForFilter.length !== 0 ? "dropdown-icon--active" : ""
+          categoriesForFilter.length !== 0 ? "dropdown-icon--active" : ""
         }`}
       >
         <FilterIcon />
@@ -177,14 +163,14 @@ const DropdownFilter = ({ brandsForFilter, setBrandsForFilter }) => {
                   <Checkbox
                     items={[
                       {
-                        label: "Hyundai",
-                        value: "Hyundai",
-                        checked: formik.values.Hyundai === true,
+                        label: "Эконом",
+                        value: "economic",
+                        checked: formik.values.economic === true,
                       },
                       {
-                        label: "Nissan",
-                        value: "Nissan",
-                        checked: formik.values.Nissan === true,
+                        label: "Премиум",
+                        value: "premium",
+                        checked: formik.values.premium === true,
                       },
                     ]}
                     direction="column"
@@ -195,7 +181,7 @@ const DropdownFilter = ({ brandsForFilter, setBrandsForFilter }) => {
                   <button
                     className="table-dropdown__reset-btn"
                     type="button"
-                    disabled={!formik.values.Hyundai && !formik.values.Nissan}
+                    disabled={!formik.values.economic && !formik.values.premium}
                     onClick={() => onFilterReset(formik.resetForm)}
                   >
                     Сбросить

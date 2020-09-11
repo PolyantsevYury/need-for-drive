@@ -53,29 +53,16 @@ export const setCurrentPage = (currentPage) => ({
   currentPage,
 });
 
-export const requestCarsPage = (
-  page,
-  pageSize,
-  brandsForFilter,
-  categoryForFilter
-) => async (dispatch) => {
+export const requestCarsPage = (page, pageSize, categoriesForFilter) => async (
+  dispatch
+) => {
   try {
     dispatch(toggleIsFetching(true));
     const result = await orderAPI.getCarsPage(
       page,
       pageSize,
-      brandsForFilter,
-      categoryForFilter
+      categoriesForFilter
     );
-    // Find car brands for further filtering
-    //
-    // const carBrandsForFiltering = [];
-    // result.data.data.map((model) => {
-    //   const modelBrand = model.name.split(",")[0];
-    //   if (carBrandsForFiltering.includes(modelBrand)) return false;
-    //   return carBrandsForFiltering.push(modelBrand);
-    // });
-    // console.log(carBrandsForFiltering);
     dispatch(setCars(result.data.data));
     dispatch(setTotalCarsCount(result.data.count));
     dispatch(toggleIsFetching(false));
