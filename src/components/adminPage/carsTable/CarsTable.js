@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./CarsTable.scss";
 import { Form, Formik } from "formik";
 import { connect } from "react-redux";
-import { Filter } from "../../common/forms/Forms";
+import classNames from "classnames";
 import FilterIcon from "../../common/icons/FilterIcon";
-import { Button } from "../../common/buttons/Buttons";
 import Paginator from "../../common/paginator/Paginator";
 import {
   requestCarsPage,
@@ -12,16 +11,6 @@ import {
 } from "../../../store/carstable-reducer";
 import { AdminPreloader } from "../../common/preloader/Preloader";
 import { Checkbox } from "../adminForms/AdminForms";
-
-const categoryOptions = [
-  { key: "Все категории", value: "Все категории" },
-  { key: "Эконом", value: "Эконом" },
-  { key: "Премиум", value: "Премиум" },
-];
-
-const initialValues = {
-  category: "Все категории",
-};
 
 const CarsTable = ({
   requestCarsPage,
@@ -37,47 +26,18 @@ const CarsTable = ({
     requestCarsPage(currentPage, pageSize, categoriesForFilter);
   }, [categoriesForFilter, currentPage, pageSize, requestCarsPage]);
 
-  const onFilterSubmit = (value) => {
-    setCategoriesForFilter(
-      value.brand !== "Все категории" ? [value.brand] : []
-    );
-  };
-  const onFilterReset = (resetForm) => {
-    setCategoriesForFilter([]);
-    resetForm();
-  };
-
   return (
     <>
       <h2 className="admin__title">Список авто</h2>
       <div className="admin__card cars-table">
         <div className="cars-table__header">
-          <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
-            {(formik) => {
-              return (
-                <Form className="cars-table__filter">
-                  <div className="cars-table__filter-items">
-                    <Filter name="category" options={categoryOptions} />
-                  </div>
-                  <div className="cars-table__filter-buttons">
-                    <div className="cars-table__filter-button">
-                      <Button type="submit" additionalStyles="button__admin">
-                        Применить
-                      </Button>
-                    </div>
-                    <div className="cars-table__filter-button">
-                      <Button
-                        onClick={() => onFilterReset(formik.resetForm)}
-                        additionalStyles="button__admin button__admin-delete"
-                      >
-                        Сбросить
-                      </Button>
-                    </div>
-                  </div>
-                </Form>
-              );
-            }}
-          </Formik>
+          <div className="cars-table__header-filter">
+            <Filter
+              categoriesForFilter={categoriesForFilter}
+              setCategoriesForFilter={setCategoriesForFilter}
+              withButton
+            />
+          </div>
         </div>
         <div className="cars-table__content">
           {isFetching ? (
@@ -89,7 +49,7 @@ const CarsTable = ({
                   <th scope="col">Модель</th>
                   <th scope="col">
                     Категория
-                    <DropdownFilter
+                    <Filter
                       categoriesForFilter={categoriesForFilter}
                       setCategoriesForFilter={setCategoriesForFilter}
                     />
@@ -126,7 +86,11 @@ const CarsTable = ({
   );
 };
 
-const DropdownFilter = ({ categoriesForFilter, setCategoriesForFilter }) => {
+const Filter = ({
+  categoriesForFilter,
+  setCategoriesForFilter,
+  withButton = false,
+}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const initialValues = {
     economic: categoriesForFilter.includes("Эконом"),
@@ -136,22 +100,27 @@ const DropdownFilter = ({ categoriesForFilter, setCategoriesForFilter }) => {
     const arrayForFilter = [];
     if (value.economic) arrayForFilter.push("Эконом");
     if (value.premium) arrayForFilter.push("Премиум");
+    setIsDropdownOpen(false);
     setCategoriesForFilter(arrayForFilter);
   };
   const onFilterReset = (resetForm) => {
     setCategoriesForFilter([]);
     resetForm();
+    setIsDropdownOpen(false);
   };
+  const dropdownIconStyles = classNames("dropdown-icon", {
+    "dropdown-icon--active": categoriesForFilter.length !== 0,
+    "dropdown-icon--with-button": withButton,
+  });
 
   return (
     <>
       <button
+        className={dropdownIconStyles}
         type="button"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        className={`dropdown-icon ${
-          categoriesForFilter.length !== 0 ? "dropdown-icon--active" : ""
-        }`}
       >
+        {withButton && "Категории"}
         <FilterIcon />
       </button>
       <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>

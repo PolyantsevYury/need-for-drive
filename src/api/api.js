@@ -27,9 +27,9 @@ const orderAPI = {
     //     return false;
     //   });
     // }
-    if (categoriesForFilter !== []) {
+    if (categoriesForFilter.length !== 0) {
       // eslint-disable-next-line no-console
-      console.log("Фильтрация по категории временно недоступна");
+      console.warn("Фильтрация по категории временно недоступна");
       // categoriesForFilter.forEach((category) => {requestUrl += `&categoryId.name=${category}`});
     }
     return instance.get(requestUrl);

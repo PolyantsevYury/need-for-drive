@@ -7,38 +7,19 @@
     padding: 7px;
   }
 
-  &__filter {
+  &__header-filter {
+    max-width: 300px;
+    margin: 0 auto;
     justify-content: space-between;
     display: none;
 
     @media (max-width: $max-mobile) {
       display: flex;
     }
-
-    @media (max-width: 600px) {
-      flex-direction: column;
-      align-items: center;
-    }
-  }
-
-  &__filter-items {
-    display: flex;
-
-    @media (max-width: 600px) {
-      margin-bottom: 7px;
-    }
-  }
-
-  &__filter-buttons {
-    display: flex;
-  }
-
-  &__filter-button {
-    margin-right: 9px;
   }
 
   &__content {
-    margin: 14px 0;
+    margin: 7px 0;
     display: flex;
     justify-content: center;
   }
@@ -80,38 +61,6 @@
 
   table th {
     font-size: 14px;
-
-    .dropdown-icon {
-      cursor: pointer;
-      background-color: #fff;
-      border: none;
-
-      &:focus,
-      &:hover {
-        outline: none;
-      }
-
-      svg {
-        fill: #bfbfbf;
-        width: 14px;
-        margin-left: 8px;
-        cursor: pointer;
-
-        &:hover {
-          fill: rgba(0,0,0,.4);
-        }
-      }
-
-      &--active {
-        svg {
-          fill: $clr-main-blue;
-
-          &:hover {
-            fill: #006DE3;
-          }
-        }
-      }
-    }
   }
 
   @media (max-width: $max-mobile) {
@@ -163,6 +112,47 @@
       font-weight: bold;
       color: $clr-blue-dark;
     }
+  }
+}
+
+.dropdown-icon {
+  cursor: pointer;
+  background-color: #fff;
+  border: none;
+
+  &:focus,
+  &:hover {
+    outline: none;
+  }
+
+  svg {
+    fill: #bfbfbf;
+    width: 14px;
+    margin-left: 8px;
+    cursor: pointer;
+
+    &:hover {
+      fill: rgba(0,0,0,.4);
+    }
+  }
+
+  &--active {
+    svg {
+      fill: $clr-main-blue;
+
+      &:hover {
+        fill: #006DE3;
+      }
+    }
+  }
+  &--with-button {
+    border: 1px solid #E1E5EB;
+    border-radius: 4px;
+    height: 28px;
+    color: #818EA3;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
   }
 }
 
