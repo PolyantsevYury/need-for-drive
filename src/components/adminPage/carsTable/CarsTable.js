@@ -114,7 +114,7 @@ const Filter = ({
   });
 
   return (
-    <>
+    <span className="dropdown-container">
       <button
         className={dropdownIconStyles}
         type="button"
@@ -164,7 +164,7 @@ const Filter = ({
           );
         }}
       </Formik>
-    </>
+    </span>
   );
 };
 
