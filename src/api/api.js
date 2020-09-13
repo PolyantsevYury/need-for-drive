@@ -19,18 +19,18 @@ const orderAPI = {
   getCars() {
     return instance.get(`db/car/`);
   },
-  getCarsPage(
-    currentPage = 1,
-    pageSize = 5,
-    brandForFilter,
-    categoryForFilter
-  ) {
-    let requestUrl = `db/car?page=${currentPage - 1}&limit=${pageSize}`;
-    if (brandForFilter && brandForFilter !== "Все модели") {
-      requestUrl += `&name[$regex]=.*${brandForFilter}.*`;
-    }
-    if (categoryForFilter && categoryForFilter !== "Все категории") {
-      // requestUrl += `&categoryId=${categoryForFilter}`;
+  getCarsPage(currentPage = 1, pageSize = 5, categoriesForFilter) {
+    const requestUrl = `db/car?page=${currentPage - 1}&limit=${pageSize}`;
+    // if (brandsForFilter !== []) {
+    //   brandsForFilter.map((brand) => {
+    //     requestUrl += `&name[$regex]=.*${brand}.*`;
+    //     return false;
+    //   });
+    // }
+    if (categoriesForFilter.length !== 0) {
+      // eslint-disable-next-line no-console
+      console.warn("Фильтрация по категории временно недоступна");
+      // categoriesForFilter.forEach((category) => {requestUrl += `&categoryId.name=${category}`});
     }
     return instance.get(requestUrl);
   },
@@ -42,6 +42,9 @@ const orderAPI = {
   },
   getOrder(orderId) {
     return instance.get(`db/order/${orderId}`);
+  },
+  getOrders() {
+    return instance.get(`db/order`);
   },
   getRate() {
     return instance.get(`db/rate/`);

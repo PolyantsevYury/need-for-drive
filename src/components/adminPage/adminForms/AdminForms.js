@@ -25,7 +25,7 @@ export const AdminRadio = ({ title, name, items, onChange }) => {
   );
 };
 
-export const Checkbox = ({ items, direction, onChange }) => {
+export const Checkbox = ({ items, direction, onChange, onColorChange }) => {
   const inputClass = classNames(s.checkbox, {
     [s.checkbox__column]: direction === "column",
   });
@@ -39,7 +39,9 @@ export const Checkbox = ({ items, direction, onChange }) => {
             value={item.value}
             id={item.value}
             checked={item.checked}
-            onChange={() => onChange(item.value)}
+            onChange={
+              onColorChange ? () => onColorChange(item.value) : onChange
+            }
           />
           <label htmlFor={item.value}>{item.label}</label>
         </div>
