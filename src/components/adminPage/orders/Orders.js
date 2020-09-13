@@ -3,7 +3,8 @@ import "./Orders.scss";
 import { Form, Formik } from "formik";
 import { connect } from "react-redux";
 import { Button } from "../../common/buttons/Buttons";
-import { Checkbox, Filter } from "../../common/forms/Forms";
+import { Filter } from "../../common/forms/Forms";
+import { Checkbox } from "../adminForms/AdminForms";
 import modelExample from "../../../assets/images/adminModel.png";
 import approveIcon from "../../../assets/images/icons/approve_icon.svg";
 import rejectIcon from "../../../assets/images/icons/reject_icon.svg";
@@ -78,10 +79,16 @@ const Orders = () => {
                   <span>ELANTRA</span> в <span>Ульяновск</span>, Нариманова 42
                 </p>
                 <p className="order__info-item">
-                  12.06.2019 12:00 — 13.06.2019 12:00
+                  <span>12.06.2019 12:00 — 13.06.2019 12:00</span>
                 </p>
                 <p className="order__info-item">
                   Цвет: <span>Голубой</span>
+                </p>
+                <p className="order__info-item">
+                  Дата создания: <span>10.06.2019</span>
+                </p>
+                <p className="order__info-item">
+                  Статус: <span>Подтвержден</span>
                 </p>
               </div>
             </div>
