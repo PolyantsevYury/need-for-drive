@@ -4,7 +4,7 @@ import orderAPI from "../api/api";
 const TOGGLE_IS_ORDERS_FETCHING = "TOGGLE_IS_ORDERS_FETCHING";
 const SET_ORDERS = "SET_ORDERS";
 const SET_TOTAL_ORDERS_COUNT = "SET_TOTAL_ORDERS_COUNT";
-const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+const SET_CURRENT_ORDERS_PAGE = "SET_CURRENT_ORDERS_PAGE";
 
 const initialState = {
   orders: null,
@@ -26,10 +26,10 @@ const ordersTableReducer = (state = initialState, action) => {
         ...state,
         isOrdersFetching: action.isOrdersFetching,
       };
-    case SET_CURRENT_PAGE:
+    case SET_CURRENT_ORDERS_PAGE:
       return {
         ...state,
-        currentPage: action.currentPage,
+        currentOrdersPage: action.currentOrdersPage,
       };
     case SET_TOTAL_ORDERS_COUNT: {
       return { ...state, totalOrdersCount: action.count };
@@ -48,9 +48,9 @@ export const setTotalOrdersCount = (totalOrdersCount) => ({
   type: SET_TOTAL_ORDERS_COUNT,
   count: totalOrdersCount,
 });
-export const setCurrentPage = (currentPage) => ({
-  type: SET_CURRENT_PAGE,
-  currentPage,
+export const setCurrentOrdersPage = (currentOrdersPage) => ({
+  type: SET_CURRENT_ORDERS_PAGE,
+  currentOrdersPage,
 });
 
 export const requestOrdersPage = (page, pageSize) => async (dispatch) => {
@@ -59,6 +59,7 @@ export const requestOrdersPage = (page, pageSize) => async (dispatch) => {
     dispatch(toggleIsOrdersFetching(true));
     const result = await orderAPI.getOrders(page, pageSize, basicToken);
     dispatch(setOrders(result.data.data));
+    dispatch(setTotalOrdersCount(result.data.count));
     dispatch(toggleIsOrdersFetching(false));
   } catch (e) {
     dispatch(toggleIsOrdersFetching(false));
