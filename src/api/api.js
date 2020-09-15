@@ -43,8 +43,12 @@ const orderAPI = {
   getOrder(orderId) {
     return instance.get(`db/order/${orderId}`);
   },
-  getOrders() {
-    return instance.get(`db/order`);
+  getOrders(currentPage = 1, pageSize = 3, basicToken) {
+    return instance.get(`db/order?page=${currentPage - 1}&limit=${pageSize}`, {
+      headers: {
+        Authorization: `Bearer ${basicToken}`,
+      },
+    });
   },
   getRate() {
     return instance.get(`db/rate/`);

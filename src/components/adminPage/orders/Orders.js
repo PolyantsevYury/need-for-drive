@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Orders.scss";
 import { Form, Formik } from "formik";
 import { connect } from "react-redux";
@@ -10,6 +10,7 @@ import approveIcon from "../../../assets/images/icons/approve_icon.svg";
 import rejectIcon from "../../../assets/images/icons/reject_icon.svg";
 import editIcon from "../../../assets/images/icons/edit_icon.svg";
 import Paginator from "../../common/paginator/Paginator";
+import { requestOrdersPage } from "../../../store/orderstable-reducer";
 
 const periodOptions = [
   { key: "За год", value: "year" },
@@ -40,8 +41,13 @@ const initialValues = {
   status: "process",
 };
 
-const Orders = () => {
+const Orders = ({ requestOrdersPage }) => {
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    requestOrdersPage();
+  }, [requestOrdersPage]);
+
   // eslint-disable-next-line no-console
   const onFilterSubmit = (value) => console.log(value);
   // eslint-disable-next-line no-console
@@ -146,7 +152,7 @@ const Orders = () => {
 };
 
 const mapStateToProps = (state) => ({
-  orders: state.carsTable.finishedOrdersData,
+  orders: state.ordersTable.orders,
 });
 
-export default connect(mapStateToProps, {})(Orders);
+export default connect(mapStateToProps, { requestOrdersPage })(Orders);

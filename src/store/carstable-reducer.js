@@ -16,15 +16,15 @@ const initialState = {
 
 const carsTableReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TOGGLE_IS_FETCHING:
-      return {
-        ...state,
-        isFetching: action.isFetching,
-      };
     case SET_CARS:
       return {
         ...state,
         cars: action.cars,
+      };
+    case TOGGLE_IS_FETCHING:
+      return {
+        ...state,
+        isFetching: action.isFetching,
       };
     case SET_CURRENT_PAGE:
       return {
