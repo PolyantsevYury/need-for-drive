@@ -3,13 +3,13 @@ import orderAPI from "../api/api";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 const SET_CARS = "SET_CARS";
 const SET_TOTAL_CARS_COUNT = "SET_TOTAL_CARS_COUNT";
-const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+const SET_CURRENT_CARS_PAGE = "SET_CURRENT_CARS_PAGE";
 
 const initialState = {
   cars: [],
-  pageSize: 5,
+  carsPageSize: 5,
   totalCarsCount: 0,
-  currentPage: 1,
+  currentCarsPage: 1,
   isFetching: false,
   carBrandsForFiltering: [],
 };
@@ -26,10 +26,10 @@ const carsTableReducer = (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
       };
-    case SET_CURRENT_PAGE:
+    case SET_CURRENT_CARS_PAGE:
       return {
         ...state,
-        currentPage: action.currentPage,
+        currentCarsPage: action.currentCarsPage,
       };
     case SET_TOTAL_CARS_COUNT: {
       return { ...state, totalCarsCount: action.count };
@@ -48,9 +48,9 @@ export const setTotalCarsCount = (totalCarsCount) => ({
   type: SET_TOTAL_CARS_COUNT,
   count: totalCarsCount,
 });
-export const setCurrentPage = (currentPage) => ({
-  type: SET_CURRENT_PAGE,
-  currentPage,
+export const setCurrentCarsPage = (currentCarsPage) => ({
+  type: SET_CURRENT_CARS_PAGE,
+  currentCarsPage,
 });
 
 export const requestCarsPage = (page, pageSize, categoriesForFilter) => async (

@@ -7,7 +7,7 @@ import FilterIcon from "../../common/icons/FilterIcon";
 import Paginator from "../../common/paginator/Paginator";
 import {
   requestCarsPage,
-  setCurrentPage,
+  setCurrentCarsPage,
 } from "../../../store/carstable-reducer";
 import { AdminPreloader } from "../../common/preloader/Preloader";
 import { Checkbox } from "../adminForms/AdminForms";
@@ -19,7 +19,7 @@ const CarsTable = ({
   pageSize,
   currentPage,
   totalCarsCount,
-  setCurrentPage,
+  setCurrentCarsPage,
 }) => {
   const [categoriesForFilter, setCategoriesForFilter] = useState([]);
   useEffect(() => {
@@ -76,7 +76,7 @@ const CarsTable = ({
         <div className="cars-table__footer">
           <Paginator
             currentPage={currentPage}
-            onPageChanged={(p) => setCurrentPage(p)}
+            onPageChanged={(p) => setCurrentCarsPage(p)}
             totalItemsCount={totalCarsCount}
             pageSize={pageSize}
           />
@@ -171,11 +171,12 @@ const Filter = ({
 const mapStateToProps = (state) => ({
   cars: state.carsTable.cars,
   isFetching: state.carsTable.isFetching,
-  pageSize: state.carsTable.pageSize,
-  currentPage: state.carsTable.currentPage,
+  pageSize: state.carsTable.carsPageSize,
+  currentPage: state.carsTable.currentCarsPage,
   totalCarsCount: state.carsTable.totalCarsCount,
 });
 
-export default connect(mapStateToProps, { requestCarsPage, setCurrentPage })(
-  CarsTable
-);
+export default connect(mapStateToProps, {
+  requestCarsPage,
+  setCurrentCarsPage,
+})(CarsTable);

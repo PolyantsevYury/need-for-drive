@@ -8,9 +8,9 @@ const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 
 const initialState = {
   orders: null,
-  pageSize: 3,
+  ordersPageSize: 3,
   totalOrdersCount: 0,
-  currentPage: 1,
+  currentOrdersPage: 1,
   isOrdersFetching: false,
 };
 
