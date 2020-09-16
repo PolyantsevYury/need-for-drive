@@ -1,14 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./CarSetting.scss";
 import { Field, Form, Formik } from "formik";
 import { Button } from "../../common/buttons/Buttons";
 import { Text } from "../../common/forms/Forms";
 import modelExample from "../../../assets/images/car-placeholder.png";
-import progressBar from "../../../assets/images/progressBar.png";
 import PlusIcon from "../../common/icons/Plus";
 import { AdminRadio, Checkbox } from "../adminForms/AdminForms";
 
 const CarSetting = () => {
+  const [completedFields, setCompletedFields] = React.useState({
+    photo: false,
+    description: false,
+    model: false,
+    color: false,
+  });
+  const [progress, setProgress] = React.useState(0);
+  useEffect(() => {
+    let newProgress = 0;
+    const fields = Object.values(completedFields);
+    fields.forEach((field) => {
+      if (field) {
+        newProgress += 100 / fields.length;
+      }
+    });
+    setProgress(newProgress);
+  }, [completedFields]);
   const initialValues = {
     model: "",
     category: "Эконом",
@@ -29,6 +45,10 @@ const CarSetting = () => {
       value: formik.values.color.toLowerCase(),
       checked: true,
     });
+    setCompletedFields({
+      ...completedFields,
+      color: true,
+    });
     formik.setValues({
       ...formik.values,
       color: "",
@@ -42,6 +62,12 @@ const CarSetting = () => {
       ...formik.values,
       addedColors: newColors,
     });
+    if (newColors.length === 0) {
+      setCompletedFields({
+        ...completedFields,
+        color: false,
+      });
+    }
   };
   // eslint-disable-next-line no-console
   const onSubmit = (value) => console.log(value);
@@ -79,6 +105,10 @@ const CarSetting = () => {
                               ...formik.values,
                               photo: e.target.files[0],
                             });
+                            setCompletedFields({
+                              ...completedFields,
+                              photo: !!e.target.files[0],
+                            });
                           }}
                         />
                         <span className="file-custom" />
@@ -86,15 +116,18 @@ const CarSetting = () => {
                     </div>
                   </div>
                   <div className="info-card__progress">
-                    <div className="info-card__progress-title">
-                      <h4>Заполнено</h4>
-                      <span>74%</span>
+                    <h4 className="info-card__progress-title">Заполнено</h4>
+                    <div className="info-card__progress-bar">
+                      <div
+                        className="info-card__progress-bar--done"
+                        style={{
+                          opacity: `${progress ? 1 : 0}`,
+                          width: `${progress}%`,
+                        }}
+                      >
+                        {progress}%
+                      </div>
                     </div>
-                    <img
-                      className="info-card__progress-bar"
-                      src={progressBar}
-                      alt=""
-                    />
                   </div>
                   <div className="info-card__description">
                     <h4 className="info-card__description-title">Описание</h4>
@@ -103,6 +136,12 @@ const CarSetting = () => {
                         as="textarea"
                         id="description"
                         name="description"
+                        onKeyUp={() =>
+                          setCompletedFields({
+                            ...completedFields,
+                            description: !!formik.values.description,
+                          })
+                        }
                       />
                     </div>
                   </div>
@@ -117,6 +156,12 @@ const CarSetting = () => {
                             name="model"
                             title="Модель автомобиля"
                             type="text"
+                            onKeyUp={() =>
+                              setCompletedFields({
+                                ...completedFields,
+                                model: !!formik.values.model,
+                              })
+                            }
                           />
                         </div>
                         <div className="form-card__form-item">

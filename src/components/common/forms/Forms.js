@@ -241,7 +241,7 @@ export const DateForm = ({ items, formik }) => {
   );
 };
 
-export const Text = ({ name, title, placeholder, type }) => {
+export const Text = ({ name, title, placeholder, type, onKeyUp }) => {
   return (
     <div className="admin-text-input">
       <span className="admin-text-input__title">{title}</span>
@@ -252,6 +252,7 @@ export const Text = ({ name, title, placeholder, type }) => {
         name={name}
         type={type}
         placeholder={placeholder}
+        onKeyUp={onKeyUp}
       />
       <div className="error-message">
         <ErrorMessage name={name} />
