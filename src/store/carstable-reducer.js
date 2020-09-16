@@ -53,7 +53,7 @@ export const setCurrentCarsPage = (currentCarsPage) => ({
   currentCarsPage,
 });
 
-export const requestCarsPage = (page, pageSize, categoriesForFilter) => async (
+export const requestCarsPage = (page, pageSize, filteredCategories) => async (
   dispatch
 ) => {
   try {
@@ -61,7 +61,7 @@ export const requestCarsPage = (page, pageSize, categoriesForFilter) => async (
     const result = await orderAPI.getCarsPage(
       page,
       pageSize,
-      categoriesForFilter
+      filteredCategories
     );
     dispatch(setCars(result.data.data));
     dispatch(setTotalCarsCount(result.data.count));

@@ -21,10 +21,10 @@ const CarsTable = ({
   totalCarsCount,
   setCurrentCarsPage,
 }) => {
-  const [categoriesForFilter, setCategoriesForFilter] = useState([]);
+  const [filteredCategories, setFilteredCategories] = useState([]);
   useEffect(() => {
-    requestCarsPage(currentPage, pageSize, categoriesForFilter);
-  }, [categoriesForFilter, currentPage, pageSize, requestCarsPage]);
+    requestCarsPage(currentPage, pageSize, filteredCategories);
+  }, [currentPage, filteredCategories, pageSize, requestCarsPage]);
 
   return (
     <>
@@ -33,8 +33,8 @@ const CarsTable = ({
         <div className="cars-table__header">
           <div className="cars-table__header-filter">
             <Filter
-              categoriesForFilter={categoriesForFilter}
-              setCategoriesForFilter={setCategoriesForFilter}
+              filteredItems={filteredCategories}
+              setFilteredItems={setFilteredCategories}
               withButton
             />
           </div>
@@ -50,8 +50,8 @@ const CarsTable = ({
                   <th scope="col">
                     Категория
                     <Filter
-                      categoriesForFilter={categoriesForFilter}
-                      setCategoriesForFilter={setCategoriesForFilter}
+                      filteredItems={filteredCategories}
+                      setFilteredItems={setFilteredCategories}
                     />
                   </th>
                   <th scope="col">Цвет</th>
@@ -86,30 +86,26 @@ const CarsTable = ({
   );
 };
 
-const Filter = ({
-  categoriesForFilter,
-  setCategoriesForFilter,
-  withButton = false,
-}) => {
+const Filter = ({ filteredItems, setFilteredItems, withButton = false }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const initialValues = {
-    economic: categoriesForFilter.includes("Эконом"),
-    premium: categoriesForFilter.includes("Премиум"),
+    economic: filteredItems.includes("Эконом"),
+    premium: filteredItems.includes("Премиум"),
   };
   const onFilterSubmit = (value) => {
     const arrayForFilter = [];
     if (value.economic) arrayForFilter.push("Эконом");
     if (value.premium) arrayForFilter.push("Премиум");
     setIsDropdownOpen(false);
-    setCategoriesForFilter(arrayForFilter);
+    setFilteredItems(arrayForFilter);
   };
   const onFilterReset = (resetForm) => {
-    setCategoriesForFilter([]);
+    setFilteredItems([]);
     resetForm();
     setIsDropdownOpen(false);
   };
   const dropdownIconStyles = classNames("dropdown-icon", {
-    "dropdown-icon--active": categoriesForFilter.length !== 0,
+    "dropdown-icon--active": filteredItems.length !== 0,
     "dropdown-icon--with-button": withButton,
   });
 

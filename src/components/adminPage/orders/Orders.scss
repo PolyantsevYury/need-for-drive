@@ -70,8 +70,12 @@
   .order {
     display: flex;
     padding: 14px;
-    border: 1px solid #F5F6F8;
+    border-top: 1px solid #F5F6F8;
     border-collapse: collapse;
+
+    &:last-child {
+      border-bottom: 1px solid #F5F6F8;
+    }
 
     @media (max-width: $max-mobile) {
       padding: 8px;

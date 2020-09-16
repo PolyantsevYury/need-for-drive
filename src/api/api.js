@@ -19,7 +19,7 @@ const orderAPI = {
   getCars() {
     return instance.get(`db/car/`);
   },
-  getCarsPage(currentPage = 1, pageSize = 5, categoriesForFilter) {
+  getCarsPage(currentPage = 1, pageSize = 5, filteredCategories) {
     const requestUrl = `db/car?page=${currentPage - 1}&limit=${pageSize}`;
     // if (brandsForFilter !== []) {
     //   brandsForFilter.map((brand) => {
@@ -27,7 +27,7 @@ const orderAPI = {
     //     return false;
     //   });
     // }
-    if (categoriesForFilter.length !== 0) {
+    if (filteredCategories.length !== 0) {
       // eslint-disable-next-line no-console
       console.warn("Фильтрация по категории временно недоступна");
       // categoriesForFilter.forEach((category) => {requestUrl += `&categoryId.name=${category}`});
