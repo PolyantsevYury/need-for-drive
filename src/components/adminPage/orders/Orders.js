@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { Button } from "../../common/buttons/Buttons";
 import { Filter } from "../../common/forms/Forms";
 import { Checkbox } from "../adminForms/AdminForms";
-import modelExample from "../../../assets/images/adminModel.png";
 import approveIcon from "../../../assets/images/icons/approve_icon.svg";
 import rejectIcon from "../../../assets/images/icons/reject_icon.svg";
 import editIcon from "../../../assets/images/icons/edit_icon.svg";
@@ -55,13 +54,33 @@ const Orders = ({
   totalOrdersCount,
 }) => {
   useEffect(() => {
-    requestOrdersPage();
-  }, [requestOrdersPage]);
+    requestOrdersPage(currentPage, pageSize);
+  }, [currentPage, pageSize, requestOrdersPage]);
 
   // eslint-disable-next-line no-console
   const onFilterSubmit = (value) => console.log(value);
   // eslint-disable-next-line no-console
   const onCheck = () => console.log("Check");
+
+  const convertDate = (date) => {
+    const newDate = new Date(date);
+    return `${newDate.getDate()}.${newDate.getMonth()}.${newDate.getFullYear()} ${newDate.getHours()}:00`;
+  };
+
+  const translateStatus = (status) => {
+    switch (status) {
+      case "cancelled":
+        return "Отменен";
+      case "confirmed":
+        return "Подтвержден";
+      case "issued":
+        return "Рассматривается";
+      case "new":
+        return "Новый";
+      default:
+        return "Новый";
+    }
+  };
 
   return (
     <>
@@ -90,66 +109,88 @@ const Orders = ({
           {isFetching ? (
             <AdminPreloader />
           ) : (
-            <div className="order">
-              <div className="order__model">
-                <img className="order__img" src={modelExample} alt="" />
-                <div className="order__info">
-                  <p className="order__info-item">
-                    <span>ELANTRA</span> в <span>Ульяновск</span>, Нариманова 42
-                  </p>
-                  <p className="order__info-item">
-                    <span>12.06.2019 12:00 — 13.06.2019 12:00</span>
-                  </p>
-                  <p className="order__info-item">
-                    Цвет: <span>Голубой</span>
-                  </p>
-                  <p className="order__info-item">
-                    Дата создания: <span>10.06.2019</span>
-                  </p>
-                  <p className="order__info-item">
-                    Статус: <span>Подтвержден</span>
-                  </p>
+            orders.map((order) => {
+              const dateFrom = convertDate(order?.dateFrom);
+              const dateTo = convertDate(order?.dateTo);
+              const createdDate = convertDate(order?.createdAt);
+              const translatedStatus = translateStatus(
+                order?.orderStatusId?.name
+              );
+              return (
+                <div className="order" key={order.id}>
+                  <div className="order__model">
+                    <img
+                      className="order__img"
+                      crossOrigin="anonymous"
+                      referrerPolicy="origin"
+                      src={`https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/${order.carId?.thumbnail?.path}`}
+                      alt=""
+                    />
+                    <div className="order__info">
+                      <p className="order__info-item">
+                        <span>{order.carId.name}</span> в
+                        <span> {order.cityId.name}</span>,{" "}
+                        {order.pointId.address}
+                      </p>
+                      <p className="order__info-item">
+                        <span>
+                          {dateFrom} — {dateTo}
+                        </span>
+                      </p>
+                      <p className="order__info-item">
+                        Цвет: <span>{order.color}</span>
+                      </p>
+                      <p className="order__info-item">
+                        Дата создания: <span>{createdDate}</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div className="order__options">
+                    <Checkbox
+                      direction="column"
+                      items={[
+                        {
+                          label: "Полный бак",
+                          value: "fullFuel",
+                          checked: order.isFullTank,
+                        },
+                        {
+                          label: "Детское кресло",
+                          value: "childSeat",
+                          checked: order.isNeedChildChair,
+                        },
+                        {
+                          label: "Правый руль",
+                          value: "rightHand",
+                          checked: order.isRightWheel,
+                        },
+                      ]}
+                      onChange={onCheck}
+                    />
+                    <div className="order__price-container">
+                      <div className="order__status-text">
+                        Статус: <p>{translatedStatus}</p>
+                      </div>
+                      <div className="order__price">{order.price || 0} ₽</div>
+                    </div>
+                  </div>
+                  <div className="order__actions">
+                    <button className="order__approve-btn" type="button">
+                      <img src={approveIcon} alt=" " />
+                      Готово
+                    </button>
+                    <button className="order__reject-btn" type="button">
+                      <img src={rejectIcon} alt=" " />
+                      Отмена
+                    </button>
+                    <button className="order__edit-btn" type="button">
+                      <img src={editIcon} alt=" " />
+                      Изменить
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div className="order__options">
-                <Checkbox
-                  direction="column"
-                  items={[
-                    {
-                      label: "Полный бак",
-                      value: "fullFuel",
-                      checked: true,
-                    },
-                    {
-                      label: "Детское кресло",
-                      value: "childSeat",
-                      checked: false,
-                    },
-                    {
-                      label: "Правый руль",
-                      value: "rightHand",
-                      checked: true,
-                    },
-                  ]}
-                  onChange={onCheck}
-                />
-                <div className="order__price">4 300 ₽</div>
-              </div>
-              <div className="order__actions">
-                <button className="order__approve-btn" type="button">
-                  <img src={approveIcon} alt=" " />
-                  Готово
-                </button>
-                <button className="order__reject-btn" type="button">
-                  <img src={rejectIcon} alt=" " />
-                  Отмена
-                </button>
-                <button className="order__edit-btn" type="button">
-                  <img src={editIcon} alt=" " />
-                  Изменить
-                </button>
-              </div>
-            </div>
+              );
+            })
           )}
         </div>
         <div className="orders__footer">

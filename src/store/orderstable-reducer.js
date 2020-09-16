@@ -11,7 +11,7 @@ const initialState = {
   ordersPageSize: 3,
   totalOrdersCount: 0,
   currentOrdersPage: 1,
-  isOrdersFetching: false,
+  isOrdersFetching: true,
 };
 
 const ordersTableReducer = (state = initialState, action) => {
