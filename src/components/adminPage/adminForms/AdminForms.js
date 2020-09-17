@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
+import { Form, Formik } from "formik";
 import s from "./AdminForms.module.scss";
+import FilterIcon from "../../common/icons/FilterIcon";
 
 export const AdminRadio = ({ title, name, items, onChange }) => {
   return (
@@ -47,5 +49,88 @@ export const Checkbox = ({ items, direction, onChange, onColorChange }) => {
         </div>
       ))}
     </div>
+  );
+};
+
+export const DropdownCheckbox = ({
+  checkboxItems,
+  filteredItems,
+  setFilteredItems,
+  dropdownButton = false,
+}) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const initialValues = {};
+  checkboxItems.forEach((item) => {
+    initialValues[item.value] = filteredItems.includes(item.label);
+  });
+
+  const onFilterSubmit = (value) => {
+    const arrayForFilter = [];
+    // if value is checked, add appropriate label (from checkboxItems) to arrayForFilter
+    checkboxItems.forEach((item) => {
+      if (value[item.value]) {
+        arrayForFilter.push(item.label);
+      }
+    });
+    setIsDropdownOpen(false);
+    setFilteredItems(arrayForFilter);
+  };
+  const onFilterReset = (resetForm) => {
+    setFilteredItems([]);
+    resetForm();
+    setIsDropdownOpen(false);
+  };
+  const dropdownIconStyles = classNames([s.dropdownIcon], {
+    [s.active]: filteredItems.length !== 0,
+    [s.withButton]: dropdownButton,
+  });
+
+  return (
+    <span className={s.dropdownContainer}>
+      <button
+        className={dropdownIconStyles}
+        type="button"
+        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+      >
+        {dropdownButton}
+        <FilterIcon />
+      </button>
+      <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
+        {(formik) => {
+          return (
+            isDropdownOpen && (
+              <Form className={s.dropdown}>
+                <div className={s.dropdownContent}>
+                  <Checkbox
+                    items={checkboxItems.map((item) => {
+                      return {
+                        label: item.label,
+                        value: item.value,
+                        checked: formik.values[item.value] === true,
+                      };
+                    })}
+                    direction="column"
+                    onChange={formik.handleChange}
+                  />
+                </div>
+                <div className={s.dropdownFooter}>
+                  <button
+                    className={s.dropdownResetBtn}
+                    type="button"
+                    disabled={!formik.values.economic && !formik.values.premium}
+                    onClick={() => onFilterReset(formik.resetForm)}
+                  >
+                    Сбросить
+                  </button>
+                  <button className={s.dropdownSubmitBtn} type="submit">
+                    ОК
+                  </button>
+                </div>
+              </Form>
+            )
+          );
+        }}
+      </Formik>
+    </span>
   );
 };

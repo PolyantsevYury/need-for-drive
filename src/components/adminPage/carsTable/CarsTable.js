@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./CarsTable.scss";
-import { Form, Formik } from "formik";
 import { connect } from "react-redux";
-import classNames from "classnames";
-import FilterIcon from "../../common/icons/FilterIcon";
 import Paginator from "../../common/paginator/Paginator";
 import {
   requestCarsPage,
   setCurrentCarsPage,
 } from "../../../store/carstable-reducer";
 import { AdminPreloader } from "../../common/preloader/Preloader";
-import { Checkbox } from "../adminForms/AdminForms";
+import { DropdownCheckbox } from "../adminForms/AdminForms";
+
+const checkboxItems = [
+  { label: "Эконом", value: "economic" },
+  { label: "Премиум", value: "premium" },
+];
 
 const CarsTable = ({
   requestCarsPage,
@@ -32,10 +34,11 @@ const CarsTable = ({
       <div className="admin__card cars-table">
         <div className="cars-table__header">
           <div className="cars-table__header-filter">
-            <Filter
+            <DropdownCheckbox
+              checkboxItems={checkboxItems}
               filteredItems={filteredCategories}
               setFilteredItems={setFilteredCategories}
-              withButton
+              dropdownButton="Категории"
             />
           </div>
         </div>
@@ -49,7 +52,8 @@ const CarsTable = ({
                   <th scope="col">Модель</th>
                   <th scope="col">
                     Категория
-                    <Filter
+                    <DropdownCheckbox
+                      checkboxItems={checkboxItems}
                       filteredItems={filteredCategories}
                       setFilteredItems={setFilteredCategories}
                     />
@@ -83,84 +87,6 @@ const CarsTable = ({
         </div>
       </div>
     </>
-  );
-};
-
-const Filter = ({ filteredItems, setFilteredItems, withButton = false }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const initialValues = {
-    economic: filteredItems.includes("Эконом"),
-    premium: filteredItems.includes("Премиум"),
-  };
-  const onFilterSubmit = (value) => {
-    const arrayForFilter = [];
-    if (value.economic) arrayForFilter.push("Эконом");
-    if (value.premium) arrayForFilter.push("Премиум");
-    setIsDropdownOpen(false);
-    setFilteredItems(arrayForFilter);
-  };
-  const onFilterReset = (resetForm) => {
-    setFilteredItems([]);
-    resetForm();
-    setIsDropdownOpen(false);
-  };
-  const dropdownIconStyles = classNames("dropdown-icon", {
-    "dropdown-icon--active": filteredItems.length !== 0,
-    "dropdown-icon--with-button": withButton,
-  });
-
-  return (
-    <span className="dropdown-container">
-      <button
-        className={dropdownIconStyles}
-        type="button"
-        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-      >
-        {withButton && "Категории"}
-        <FilterIcon />
-      </button>
-      <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
-        {(formik) => {
-          return (
-            isDropdownOpen && (
-              <Form className="table-dropdown">
-                <div className="table-dropdown__content">
-                  <Checkbox
-                    items={[
-                      {
-                        label: "Эконом",
-                        value: "economic",
-                        checked: formik.values.economic === true,
-                      },
-                      {
-                        label: "Премиум",
-                        value: "premium",
-                        checked: formik.values.premium === true,
-                      },
-                    ]}
-                    direction="column"
-                    onChange={formik.handleChange}
-                  />
-                </div>
-                <div className="table-dropdown__footer">
-                  <button
-                    className="table-dropdown__reset-btn"
-                    type="button"
-                    disabled={!formik.values.economic && !formik.values.premium}
-                    onClick={() => onFilterReset(formik.resetForm)}
-                  >
-                    Сбросить
-                  </button>
-                  <button className="table-dropdown__submit-btn" type="submit">
-                    ОК
-                  </button>
-                </div>
-              </Form>
-            )
-          );
-        }}
-      </Formik>
-    </span>
   );
 };
 
