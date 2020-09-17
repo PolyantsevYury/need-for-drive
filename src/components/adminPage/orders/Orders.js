@@ -1,10 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Orders.scss";
-import { Form, Formik } from "formik";
 import { connect } from "react-redux";
-import { Button } from "../../common/buttons/Buttons";
-import { Filter } from "../../common/forms/Forms";
-import { Checkbox } from "../adminForms/AdminForms";
+import { Checkbox, DropdownCheckbox } from "../adminForms/AdminForms";
 import approveIcon from "../../../assets/images/icons/approve_icon.svg";
 import rejectIcon from "../../../assets/images/icons/reject_icon.svg";
 import editIcon from "../../../assets/images/icons/edit_icon.svg";
@@ -15,34 +12,17 @@ import {
 } from "../../../store/orderstable-reducer";
 import { AdminPreloader } from "../../common/preloader/Preloader";
 
-const periodOptions = [
-  { key: "За год", value: "year" },
-  { key: "За месяц", value: "month" },
-  { key: "За неделю", value: "week" },
-  { key: "За день", value: "day" },
+const checkboxCitiesItems = [
+  { label: "Ульяновск", value: "ulyanovsk" },
+  { label: "Саранск", value: "saransk" },
+  { label: "Самара", value: "samara" },
+  { label: "Краснодар", value: "krasnodar" },
 ];
-const modelOptions = [
-  { key: "Все модели", value: "all" },
-  { key: "Elantra", value: "Elantra" },
-  { key: "Tucson", value: "Tucson" },
-  { key: "Solaris", value: "Solaris" },
+
+const checkboxStatusesItems = [
+  { label: "В процессе", value: "process" },
+  { label: "Завершенные", value: "finished" },
 ];
-const cityOptions = [
-  { key: "Ульяновск", value: "Ульяновск" },
-  { key: "Саранск", value: "Саранск" },
-  { key: "Самара", value: "Самара" },
-  { key: "Краснодар", value: "Краснодар" },
-];
-const statusOptions = [
-  { key: "В процессе", value: "process" },
-  { key: "Завершенные", value: "finished" },
-];
-const initialValues = {
-  period: "week",
-  model: "all",
-  city: "Ульяновск",
-  status: "process",
-};
 
 const Orders = ({
   orders,
@@ -53,14 +33,11 @@ const Orders = ({
   setCurrentOrdersPage,
   totalOrdersCount,
 }) => {
+  const [filteredCities, setFilteredCities] = useState([]);
+  const [filteredStatuses, setFilteredStatuses] = useState([]);
   useEffect(() => {
     requestOrdersPage(currentPage, pageSize);
   }, [currentPage, pageSize, requestOrdersPage]);
-
-  // eslint-disable-next-line no-console
-  const onFilterSubmit = (value) => console.log(value);
-  // eslint-disable-next-line no-console
-  const onCheck = () => console.log("Check");
 
   const convertDate = (date) => {
     const newDate = new Date(date);
@@ -87,23 +64,18 @@ const Orders = ({
       <h2 className="admin__title">Заказы</h2>
       <div className="admin__card orders">
         <div className="orders__header">
-          <Formik initialValues={initialValues} onSubmit={onFilterSubmit}>
-            <Form className="orders__filter">
-              <div className="orders__filter-items">
-                <div className="orders__container">
-                  <Filter name="period" options={periodOptions} />
-                  <Filter name="model" options={modelOptions} />
-                </div>
-                <div className="orders__container">
-                  <Filter name="city" options={cityOptions} />
-                  <Filter name="status" options={statusOptions} />
-                </div>
-              </div>
-              <div className="orders__filter-btn">
-                <Button additionalStyles="button__admin">Применить</Button>
-              </div>
-            </Form>
-          </Formik>
+          <DropdownCheckbox
+            checkboxItems={checkboxCitiesItems}
+            filteredItems={filteredCities}
+            setFilteredItems={setFilteredCities}
+            dropdownButton="Города"
+          />
+          <DropdownCheckbox
+            checkboxItems={checkboxStatusesItems}
+            filteredItems={filteredStatuses}
+            setFilteredItems={setFilteredStatuses}
+            dropdownButton="Статус"
+          />
         </div>
         <div className="orders__content">
           {isFetching ? (
@@ -165,7 +137,7 @@ const Orders = ({
                           checked: order.isRightWheel,
                         },
                       ]}
-                      onChange={onCheck}
+                      onChange={() => {}}
                     />
                     <div className="order__price-container">
                       <div className="order__status-text">

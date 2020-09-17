@@ -164,6 +164,14 @@
   position: relative;
 }
 
+.dropdownContainer + .dropdownContainer {
+  margin-left: 14px;
+
+  @media (max-width: $max-mobile) {
+    margin-left: 7px;
+  }
+}
+
 .dropdownIcon {
   cursor: pointer;
   background-color: #fff;
