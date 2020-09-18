@@ -86,7 +86,7 @@ const Orders = ({
               const dateTo = convertDate(order?.dateTo);
               const createdDate = convertDate(order?.createdAt);
               const translatedStatus = translateStatus(
-                order?.orderStatusId?.name
+                order.orderStatusId?.name
               );
               return (
                 <div className="order" key={order.id}>
@@ -100,9 +100,9 @@ const Orders = ({
                     />
                     <div className="order__info">
                       <p className="order__info-item">
-                        <span>{order.carId.name}</span> в
-                        <span> {order.cityId.name}</span>,{" "}
-                        {order.pointId.address}
+                        <span>{order.carId?.name}</span> в
+                        <span> {order.cityId?.name}</span>,{" "}
+                        {order.pointId?.address}
                       </p>
                       <p className="order__info-item">
                         <span>
