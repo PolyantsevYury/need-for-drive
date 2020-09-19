@@ -2,7 +2,6 @@ import React from "react";
 import { Form, Formik } from "formik";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import Cookies from "js-cookie";
 import * as Yup from "yup";
 import Logo from "../../assets/images/loginLogo.svg";
 import "./Login.scss";
@@ -20,9 +19,8 @@ const validationSchema = Yup.object({
   password: Yup.string().required("Пожалуйста введите пароль"),
 });
 
-const Login = ({ isAuthInProgress, isAuthFailed, logIn }) => {
-  const accessToken = Cookies.get("access_token");
-  if (accessToken) return <Redirect to="/admin/orders" />;
+const Login = ({ isAuth, isAuthInProgress, isAuthFailed, logIn }) => {
+  if (isAuth === true) return <Redirect to="/admin/orders" />;
 
   const onLoginSubmit = (userData) => {
     logIn(userData);
@@ -73,6 +71,7 @@ const Login = ({ isAuthInProgress, isAuthFailed, logIn }) => {
 };
 
 const mapStateToProps = (state) => ({
+  isAuth: state.auth.isAuth,
   isAuthInProgress: state.auth.isAuthInProgress,
   isAuthFailed: state.auth.isAuthFailed,
 });

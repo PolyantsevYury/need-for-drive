@@ -1,17 +1,12 @@
 import React, { useState } from "react";
-import Cookies from "js-cookie";
 import SearchIcon from "../../assets/images/icons/search_icon.svg";
 import NotificationsIcon from "../../assets/images/icons/notifications_icon.svg";
 import UserImg from "../../assets/images/user-img.png";
 import LogoutIcon from "../../assets/images/icons/logout_icon.png";
 import Dropdown from "../common/icons/Dropdown";
 
-const Header = ({ setIsTokenValid }) => {
+const Header = ({ logOut }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const logout = () => {
-    Cookies.remove("access_token");
-    setIsTokenValid(false);
-  };
 
   return (
     <div className="admin-header">
@@ -41,7 +36,7 @@ const Header = ({ setIsTokenValid }) => {
           <div className="dropdown">
             <button
               type="button"
-              onClick={() => logout()}
+              onClick={() => logOut()}
               className="dropdown__logout-btn"
             >
               <img src={LogoutIcon} alt="" />

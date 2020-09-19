@@ -71,9 +71,17 @@ const orderAPI = {
       },
     });
   },
+  postRefreshToken(orderBody, basicToken) {
+    return instance.post(`auth/refresh`, orderBody, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Basic ${basicToken}`,
+      },
+    });
+  },
   postLogOut(accessToken) {
     return instance.post(
-      `auth/login`,
+      `auth/logout`,
       {},
       {
         headers: {
