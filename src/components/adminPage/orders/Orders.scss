@@ -5,12 +5,12 @@
   flex-direction: column;
 
   &__header {
-    padding: 0 0 14px 14px;
+    padding: 7px 14px;
     display: flex;
     align-items: center;
 
     @media (max-width: $max-mobile) {
-      padding: 0 0 8px 8px;
+      padding: 7px;
     }
   }
 
@@ -54,28 +54,28 @@
 
   &__content {
     flex-grow: 1;
-    border-top: 1px solid #F5F6F8;
-    border-bottom: 1px solid #F5F6F8;
-    padding: 14px;
-
-    @media (max-width: $max-mobile) {
-      padding: 8px;
-    }
   }
 
   &__footer {
-    height: 56px;
+    padding: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    @media (max-width: $max-mobile) {
-      height: 50px;
-    }
   }
 
   .order {
     display: flex;
+    padding: 14px;
+    border-top: 1px solid #F5F6F8;
+    border-collapse: collapse;
+
+    &:last-child {
+      border-bottom: 1px solid #F5F6F8;
+    }
+
+    @media (max-width: $max-mobile) {
+      padding: 8px;
+    }
 
     @media (max-width: 900px) {
       flex-direction: column;
@@ -84,6 +84,9 @@
 
     &__model {
       display: flex;
+      align-items: center;
+      max-width: 460px;
+      width: 100%;
 
       @media (max-width: 900px) {
         margin-bottom: 14px;
@@ -131,13 +134,30 @@
       }
     }
 
+    &__price-container {
+      width: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    &__status-text {
+      text-align: center;
+      font-size: 13px;
+      color: #889098;
+
+      p {
+        font-size: 14px;
+        color: #121212;
+      }
+    }
+
     &__price {
       font-size: 22px;
       color: #121212;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: max-content;
+      margin-top: 7px;
     }
 
     &__actions {

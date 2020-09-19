@@ -19,7 +19,7 @@ const orderAPI = {
   getCars() {
     return instance.get(`db/car/`);
   },
-  getCarsPage(currentPage = 1, pageSize = 5, categoriesForFilter) {
+  getCarsPage(currentPage = 1, pageSize = 5, filteredCategories) {
     const requestUrl = `db/car?page=${currentPage - 1}&limit=${pageSize}`;
     // if (brandsForFilter !== []) {
     //   brandsForFilter.map((brand) => {
@@ -27,7 +27,7 @@ const orderAPI = {
     //     return false;
     //   });
     // }
-    if (categoriesForFilter.length !== 0) {
+    if (filteredCategories.length !== 0) {
       // eslint-disable-next-line no-console
       console.warn("Фильтрация по категории временно недоступна");
       // categoriesForFilter.forEach((category) => {requestUrl += `&categoryId.name=${category}`});
@@ -43,8 +43,12 @@ const orderAPI = {
   getOrder(orderId) {
     return instance.get(`db/order/${orderId}`);
   },
-  getOrders() {
-    return instance.get(`db/order`);
+  getOrders(currentPage = 1, pageSize = 3, accessToken) {
+    return instance.get(`db/order?page=${currentPage - 1}&limit=${pageSize}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   },
   getRate() {
     return instance.get(`db/rate/`);
@@ -59,6 +63,33 @@ const orderAPI = {
         Authorization: `Basic ${basicToken}`,
       },
     });
+  },
+  getAuthCheck(accessToken) {
+    return instance.get(`auth/check`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+  postRefreshToken(orderBody, basicToken) {
+    return instance.post(`auth/refresh`, orderBody, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Basic ${basicToken}`,
+      },
+    });
+  },
+  postLogOut(accessToken) {
+    return instance.post(
+      `auth/logout`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
   },
 };
 

@@ -3,6 +3,10 @@
 .paginator {
   text-align: center;
   color: $clr-main-blue;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   button {
     color: $clr-main-blue;
@@ -16,14 +20,14 @@
 }
 
 .arrow {
-  width: 8px;
+  width: 10px;
   margin: 0 1px;
 }
 
 .pageNumber {
   font-size: 13px;
-  width: 19px;
-  height: 19px;
+  width: 24px;
+  height: 24px;
 
   &:hover {
     font-size: 14px;

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "./AdminPage.scss";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import Cookies from "js-cookie";
+import { connect } from "react-redux";
 import Orders from "./orders/Orders";
 import NavBar from "./NavBar";
 import Header from "./Header";
@@ -10,18 +10,21 @@ import NavBarMobile from "./NavBarMobile";
 import Error from "./error/Error";
 import CarSetting from "./carSetting/CarSetting";
 import CarsTable from "./carsTable/CarsTable";
+import { authCheck, logOut } from "../../store/auth-reducer";
 
-const AdminPage = () => {
+const AdminPage = ({ isAuth, authCheck, logOut }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  const [isTokenValid, setIsTokenValid] = useState(Cookies.get("access_token"));
-  if (!isTokenValid) return <Redirect to="/login" />;
+  useEffect(() => {
+    authCheck();
+  }, [authCheck]);
+  if (isAuth === false) return <Redirect to="/login" />;
 
   return (
     <div className="admin">
       {isMobile ? <NavBarMobile /> : <NavBar />}
       <div className="admin__container">
         <div className="admin__header">
-          <Header setIsTokenValid={setIsTokenValid} />
+          <Header logOut={logOut} />
         </div>
         <div className="admin__content">
           <div className="admin__content-container">
@@ -50,4 +53,8 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+const mapStateToProps = (state) => ({
+  isAuth: state.auth.isAuth,
+});
+
+export default connect(mapStateToProps, { authCheck, logOut })(AdminPage);

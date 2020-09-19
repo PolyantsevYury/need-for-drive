@@ -1,16 +1,23 @@
 import Cookies from "js-cookie";
 import orderAPI from "../api/api";
 
+const SET_IS_AUTH = "SET_IS_AUTH";
 const TOGGLE_IS_AUTH_IN_PROGRESS = "TOGGLE_IS_AUTH_IN_PROGRESS";
 const TOGGLE_IS_AUTH_FAILED = "TOGGLE_IS_AUTH_FAILED";
 
 const initialState = {
+  isAuth: null,
   isAuthInProgress: false,
   isAuthFailed: false,
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_IS_AUTH:
+      return {
+        ...state,
+        isAuth: action.isAuth,
+      };
     case TOGGLE_IS_AUTH_IN_PROGRESS:
       return {
         ...state,
@@ -26,6 +33,10 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
+export const setIsAuth = (isAuth) => ({
+  type: SET_IS_AUTH,
+  isAuth,
+});
 export const toggleIsAuthInProgress = (isAuthInProgress) => ({
   type: TOGGLE_IS_AUTH_IN_PROGRESS,
   isAuthInProgress,
@@ -52,7 +63,11 @@ export const logIn = (userData) => async (dispatch) => {
     const orderBody = JSON.stringify(userData);
     const response = await orderAPI.postLogIn(orderBody, basicToken);
     if (response.statusText === "OK") {
+      dispatch(setIsAuth(true));
       const cookiesExpiresDays = response.data.expires_in / 86400;
+      Cookies.set("basic_token", basicToken, {
+        expires: cookiesExpiresDays,
+      });
       Cookies.set("access_token", response.data.access_token, {
         expires: cookiesExpiresDays,
       });
@@ -64,6 +79,48 @@ export const logIn = (userData) => async (dispatch) => {
   } catch (error) {
     dispatch(toggleIsAuthInProgress(false));
     dispatch(toggleIsAuthFailed(true));
+    // eslint-disable-next-line no-console
+    console.log(error);
+  }
+};
+
+export const authCheck = () => async (dispatch) => {
+  try {
+    const accessToken = Cookies.get("access_token");
+    await orderAPI.getAuthCheck(accessToken);
+    dispatch(setIsAuth(true));
+  } catch (error) {
+    if (error.status === 401) {
+      try {
+        const refreshToken = Cookies.get("refresh_token");
+        const basicToken = Cookies.get("basic_token");
+        const orderBody = JSON.stringify({ refresh_token: refreshToken });
+        const response = await orderAPI.postRefreshToken(orderBody, basicToken);
+        Cookies.set("access_token", response.data.access_token, {
+          expires: 7,
+        });
+        Cookies.set("refresh_token", response.data.refresh_token, {
+          expires: 7,
+        });
+        dispatch(setIsAuth(true));
+      } catch (error) {
+        dispatch(setIsAuth(false));
+      }
+    } else {
+      dispatch(setIsAuth(false));
+    }
+  }
+};
+
+export const logOut = () => async (dispatch) => {
+  try {
+    const accessToken = Cookies.get("access_token");
+    await orderAPI.postLogOut(accessToken);
+    dispatch(setIsAuth(false));
+    Cookies.remove("access_token");
+    Cookies.remove("basic_token");
+    Cookies.remove("refresh_token");
+  } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error);
   }
