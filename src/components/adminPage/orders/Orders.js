@@ -5,6 +5,7 @@ import { Checkbox, DropdownCheckbox } from "../adminForms/AdminForms";
 import approveIcon from "../../../assets/images/icons/approve_icon.svg";
 import rejectIcon from "../../../assets/images/icons/reject_icon.svg";
 import editIcon from "../../../assets/images/icons/edit_icon.svg";
+import modelPlaceholder from "../../../assets/images/car-placeholder.png";
 import Paginator from "../../common/paginator/Paginator";
 import {
   requestOrdersPage,
@@ -95,7 +96,11 @@ const Orders = ({
                       className="order__img"
                       crossOrigin="anonymous"
                       referrerPolicy="origin"
-                      src={`https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/${order.carId?.thumbnail?.path}`}
+                      src={
+                        order.carId?.thumbnail?.path
+                          ? `https://cors-anywhere.herokuapp.com/http://api-factory.simbirsoft1.com/${order.carId?.thumbnail?.path}`
+                          : modelPlaceholder
+                      }
                       alt=""
                     />
                     <div className="order__info">

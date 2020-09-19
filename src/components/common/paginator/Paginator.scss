@@ -3,6 +3,10 @@
 .paginator {
   text-align: center;
   color: $clr-main-blue;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   button {
     color: $clr-main-blue;
