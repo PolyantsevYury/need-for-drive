@@ -11,8 +11,9 @@ import Error from "./error/Error";
 import CarSetting from "./carSetting/CarSetting";
 import CarsTable from "./carsTable/CarsTable";
 import { authCheck, logOut } from "../../store/auth-reducer";
+import { AdminPreloader } from "../common/preloader/Preloader";
 
-const AdminPage = ({ isAuth, authCheck, logOut }) => {
+const AdminPage = ({ isAuth, authCheck, isAuthChecking, logOut }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   useEffect(() => {
     authCheck();
@@ -28,16 +29,20 @@ const AdminPage = ({ isAuth, authCheck, logOut }) => {
         </div>
         <div className="admin__content">
           <div className="admin__content-container">
-            <Switch>
-              <Route exact path="/admin/orders" render={() => <Orders />} />
-              <Route exact path="/admin/table" render={() => <CarsTable />} />
-              <Route
-                exact
-                path="/admin/car-setting"
-                render={() => <CarSetting />}
-              />
-              <Route path="*" render={() => <Error />} />
-            </Switch>
+            {isAuthChecking ? (
+              <AdminPreloader />
+            ) : (
+              <Switch>
+                <Route exact path="/admin/orders" render={() => <Orders />} />
+                <Route exact path="/admin/table" render={() => <CarsTable />} />
+                <Route
+                  exact
+                  path="/admin/car-setting"
+                  render={() => <CarSetting />}
+                />
+                <Route path="*" render={() => <Error />} />
+              </Switch>
+            )}
           </div>
           <div className="admin__footer">
             <a className="admin__footer-link" href="/">
@@ -55,6 +60,7 @@ const AdminPage = ({ isAuth, authCheck, logOut }) => {
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
+  isAuthChecking: state.auth.isAuthChecking,
 });
 
 export default connect(mapStateToProps, { authCheck, logOut })(AdminPage);
