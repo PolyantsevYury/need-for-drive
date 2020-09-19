@@ -53,6 +53,9 @@ export const logIn = (userData) => async (dispatch) => {
     const response = await orderAPI.postLogIn(orderBody, basicToken);
     if (response.statusText === "OK") {
       const cookiesExpiresDays = response.data.expires_in / 86400;
+      Cookies.set("basic_token", basicToken, {
+        expires: cookiesExpiresDays,
+      });
       Cookies.set("access_token", response.data.access_token, {
         expires: cookiesExpiresDays,
       });
@@ -64,6 +67,29 @@ export const logIn = (userData) => async (dispatch) => {
   } catch (error) {
     dispatch(toggleIsAuthInProgress(false));
     dispatch(toggleIsAuthFailed(true));
+    // eslint-disable-next-line no-console
+    console.log(error);
+  }
+};
+
+export const authCheck = () => async () => {
+  try {
+    const accessToken = Cookies.get("access_token");
+    await orderAPI.getAuthCheck(accessToken);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+  }
+};
+
+export const logOut = () => async () => {
+  try {
+    const accessToken = Cookies.get("access_token");
+    await orderAPI.postLogOut(accessToken);
+    Cookies.remove("access_token");
+    Cookies.remove("basic_token");
+    Cookies.remove("refresh_token");
+  } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error);
   }

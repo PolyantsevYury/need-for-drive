@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AdminPage.scss";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import Cookies from "js-cookie";
+import { connect } from "react-redux";
 import Orders from "./orders/Orders";
 import NavBar from "./NavBar";
 import Header from "./Header";
@@ -10,10 +11,15 @@ import NavBarMobile from "./NavBarMobile";
 import Error from "./error/Error";
 import CarSetting from "./carSetting/CarSetting";
 import CarsTable from "./carsTable/CarsTable";
+import { authCheck } from "../../store/auth-reducer";
 
-const AdminPage = () => {
+const AdminPage = ({ authCheck }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [isTokenValid, setIsTokenValid] = useState(Cookies.get("access_token"));
+  useEffect(() => {
+    authCheck();
+  }, [authCheck]);
+
   if (!isTokenValid) return <Redirect to="/login" />;
 
   return (
@@ -50,4 +56,6 @@ const AdminPage = () => {
   );
 };
 
-export default AdminPage;
+const mapStateToProps = () => ({});
+
+export default connect(mapStateToProps, { authCheck })(AdminPage);

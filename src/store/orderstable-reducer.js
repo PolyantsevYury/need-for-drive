@@ -55,9 +55,9 @@ export const setCurrentOrdersPage = (currentOrdersPage) => ({
 
 export const requestOrdersPage = (page, pageSize) => async (dispatch) => {
   try {
-    const basicToken = `${Cookies.get("access_token")}`;
+    const accessToken = `${Cookies.get("access_token")}`;
     dispatch(toggleIsOrdersFetching(true));
-    const result = await orderAPI.getOrders(page, pageSize, basicToken);
+    const result = await orderAPI.getOrders(page, pageSize, accessToken);
     dispatch(setOrders(result.data.data));
     dispatch(setTotalOrdersCount(result.data.count));
     dispatch(toggleIsOrdersFetching(false));

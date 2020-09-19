@@ -43,10 +43,10 @@ const orderAPI = {
   getOrder(orderId) {
     return instance.get(`db/order/${orderId}`);
   },
-  getOrders(currentPage = 1, pageSize = 3, basicToken) {
+  getOrders(currentPage = 1, pageSize = 3, accessToken) {
     return instance.get(`db/order?page=${currentPage - 1}&limit=${pageSize}`, {
       headers: {
-        Authorization: `Bearer ${basicToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
   },
@@ -63,6 +63,25 @@ const orderAPI = {
         Authorization: `Basic ${basicToken}`,
       },
     });
+  },
+  getAuthCheck(accessToken) {
+    return instance.get(`auth/check`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  },
+  postLogOut(accessToken) {
+    return instance.post(
+      `auth/login`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
   },
 };
 
