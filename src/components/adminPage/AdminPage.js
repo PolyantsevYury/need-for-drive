@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./AdminPage.scss";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Orders from "./orders/Orders";
 import NavBar from "./NavBar";
 import Header from "./Header";
@@ -10,14 +10,19 @@ import NavBarMobile from "./NavBarMobile";
 import Error from "./error/Error";
 import CarSetting from "./carSetting/CarSetting";
 import CarsTable from "./carsTable/CarsTable";
-import { authCheck, logOut } from "../../store/auth-reducer";
+import { authCheck } from "../../store/auth-reducer";
 import { AdminPreloader } from "../common/preloader/Preloader";
 
-const AdminPage = ({ isAuth, authCheck, isAuthChecking, logOut }) => {
+const AdminPage = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  const isAuthChecking = useSelector((state) => state.auth.isAuthChecking);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    authCheck();
-  }, [authCheck]);
+    dispatch(authCheck());
+  }, [dispatch]);
   if (isAuth === false) return <Redirect to="/login" />;
 
   return (
@@ -25,7 +30,7 @@ const AdminPage = ({ isAuth, authCheck, isAuthChecking, logOut }) => {
       {isMobile ? <NavBarMobile /> : <NavBar />}
       <div className="admin__container">
         <div className="admin__header">
-          <Header logOut={logOut} />
+          <Header />
         </div>
         <div className="admin__content">
           <div className="admin__content-container">
@@ -58,9 +63,4 @@ const AdminPage = ({ isAuth, authCheck, isAuthChecking, logOut }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuth,
-  isAuthChecking: state.auth.isAuthChecking,
-});
-
-export default connect(mapStateToProps, { authCheck, logOut })(AdminPage);
+export default AdminPage;
