@@ -3,11 +3,13 @@ import orderAPI from "../api/api";
 
 const SET_IS_AUTH = "SET_IS_AUTH";
 const TOGGLE_IS_AUTH_IN_PROGRESS = "TOGGLE_IS_AUTH_IN_PROGRESS";
+const TOGGLE_IS_AUTH_IN_CHECKING = "TOGGLE_IS_AUTH_IN_CHECKING";
 const TOGGLE_IS_AUTH_FAILED = "TOGGLE_IS_AUTH_FAILED";
 
 const initialState = {
   isAuth: null,
   isAuthInProgress: false,
+  isAuthChecking: true,
   isAuthFailed: false,
 };
 
@@ -22,6 +24,11 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthInProgress: action.isAuthInProgress,
+      };
+    case TOGGLE_IS_AUTH_IN_CHECKING:
+      return {
+        ...state,
+        isAuthChecking: action.isAuthChecking,
       };
     case TOGGLE_IS_AUTH_FAILED:
       return {
@@ -40,6 +47,10 @@ export const setIsAuth = (isAuth) => ({
 export const toggleIsAuthInProgress = (isAuthInProgress) => ({
   type: TOGGLE_IS_AUTH_IN_PROGRESS,
   isAuthInProgress,
+});
+export const toggleIsAuthChecking = (isAuthChecking) => ({
+  type: TOGGLE_IS_AUTH_IN_CHECKING,
+  isAuthChecking,
 });
 export const toggleIsAuthFailed = (isAuthFailed) => ({
   type: TOGGLE_IS_AUTH_FAILED,
@@ -86,9 +97,11 @@ export const logIn = (userData) => async (dispatch) => {
 
 export const authCheck = () => async (dispatch) => {
   try {
+    dispatch(toggleIsAuthChecking(true));
     const accessToken = Cookies.get("access_token");
     await orderAPI.getAuthCheck(accessToken);
     dispatch(setIsAuth(true));
+    dispatch(toggleIsAuthChecking(false));
   } catch (error) {
     if (error.status === 401) {
       try {
@@ -102,11 +115,14 @@ export const authCheck = () => async (dispatch) => {
         Cookies.set("refresh_token", response.data.refresh_token, {
           expires: 7,
         });
+        dispatch(toggleIsAuthChecking(false));
         dispatch(setIsAuth(true));
       } catch (error) {
+        dispatch(toggleIsAuthChecking(false));
         dispatch(setIsAuth(false));
       }
     } else {
+      dispatch(toggleIsAuthChecking(false));
       dispatch(setIsAuth(false));
     }
   }

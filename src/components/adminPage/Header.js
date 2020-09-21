@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import SearchIcon from "../../assets/images/icons/search_icon.svg";
 import NotificationsIcon from "../../assets/images/icons/notifications_icon.svg";
 import UserImg from "../../assets/images/user-img.png";
 import LogoutIcon from "../../assets/images/icons/logout_icon.png";
 import Dropdown from "../common/icons/Dropdown";
+import { logOut } from "../../store/auth-reducer";
 
-const Header = ({ logOut }) => {
+const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <div className="admin-header">
@@ -36,7 +39,7 @@ const Header = ({ logOut }) => {
           <div className="dropdown">
             <button
               type="button"
-              onClick={() => logOut()}
+              onClick={() => dispatch(logOut())}
               className="dropdown__logout-btn"
             >
               <img src={LogoutIcon} alt="" />
